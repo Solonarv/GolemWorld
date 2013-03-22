@@ -1,5 +1,5 @@
 [{
-	"modid": "GW",
+	"modid": "golemworld",
     "name":  "Golem World",
     "description": "Tired of boring old iron golems? Bringing you golems made of gold, dirt, glass, and even netherrack and ice!",
     "version":"@VERSION@",

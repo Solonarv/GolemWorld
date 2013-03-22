@@ -38,5 +38,7 @@ import cpw.mods.fml.relauncher.Side;
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class GolemWorld {
-
+	
+	@Instance(Reference.MOD_ID)
+	public static GolemWorld instance;
 }
