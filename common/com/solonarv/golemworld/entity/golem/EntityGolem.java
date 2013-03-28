@@ -1,4 +1,4 @@
-package com.solonarv.golemworld.entity;
+package com.solonarv.golemworld.entity.golem;
 
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.world.World;
@@ -13,7 +13,7 @@ public abstract class EntityGolem extends EntityMob {
 	
 	protected static Object[] recipe={};
 	protected static int maxHealth;
-	//Attack damage is gaussian-random distributed, float are ready for 1.6 decimal health
+	//Attack damage is gaussian-random distributed, floats are ready for 1.6 decimal health
 	protected static float avgAttackDmg;
 	protected static float atkDmgStdDev;
 	
