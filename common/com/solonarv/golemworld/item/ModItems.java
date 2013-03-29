@@ -22,7 +22,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
  */
 public class ModItems {
 	
-	public static int idPaperAwaken=500;
+	public static int idPaperAwaken = 5000;
 	
 	public static Item paperAwaken=new ItemPaperOfAwakening(idPaperAwaken)
 		.setCreativeTab(CreativeTabs.tabMisc)
