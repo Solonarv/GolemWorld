@@ -138,45 +138,45 @@ public class GolemRecipe<TypeGolem extends EntityGolem> {
                 flagXp[0]=flagXn[0]=flagZp[0]=flagZn[0]=true;
             }
             for(int i=0; i<3; i++){
-                if( (world.getBlockId(x-1, y-1, z) == this.midRow[0].blockID || this.midRow[0]==null) 
-                        && (world.getBlockId(x, y-1, z) == this.midRow[1].blockID || this.midRow[1]==null)
-                        && (world.getBlockId(x+1, y-1, z) == this.midRow[2].blockID || this.midRow[2]==null)){
+                if( (this.midRow[0]==null || world.getBlockId(x-1, y-1, z) == this.midRow[0].blockID) 
+                        && (this.midRow[1]==null || world.getBlockId(x, y-1, z) == this.midRow[1].blockID)
+                        && (this.midRow[2]==null || world.getBlockId(x+1, y-1, z) == this.midRow[2].blockID)){
                     flagXp[1]=true;
                 }
-                if( (world.getBlockId(x-1, y-1, z) == this.midRow[2].blockID || this.midRow[0]==null)
-                        && (world.getBlockId(x, y-1, z) == this.midRow[1].blockID || this.midRow[1]==null)
-                        && (world.getBlockId(x+1, y-1, z) == this.midRow[0].blockID || this.midRow[2]==null)){
+                if( (this.midRow[2]==null || world.getBlockId(x-1, y-1, z) == this.midRow[2].blockID)
+                        && (this.midRow[1]==null || world.getBlockId(x, y-1, z) == this.midRow[1].blockID)
+                        && (this.midRow[0]==null || world.getBlockId(x+1, y-1, z) == this.midRow[0].blockID)){
                     flagXn[1]=true;
                 }
-                if( (world.getBlockId(x, y-1, z-1) == this.midRow[0].blockID || this.midRow[0]==null)
-                        && (world.getBlockId(x, y-1, z) == this.midRow[1].blockID || this.midRow[1]==null)
-                        && (world.getBlockId(x, y-1, z+1) == this.midRow[2].blockID || this.midRow[2]==null)){
+                if( (this.midRow[0]==null || world.getBlockId(x, y-1, z-1) == this.midRow[0].blockID)
+                        && (this.midRow[1]==null || world.getBlockId(x, y-1, z) == this.midRow[1].blockID)
+                        && (this.midRow[2]==null || world.getBlockId(x, y-1, z+1) == this.midRow[2].blockID)){
                     flagZp[1]=true;
                 }
-                if( (world.getBlockId(x, y-1, z-1) == this.midRow[2].blockID || this.midRow[0]==null)
-                        && (world.getBlockId(x, y-1, z) == this.midRow[1].blockID || this.midRow[1]==null)
-                        && (world.getBlockId(x, y-1, z+1) == this.midRow[0].blockID || this.midRow[2]==null)){
+                if( (this.midRow[2]==null || world.getBlockId(x, y-1, z-1) == this.midRow[2].blockID)
+                        && (this.midRow[1]==null || world.getBlockId(x, y-1, z) == this.midRow[1].blockID)
+                        && (this.midRow[0]==null || world.getBlockId(x, y-1, z+1) == this.midRow[0].blockID)){
                     flagZn[1]=true;
                 }
                 
-                if( (world.getBlockId(x-1, y-2, z) == this.botRow[0].blockID || this.botRow[0]==null)
-                        && (world.getBlockId(x, y-2, z) == this.botRow[1].blockID || this.botRow[1]==null)
-                        && (world.getBlockId(x+1, y-2, z) == this.botRow[2].blockID || this.botRow[2]==null)){
+                if( (this.botRow[0]==null || world.getBlockId(x-1, y-2, z) == this.botRow[0].blockID)
+                        && (this.botRow[1]==null || world.getBlockId(x, y-2, z) == this.botRow[1].blockID)
+                        && (this.botRow[2]==null || world.getBlockId(x+1, y-2, z) == this.botRow[2].blockID)){
                     flagXp[2]=true;
                 }
-                if( (world.getBlockId(x-1, y-2, z) == this.botRow[2].blockID || this.botRow[0]==null)
-                        && (world.getBlockId(x, y-2, z) == this.botRow[1].blockID || this.botRow[1]==null)
-                        && (world.getBlockId(x+1, y-2, z) == this.botRow[0].blockID || this.botRow[2]==null)){
+                if( (this.botRow[2]==null || world.getBlockId(x-1, y-2, z) == this.botRow[2].blockID)
+                        && (this.botRow[1]==null || world.getBlockId(x, y-2, z) == this.botRow[1].blockID)
+                        && (this.botRow[0]==null || world.getBlockId(x+1, y-2, z) == this.botRow[0].blockID)){
                     flagXn[2]=true;
                 }
-                if( (world.getBlockId(x, y-2, z-1) == this.botRow[0].blockID || this.botRow[0]==null)
-                        && (world.getBlockId(x, y-2, z) == this.botRow[1].blockID || this.botRow[1]==null)
-                        && (world.getBlockId(x, y-2, z+1) == this.botRow[2].blockID || this.botRow[2]==null)){
+                if( (this.botRow[0]==null || world.getBlockId(x, y-2, z-1) == this.botRow[0].blockID)
+                        && (this.botRow[1]==null || world.getBlockId(x, y-2, z) == this.botRow[1].blockID)
+                        && (this.botRow[2]==null || world.getBlockId(x, y-2, z+1) == this.botRow[2].blockID)){
                     flagZp[2]=true;
                 }
-                if( (world.getBlockId(x, y-2, z-1) == this.botRow[2].blockID || this.botRow[0]==null)
-                        && (world.getBlockId(x, y-2, z) == this.botRow[1].blockID || this.botRow[1]==null)
-                        && (world.getBlockId(x, y-2, z+1) == this.botRow[0].blockID || this.botRow[2]==null)){
+                if( (this.botRow[2]==null || world.getBlockId(x, y-2, z-1) == this.botRow[2].blockID)
+                        && (this.botRow[1]==null || world.getBlockId(x, y-2, z) == this.botRow[1].blockID)
+                        && (this.botRow[0]==null || world.getBlockId(x, y-2, z+1) == this.botRow[0].blockID)){
                     flagZn[2]=true;
                 }
             }
