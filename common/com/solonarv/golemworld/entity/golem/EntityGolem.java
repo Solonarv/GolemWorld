@@ -30,5 +30,7 @@ public abstract class EntityGolem extends EntityMob {
 	protected final int decreaseAirSupply(int par1){
         return par1;
     }
-	
+	public static boolean isSmart(){
+		return false;
+	}
 }

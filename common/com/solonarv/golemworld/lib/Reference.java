@@ -18,4 +18,6 @@ public class Reference {
 	public static final String VERSION="@VERSION@";
 	public static final int MAX_TPS=20;
 	public static final int ITEMID_SHIFT=256;
+	
+	public static final String CONFIG_FILE="";
 }

@@ -13,6 +13,10 @@ public abstract class EntitySmartGolem extends EntityGolem {
 	protected final static float avgAttackDmg=1;
 	protected final static float atkDmgStdDev=0;
 	
+	public final static boolean isSmart(){
+		return true;
+	}
+	
 	private InventoryGolem mainInventory;
 	
 	

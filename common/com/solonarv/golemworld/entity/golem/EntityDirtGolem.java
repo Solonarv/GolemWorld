@@ -7,10 +7,6 @@ import com.solonarv.golemworld.entity.golem.EntityGolem;
 
 public class EntityDirtGolem extends EntityGolem {
 	
-	protected static Object[] recipe={" p ","ddd"," g ",
-		"p", Block.pumpkin,
-		"d", Block.dirt,
-		"g", Block.grass};
 	protected static int maxHealth;
 	
 	protected static float avgAttackDmg;
