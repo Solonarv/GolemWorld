@@ -5,7 +5,7 @@ import net.minecraft.world.World;
 import net.minecraft.util.MathHelper;
 
 
-public abstract class EntityGolem extends EntityMob {
+public class EntityGolem extends EntityMob {
 	public EntityGolem(World world){
 		super(world);
 		this.experienceValue=0;
@@ -19,10 +19,10 @@ public abstract class EntityGolem extends EntityMob {
 	
 	//Final methods, those are common to _all_ golems
 	public final int getMaxHealth(){
-		return this.maxHealth;
+		return maxHealth;
 	};
 	public final int getAttackStrength(){
-		return MathHelper.floor_double(this.avgAttackDmg + this.rand.nextGaussian() * this.atkDmgStdDev);
+		return MathHelper.floor_double(avgAttackDmg + this.rand.nextGaussian() * atkDmgStdDev);
 	};
 	/**
      * Decrements the entity's air supply when underwater
