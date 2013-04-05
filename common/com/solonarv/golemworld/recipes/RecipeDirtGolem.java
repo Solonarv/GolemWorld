@@ -6,7 +6,7 @@ import com.solonarv.golemworld.entity.golem.EntityDirtGolem;
 
 public class RecipeDirtGolem extends GolemRecipe {
     public RecipeDirtGolem(){
-        super(Block.dirt);
+        super(null, new Block[] {Block.dirt,Block.dirt,Block.dirt}, new Block[] {null,Block.grass,null});
     }
     public EntityDirtGolem checkAndSpawnIfValid(int x, int y, int z, World world){
         EntityPos pos=this.checkRecipeInWorld(x, y, z, world);
@@ -19,4 +19,5 @@ public class RecipeDirtGolem extends GolemRecipe {
         }
         return null;
     }
+    public RecipeDirtGolem getThis(){return this;}
 }

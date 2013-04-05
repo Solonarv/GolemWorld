@@ -59,11 +59,6 @@ public class InventoryGolem implements IInventory {
 	}
 
 	@Override
-	public boolean func_94042_c() {
-		return false;
-	}
-
-	@Override
 	public int getInventoryStackLimit() {
 		return 64;
 	}
@@ -83,10 +78,14 @@ public class InventoryGolem implements IInventory {
 	@Override
 	public void closeChest() {}
 
-	@Override
-	public boolean func_94041_b(int i, ItemStack itemstack) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean isInvNameLocalized() {
+        return false;
+    }
+
+    @Override
+    public boolean isStackValidForSlot(int slot, ItemStack itemstack) {
+        return true;
+    }
 
 }

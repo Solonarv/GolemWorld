@@ -1,8 +1,6 @@
 package com.solonarv.golemworld.entity.golem;
 
 import net.minecraft.world.World;
-import net.minecraft.block.Block;
-
 import com.solonarv.golemworld.entity.golem.EntityGolem;
 
 public class EntityDirtGolem extends EntityGolem {

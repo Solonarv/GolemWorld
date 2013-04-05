@@ -10,14 +10,19 @@ package com.solonarv.golemworld.lib;
  * 
  */
 public class Reference {
-	public static final boolean DEBUG=false;
+	public final static String MOD_NAME = "Golem World";
+	public final static String MOD_ID = "golemworld";
+	public final static String CHANNEL_NAME = MOD_ID;
+	public final static String VERSION = "@VERSION@";
+	public final static int MAX_TPS = 20;
+	public final static int ITEMID_SHIFT = 256;
 	
-	public static final String MOD_NAME="Golem World";
-	public static final String MOD_ID="golemworld";
-	public static final String CHANNEL_NAME=MOD_ID;
-	public static final String VERSION="@VERSION@";
-	public static final int MAX_TPS=20;
-	public static final int ITEMID_SHIFT=256;
-	
-	public static final String CONFIG_FILE="";
+	public final static String CONFIG_FILE = "";
+
+    public final static String CLIENT_PROXY = "com.solonarv.golemworld.proxy.ClientProxy";
+
+    public final static String COMMON_PROXY = "com.solonarv.golemworld.proxy.CommonProxy";
+    
+    public final static String MOB_TEXTURES = "";
+    public final static String ITEM_TEXTURES = "f:/mods/source/Golem World/resources/mods/golemworld/textures/items/";
 }

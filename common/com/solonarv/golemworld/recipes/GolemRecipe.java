@@ -45,6 +45,7 @@ public abstract class GolemRecipe {
         this.midRow=mid;
         this.botRow=bot;
         this.smart=smart;
+        GolemRecipes.addRecipe(this);
     }
     /**
      * Creates a new golem recipe: if blocks in the specified shape are
@@ -57,6 +58,7 @@ public abstract class GolemRecipe {
         this.midRow=mid;
         this.botRow=bot;
         this.smart=false;
+        GolemRecipes.addRecipe(this);
     }
     
     /**
@@ -70,8 +72,8 @@ public abstract class GolemRecipe {
         }
         this.botRow[1]=golemMat;
         this.botRow[0]=this.botRow[2]=null;
+        GolemRecipes.addRecipe(this);
     }
-    
     
     /**
      * Is the target block part of a
@@ -214,4 +216,5 @@ public abstract class GolemRecipe {
         
         return -1;
     }
+    public EntityGolem checkAndSpawnIfValid(int x, int y, int z, World world){return null;}
 }
