@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 import net.minecraft.world.World;
 
+import com.solonarv.golemworld.entity.golem.EntityDirtGolem;
 import com.solonarv.golemworld.entity.golem.EntityGolem;
 
 public class GolemRecipes {
 	
 	private static ArrayList<GolemRecipe> recipes;
 	
-	public static RecipeDirtGolem dirtGolem=new RecipeDirtGolem();
+	public static RecipeDirtGolem dirtGolem=(RecipeDirtGolem) (EntityDirtGolem.recipe=new RecipeDirtGolem());
 	
 	public static <T extends GolemRecipe> T addRecipe(T recipe){
 	    if(recipe.getClass()==GolemRecipe.class) return null;
