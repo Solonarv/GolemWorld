@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
 import com.solonarv.golemworld.entity.golem.EntityGolem;
+import com.solonarv.golemworld.lib.GolemRegistry;
 
 public abstract class GolemRecipe {
     
@@ -45,7 +46,7 @@ public abstract class GolemRecipe {
         this.midRow=mid;
         this.botRow=bot;
         this.smart=smart;
-        GolemRecipes.addRecipe(this);
+        GolemRegistry.addRecipe(this);
     }
     /**
      * Creates a new golem recipe: if blocks in the specified shape are
@@ -58,7 +59,7 @@ public abstract class GolemRecipe {
         this.midRow=mid;
         this.botRow=bot;
         this.smart=false;
-        GolemRecipes.addRecipe(this);
+        GolemRegistry.addRecipe(this);
     }
     
     /**
@@ -72,7 +73,7 @@ public abstract class GolemRecipe {
         }
         this.botRow[1]=golemMat;
         this.botRow[0]=this.botRow[2]=null;
-        GolemRecipes.addRecipe(this);
+        GolemRegistry.addRecipe(this);
     }
     
     /**
@@ -217,4 +218,16 @@ public abstract class GolemRecipe {
         return -1;
     }
     public EntityGolem checkAndSpawnIfValid(int x, int y, int z, World world){return null;}
+    
+    public static Class<? extends EntityGolem> golemClass(){
+        return EntityGolem.class;
+    }
+    
+    public static String golemName(){
+        return EntityGolem.name;
+    }
+    
+    public static int golemId(){
+        return EntityGolem.id;
+    }
 }

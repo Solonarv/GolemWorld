@@ -28,6 +28,9 @@ public class EntityGolem extends EntityMob {
     private int homeCheckTimer = 0;
     Village villageObj = null;
     private int attackTimer;
+    
+    public static int id;
+    public static String name;
 
     public EntityGolem(World par1World)
     {
@@ -48,12 +51,14 @@ public class EntityGolem extends EntityMob {
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityLiving.class, 16.0F, 0, false, true, IMob.mobSelector));
     }
 
+    @Override
     protected void entityInit()
     {
         super.entityInit();
         this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
     }
 
+    @Override
     /**
      * Returns true if the newer Entity AI code should be run
      */
@@ -62,6 +67,7 @@ public class EntityGolem extends EntityMob {
         return true;
     }
 
+    @Override
     /**
      * main AI tick function, replaces updateEntityActionState
      */
@@ -97,19 +103,24 @@ public class EntityGolem extends EntityMob {
 	protected static float avgAttackDmg;
 	protected static float atkDmgStdDev;
 	
+	@Override
 	//Final methods, those are common to _all_ golems
 	public final int getMaxHealth(){
 		return maxHealth;
 	};
+	
 	public final int getAttackStrength(){
 		return MathHelper.floor_double(avgAttackDmg + this.rand.nextGaussian() * atkDmgStdDev);
 	};
+	
+	@Override
 	/**
      * Decrements the entity's air supply when underwater
      */
 	protected final int decreaseAirSupply(int par1){
         return par1;
     }
+	
 	public static boolean isSmart(){
 		return false;
 	}

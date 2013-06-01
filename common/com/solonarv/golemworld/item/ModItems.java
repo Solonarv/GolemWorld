@@ -2,7 +2,6 @@ package com.solonarv.golemworld.item;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 
 import com.solonarv.golemworld.lib.ItemIDs;
@@ -31,13 +30,14 @@ public class ModItems {
 	public static void registerItems(){
 	    LanguageRegistry.addName(paperAwaken, "Paper of Awakening");
 	    
-	    GameRegistry.addShapedRecipe(new ItemStack(paperAwaken), new Object[] {
+	    GameRegistry.addRecipe(new ItemStack(paperAwaken), new Object[] {
 	        "grg",
 	        "rpr",
-	        "grg", "g",Item.lightStoneDust, "r",Item.redstone, "p",Item.paper});
-	    GameRegistry.addShapedRecipe(new ItemStack(paperAwaken), new Object[] {
+	        "grg", 'g',Item.lightStoneDust, 'r',Item.redstone, 'p',Item.paper});
+	    GameRegistry.addRecipe(new ItemStack(paperAwaken), new Object[] {
             "grg",
             "rpr",
-            "grg", "g",Item.redstone, "r",Item.lightStoneDust, "p",Item.paper});
+            "grg", 'g',Item.redstone, 'r',Item.lightStoneDust, 'p',Item.paper});
+	    
 	}
 }

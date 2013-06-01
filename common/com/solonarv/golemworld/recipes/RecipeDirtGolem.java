@@ -3,6 +3,7 @@ package com.solonarv.golemworld.recipes;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import com.solonarv.golemworld.entity.golem.EntityDirtGolem;
+import com.solonarv.golemworld.entity.golem.EntityGolem;
 
 public class RecipeDirtGolem extends GolemRecipe {
     public RecipeDirtGolem(){
@@ -20,4 +21,16 @@ public class RecipeDirtGolem extends GolemRecipe {
         return null;
     }
     public RecipeDirtGolem getThis(){return this;}
+    
+    public static Class<? extends EntityGolem> golemClass(){
+        return EntityDirtGolem.class;
+    }
+    
+    public static String golemName(){
+        return EntityDirtGolem.name;
+    }
+    
+    public static int golemId(){
+        return EntityDirtGolem.id;
+    }
 }
