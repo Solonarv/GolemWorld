@@ -1,17 +1,17 @@
 package com.solonarv.golemworld.entity.ai;
 
-import com.solonarv.golemworld.entity.golem.EntityGolem;
+import com.solonarv.golemworld.entity.golem.EntityCustomGolem;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.passive.EntityVillager;
 
 public class EntityAILookAtVillager extends EntityAIBase
 {
-    private EntityGolem theGolem;
+    private EntityCustomGolem theGolem;
     private EntityVillager theVillager;
     private int lookTime;
 
-    public EntityAILookAtVillager(EntityGolem par1EntityIronGolem)
+    public EntityAILookAtVillager(EntityCustomGolem par1EntityIronGolem)
     {
         this.theGolem = par1EntityIronGolem;
         this.setMutexBits(3);

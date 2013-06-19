@@ -3,6 +3,7 @@ package com.solonarv.golemworld;
 import net.minecraftforge.common.Configuration;
 
 import com.solonarv.golemworld.item.ModItems;
+import com.solonarv.golemworld.lib.GolemRegistry;
 import com.solonarv.golemworld.lib.Reference;
 import com.solonarv.golemworld.proxy.CommonProxy;
 
@@ -49,6 +50,7 @@ public class GolemWorld {
     public void load(FMLInitializationEvent event) {
             proxy.registerRenderers();
             ModItems.registerItems();
+            GolemRegistry.registerGolems();
     }
     
     @PostInit

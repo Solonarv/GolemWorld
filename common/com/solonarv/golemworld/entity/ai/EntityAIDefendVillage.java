@@ -1,6 +1,6 @@
 package com.solonarv.golemworld.entity.ai;
 
-import com.solonarv.golemworld.entity.golem.EntityGolem;
+import com.solonarv.golemworld.entity.golem.EntityCustomGolem;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAITarget;
@@ -8,14 +8,14 @@ import net.minecraft.village.Village;
 
 public class EntityAIDefendVillage extends EntityAITarget
 {
-    EntityGolem thegolem;
+    EntityCustomGolem thegolem;
 
     /**
      * The aggressor of the iron golem's village which is now the golem's attack target.
      */
     EntityLiving villageAgressorTarget;
 
-    public EntityAIDefendVillage(EntityGolem par1EntityGolem)
+    public EntityAIDefendVillage(EntityCustomGolem par1EntityGolem)
     {
         super(par1EntityGolem, 16.0F, false, true);
         this.thegolem = par1EntityGolem;

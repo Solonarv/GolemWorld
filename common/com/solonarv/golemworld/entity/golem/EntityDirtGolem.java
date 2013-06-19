@@ -1,9 +1,9 @@
 package com.solonarv.golemworld.entity.golem;
 
 import net.minecraft.world.World;
-import com.solonarv.golemworld.entity.golem.EntityGolem;
+import com.solonarv.golemworld.entity.golem.EntityCustomGolem;
 
-public class EntityDirtGolem extends EntityGolem {
+public class EntityDirtGolem extends EntityCustomGolem {
 	
 	protected static int maxHealth;
 	
@@ -12,6 +12,5 @@ public class EntityDirtGolem extends EntityGolem {
 	
 	public EntityDirtGolem(World world){
 		super(world);
-		this.experienceValue=0;
 	}
 }
