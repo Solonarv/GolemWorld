@@ -1,7 +1,5 @@
 package com.solonarv.golemworld.item;
 
-import java.lang.reflect.InvocationTargetException;
-
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -35,30 +33,36 @@ public class ItemPaperOfAwakening extends Item {
 	
 	@Override
 	public boolean onItemUse(ItemStack itemStack, EntityPlayer entityPlayer, World world, int x, int y, int z, int sideHit, float hitVecX, float hitVecY, float hitVecZ) {
-	    EntityCustomGolem g=null;
-	    try {
-            g=GolemRegistry.checkAllAndSpawn(world, x, y, z);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
-	    if(g==null)
+	    if(world.isRemote)
+	        return true;
+	    if(itemStack.stackSize<=0)
+	        return false;
+	    EntityCustomGolem g=spawnAGolem(world,x,y,z);
+	    if(g!=null){
+	        if(!entityPlayer.capabilities.isCreativeMode)
+                itemStack.stackSize--;
+            entityPlayer.addChatMessage("Spawned golem: "+g.getName());
+	    }else{
 	        entityPlayer.addChatMessage("No golem could be spawned.");
-	    else   
-	        entityPlayer.addChatMessage("Spawned golem: "+g.name);
+	    }
 	    return g!=null;
 	}
 	
-	public String getTextureFile(){
+	public static EntityCustomGolem spawnAGolem(World world, int x, int y, int z) {
+	    EntityCustomGolem golem=null;
+	    try{
+            golem=GolemRegistry.checkAllAndSpawn(world, x, y, z);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        golem.rotationYawHead=golem.rotationYaw;
+        golem.renderYawOffset=golem.rotationYaw;
+        golem.initCreature();
+        world.spawnEntityInWorld(golem);
+        return golem;
+    }
+
+    public String getTextureFile(){
 	    return Reference.ITEM_TEXTURES + "/16xpaperAwakening.png";
 	}
 	

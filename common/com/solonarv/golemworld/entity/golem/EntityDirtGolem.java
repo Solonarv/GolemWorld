@@ -1,10 +1,11 @@
 package com.solonarv.golemworld.entity.golem;
 
 import net.minecraft.world.World;
-import com.solonarv.golemworld.entity.golem.EntityCustomGolem;
 
 public class EntityDirtGolem extends EntityCustomGolem {
 	
+    public static final String name="Dirt Golem";
+    
 	protected static int maxHealth;
 	
 	protected static float avgAttackDmg;

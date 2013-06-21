@@ -134,7 +134,6 @@ public class GolemRegistry {
                 return null;
             this.clearFromWorld(world,x,y,z, (pos.facing%2==1));
             T golem=this.golemClass.getConstructor(World.class).newInstance(world);
-            world.spawnEntityInWorld(golem);
             golem.setPositionAndRotation(pos.posX, pos.posY, pos.posZ, pos.facing*360f, 0);
             return golem;
         }

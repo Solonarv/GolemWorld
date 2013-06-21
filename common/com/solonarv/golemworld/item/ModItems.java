@@ -1,11 +1,10 @@
 package com.solonarv.golemworld.item;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.creativetab.CreativeTabs;
 
 import com.solonarv.golemworld.lib.ItemIDs;
-import com.solonarv.golemworld.item.ItemPaperOfAwakening;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -38,6 +37,10 @@ public class ModItems {
             "grg",
             "rpr",
             "grg", 'g',Item.redstone, 'r',Item.lightStoneDust, 'p',Item.paper});
+	    
+	}
+	
+	public static void overrideVanillaPumpkin(){
 	    
 	}
 }
