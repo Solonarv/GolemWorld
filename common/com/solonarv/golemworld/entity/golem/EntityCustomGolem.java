@@ -18,16 +18,16 @@ public class EntityCustomGolem extends net.minecraft.entity.monster.EntityIronGo
     }
     
 	public static GolemRegistration<EntityCustomGolem> recipe;
-	protected static int maxHealth;
 	//Attack damage is gaussian-random distributed, floats are ready for 1.6 decimal health
 	protected static float avgAttackDmg;
 	protected static float atkDmgStdDev;
 	
 	@Override
+	public int getMaxHealth(){
+        return 0;
+    };
+	
 	//Final methods, those are common to _all_ golems
-	public final int getMaxHealth(){
-		return maxHealth;
-	};
 	
 	public final int getAttackStrength(){
 		return MathHelper.floor_double(avgAttackDmg + this.rand.nextGaussian() * atkDmgStdDev);

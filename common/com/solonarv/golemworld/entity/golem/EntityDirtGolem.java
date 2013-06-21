@@ -6,12 +6,14 @@ public class EntityDirtGolem extends EntityCustomGolem {
 	
     public static final String name="Dirt Golem";
     
-	protected static int maxHealth;
-	
-	protected static float avgAttackDmg;
-	protected static float atkDmgStdDev;
+	protected static int maxHealth=20; // 10 hearts
 	
 	public EntityDirtGolem(World world){
 		super(world);
 	}
+	
+	@Override
+    public int getMaxHealth(){
+        return 20;
+    };
 }
