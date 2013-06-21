@@ -26,7 +26,7 @@ public class ItemPaperOfAwakening extends Item {
 	
 	}
 	
-	@Override
+	//@Override
 	public void updateIcons(IconRegister iconRegister){
 	    iconRegister.registerIcon(Reference.MOD_ID.toLowerCase() + ":16xpaperAwakening");
 	}
@@ -55,10 +55,12 @@ public class ItemPaperOfAwakening extends Item {
         } catch(Exception e){
             e.printStackTrace();
         }
-        golem.rotationYawHead=golem.rotationYaw;
-        golem.renderYawOffset=golem.rotationYaw;
-        golem.initCreature();
-        world.spawnEntityInWorld(golem);
+	    if(golem!=null){
+	        golem.rotationYawHead=golem.rotationYaw;
+	        golem.renderYawOffset=golem.rotationYaw;
+	        golem.initCreature();
+	        world.spawnEntityInWorld(golem);
+	    }
         return golem;
     }
 

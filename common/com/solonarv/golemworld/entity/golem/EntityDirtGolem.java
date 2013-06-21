@@ -16,4 +16,9 @@ public class EntityDirtGolem extends EntityCustomGolem {
     public int getMaxHealth(){
         return 20;
     };
+    
+    @Override
+    public final String getName(){
+        return "Dirt Golem";
+    }
 }
