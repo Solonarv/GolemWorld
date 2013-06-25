@@ -2,8 +2,8 @@ package com.solonarv.golemworld;
 
 import net.minecraftforge.common.Configuration;
 
+import com.solonarv.golemworld.entity.golem.EntityCustomGolem;
 import com.solonarv.golemworld.item.ModItems;
-import com.solonarv.golemworld.lib.GolemRegistry;
 import com.solonarv.golemworld.lib.Reference;
 import com.solonarv.golemworld.proxy.CommonProxy;
 
@@ -18,7 +18,6 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
-
 /**
  * Golem-World
  * 
@@ -31,30 +30,30 @@ import cpw.mods.fml.common.network.NetworkMod;
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class GolemWorld {
-	
-	@Instance(Reference.MOD_ID)
-	public static GolemWorld instance;
-	
-	@SidedProxy(clientSide=Reference.CLIENT_PROXY,serverSide=Reference.COMMON_PROXY)
-	public static CommonProxy proxy; //Will be fixed later
-	
-	public static Configuration config;
-	
-	@PreInit
+
+    @Instance(Reference.MOD_ID)
+    public static GolemWorld instance;
+
+    @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.COMMON_PROXY)
+    public static CommonProxy proxy; // Will be fixed later
+
+    public static Configuration config;
+
+    @PreInit
     public void preInit(FMLPreInitializationEvent event) {
-            config=new Configuration(event.getSuggestedConfigurationFile());
-            config.load();
+        config = new Configuration(event.getSuggestedConfigurationFile());
+        config.load();
     }
-    
+
     @Init
     public void load(FMLInitializationEvent event) {
-            proxy.registerRenderers();
-            ModItems.registerItems();
-            GolemRegistry.registerGolems();
+        proxy.registerRenderers();
+        ModItems.registerItems();
+        EntityCustomGolem.registerMe();
     }
-    
+
     @PostInit
     public void postInit(FMLPostInitializationEvent event) {
-            // TODO Stub Method
+        // TODO Stub Method
     }
 }
