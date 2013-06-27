@@ -15,3 +15,4 @@ Minecraft Mod: More Golems. Adds dozens of new golems, similar to the Iron Golem
 ### Not Yet Implemented (NYI)
  - Smart golems
  - Working textures
+ - In-game list of golems and guide
