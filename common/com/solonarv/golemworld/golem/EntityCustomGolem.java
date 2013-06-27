@@ -136,5 +136,8 @@ public class EntityCustomGolem extends EntityIronGolem {
         GolemRegistry.registerGolem(new GolemFactory(15, "Dirt Golem", 6, 1.2,
                 new ItemStack[] { new ItemStack(Block.dirt, 3) }, null),
                 Block.dirt, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(new GolemFactory(20, "Glass Golem", 10,
+                3.5, new ItemStack[] { new ItemStack(Block.glass, 3) }, null),
+                Block.glass, GolemShapes.DEFAULT);
     }
 }
