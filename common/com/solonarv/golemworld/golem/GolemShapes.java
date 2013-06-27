@@ -1,4 +1,4 @@
-package com.solonarv.golemworld.entity.golem;
+package com.solonarv.golemworld.golem;
 
 public enum GolemShapes {
     DEFAULT, PILLAR, FULL

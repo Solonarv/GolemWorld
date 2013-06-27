@@ -1,4 +1,4 @@
-package com.solonarv.golemworld.entity.golem;
+package com.solonarv.golemworld.golem;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -14,8 +14,9 @@ public class GolemFactory {
 
     protected String texture;
 
-    public GolemFactory(int maxHealth, String name, double attackDamageMean,
-            double attackDamageStdDev, ItemStack[] droppedItems, String texture) {
+    public GolemFactory(int maxHealth, String name,
+            double attackDamageMean, double attackDamageStdDev,
+            ItemStack[] droppedItems, String texture) {
         this.maxHealth = maxHealth;
         this.name = name;
         this.attackDamageMean = attackDamageMean;

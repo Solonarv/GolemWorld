@@ -6,8 +6,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import com.solonarv.golemworld.entity.golem.EntityCustomGolem;
-import com.solonarv.golemworld.entity.golem.GolemRegistry;
+import com.solonarv.golemworld.golem.EntityCustomGolem;
+import com.solonarv.golemworld.golem.GolemRegistry;
 import com.solonarv.golemworld.lib.Reference;
 
 /**

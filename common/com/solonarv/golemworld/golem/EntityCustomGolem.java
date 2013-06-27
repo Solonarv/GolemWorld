@@ -1,10 +1,13 @@
-package com.solonarv.golemworld.entity.golem;
+package com.solonarv.golemworld.golem;
+
+import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -20,12 +23,17 @@ public class EntityCustomGolem extends EntityIronGolem {
 
     protected double attackDamageMean, attackDamageStdDev;
 
-    protected ItemStack[] droppedItems = new ItemStack[16];
+    protected ItemStack[] droppedItems;
 
     protected String texture;
 
     // Make private attackTimer from superclass visible
     protected int attackTimer;
+
+    public EntityCustomGolem(World world) {
+        this(world, 15, "Dirt Golem", 6, 1.2, new ItemStack[] { new ItemStack(
+                Block.dirt, 3) });
+    }
 
     public EntityCustomGolem(World world, int maxHealth, String name,
             double attackDamageMean, double attackDamageStdDev,
@@ -42,13 +50,50 @@ public class EntityCustomGolem extends EntityIronGolem {
     }
 
     @Override
+    public void writeEntityToNBT(NBTTagCompound nbt) {
+        super.writeEntityToNBT(nbt);
+        // Write fields to NBT
+        nbt.setByte("maxhealth", (byte) maxHealth);
+        nbt.setString("name", name);
+        nbt.setDouble("atkdmgMean", attackDamageMean);
+        nbt.setDouble("atkdmgStdDev", attackDamageStdDev);
+        // Advanced NBT hackery to shove my ItemStack[] into an NBTTagCompound
+        NBTTagCompound dropped = new NBTTagCompound();
+        for (int i = 0; i < droppedItems.length; i++) {
+            dropped.setCompoundTag(String.valueOf(i),
+                    droppedItems[i].writeToNBT(new NBTTagCompound()));
+        }
+        nbt.setCompoundTag("dropped", dropped);
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound nbt) {
+        super.writeEntityToNBT(nbt);
+        maxHealth = nbt.getByte("maxhealth");
+        name = nbt.getString("name");
+        attackDamageMean = nbt.getDouble("atkdmgMean");
+        attackDamageStdDev = nbt.getDouble("atkdmgStdDev");
+        NBTTagCompound dropped = nbt.getCompoundTag("dropped");
+        ArrayList<ItemStack> droppedStacks = new ArrayList<ItemStack>();
+        int i = 0;
+        while (true) {
+            NBTTagCompound temp = dropped.getCompoundTag(String.valueOf(i++));
+            if (temp.hasNoTags()) {
+                break;
+            }
+            droppedStacks.add(ItemStack.loadItemStackFromNBT(temp));
+        }
+        droppedItems = droppedStacks
+                .toArray(new ItemStack[droppedStacks.size()]);
+    }
+
+    @Override
     public int getMaxHealth() {
         return maxHealth == 0 ? 10 : maxHealth;
     };
 
-    // Final methods, those are common to _all_ golems
     @Override
-    public final boolean attackEntityAsMob(Entity par1Entity) {
+    public boolean attackEntityAsMob(Entity par1Entity) {
         attackTimer = 10;
         worldObj.setEntityState(this, (byte) 4);
         int dmg = getAttackStrength();
@@ -83,9 +128,11 @@ public class EntityCustomGolem extends EntityIronGolem {
         return name;
     }
 
-    public static void registerMe() {
+    public static final void registerMe() { // makes as much sense here as
+                                            // anywhere else
         EntityRegistry.registerModEntity(EntityCustomGolem.class,
                 "Custom Golem", 1, GolemWorld.instance, 15, 1, true);
+        // Register all OUR golems with the golemRegistry
         GolemRegistry.registerGolem(new GolemFactory(15, "Dirt Golem", 6, 1.2,
                 new ItemStack[] { new ItemStack(Block.dirt, 3) }, null),
                 Block.dirt, GolemShapes.DEFAULT);

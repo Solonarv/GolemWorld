@@ -1,12 +1,11 @@
-package com.solonarv.golemworld.entity.golem;
+package com.solonarv.golemworld.golem;
 
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import com.solonarv.golemworld.entity.golem.GolemRegistration.BlockWithMeta;
+import com.solonarv.golemworld.util.BlockWithMeta;
 
 /**
  * 
@@ -47,9 +46,9 @@ public class GolemRegistry {
         }
     }
 
-    public static GolemFactory findMatch(IBlockAccess world, int x, int y, int z) {
+    public static GolemFactory findMatch(World world, int x, int y, int z) {
         for (GolemRegistration gr : entries) {
-            if (gr.checkAt(world, x, y, z)) {
+            if (gr.checkAt(world, x, y, z, true)) {
                 return gr.factory;
             }
         }

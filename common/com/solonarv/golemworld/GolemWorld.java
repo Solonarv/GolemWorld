@@ -2,7 +2,7 @@ package com.solonarv.golemworld;
 
 import net.minecraftforge.common.Configuration;
 
-import com.solonarv.golemworld.entity.golem.EntityCustomGolem;
+import com.solonarv.golemworld.golem.EntityCustomGolem;
 import com.solonarv.golemworld.item.ModItems;
 import com.solonarv.golemworld.lib.Reference;
 import com.solonarv.golemworld.proxy.CommonProxy;
