@@ -12,10 +12,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-import com.solonarv.golemworld.GolemWorld;
-
-import cpw.mods.fml.common.registry.EntityRegistry;
-
 public class EntityCustomGolem extends EntityIronGolem {
 
     protected int maxHealth;
@@ -126,18 +122,5 @@ public class EntityCustomGolem extends EntityIronGolem {
 
     public String getName() {
         return name;
-    }
-
-    public static final void registerMe() { // makes as much sense here as
-                                            // anywhere else
-        EntityRegistry.registerModEntity(EntityCustomGolem.class,
-                "Custom Golem", 1, GolemWorld.instance, 15, 1, true);
-        // Register all OUR golems with the golemRegistry
-        GolemRegistry.registerGolem(new GolemFactory(15, "Dirt Golem", 6, 1.2,
-                new ItemStack[] { new ItemStack(Block.dirt, 3) }, null),
-                Block.dirt, GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(new GolemFactory(20, "Glass Golem", 10,
-                3.5, new ItemStack[] { new ItemStack(Block.glass, 3) }, null),
-                Block.glass, GolemShapes.DEFAULT);
     }
 }
