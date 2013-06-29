@@ -1,4 +1,4 @@
-package com.solonarv.golemworld.golem;
+package com.solonarv.mods.golemworld.golem;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

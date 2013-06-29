@@ -1,4 +1,4 @@
-package com.solonarv.golemworld.golem;
+package com.solonarv.mods.golemworld.golem;
 
 import java.util.ArrayList;
 

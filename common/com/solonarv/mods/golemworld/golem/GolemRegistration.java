@@ -1,10 +1,10 @@
-package com.solonarv.golemworld.golem;
+package com.solonarv.mods.golemworld.golem;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
-import com.solonarv.golemworld.util.BlockWithMeta;
-import com.solonarv.golemworld.util.TransactionDeleteBlocks;
+import com.solonarv.mods.golemworld.util.BlockWithMeta;
+import com.solonarv.mods.golemworld.util.TransactionDeleteBlocks;
 
 /**
  * A single entry in the golem registry

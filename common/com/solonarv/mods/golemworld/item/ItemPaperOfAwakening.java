@@ -1,4 +1,4 @@
-package com.solonarv.golemworld.item;
+package com.solonarv.mods.golemworld.item;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -6,9 +6,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import com.solonarv.golemworld.golem.EntityCustomGolem;
-import com.solonarv.golemworld.golem.GolemRegistry;
-import com.solonarv.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
+import com.solonarv.mods.golemworld.golem.GolemRegistry;
+import com.solonarv.mods.golemworld.lib.Reference;
 
 /**
  * Golem-World

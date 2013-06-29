@@ -1,6 +1,6 @@
-package com.solonarv.golemworld.lib;
+package com.solonarv.mods.golemworld.lib;
 
-import com.solonarv.golemworld.GolemWorld;
+import com.solonarv.mods.golemworld.GolemWorld;
 
 public class ItemIDs {
     

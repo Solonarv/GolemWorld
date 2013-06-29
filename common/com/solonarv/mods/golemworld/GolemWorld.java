@@ -1,11 +1,15 @@
-package com.solonarv.golemworld;
+package com.solonarv.mods.golemworld;
 
+import net.minecraft.entity.monster.EntityIronGolem;
+import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 
-import com.solonarv.golemworld.golem.GolemRegistry;
-import com.solonarv.golemworld.item.ModItems;
-import com.solonarv.golemworld.lib.Reference;
-import com.solonarv.golemworld.proxy.CommonProxy;
+import com.solonarv.mods.golemworld.golem.GolemRegistry;
+import com.solonarv.mods.golemworld.item.ModItems;
+import com.solonarv.mods.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.proxy.CommonProxy;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -55,5 +59,20 @@ public class GolemWorld {
     @PostInit
     public void postInit(FMLPostInitializationEvent event) {
         // TODO Stub Method
+    }
+
+    @ForgeSubscribe
+    public void onEntityJoinWorld(EntityJoinWorldEvent e) {
+        if (EntityIronGolem.class.isInstance(e.entity)) {
+            EntityIronGolem theGolem = (EntityIronGolem) e.entity;
+            if (theGolem.isPlayerCreated()) {
+                int x, y, z;
+                x = MathHelper.floor_double(theGolem.posX);
+                y = MathHelper.floor_double(theGolem.posY);
+                z = MathHelper.floor_double(theGolem.posZ);
+                e.world.removeEntity(theGolem);
+                GolemRegistry.spawnRandomGolem(e.world, x, y, z);
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.solonarv.golemworld.inventory;
+package com.solonarv.mods.golemworld.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

@@ -1,10 +1,10 @@
-package com.solonarv.golemworld.item;
+package com.solonarv.mods.golemworld.item;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import com.solonarv.golemworld.lib.ItemIDs;
+import com.solonarv.mods.golemworld.lib.ItemIDs;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;

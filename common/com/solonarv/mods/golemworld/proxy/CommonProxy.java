@@ -1,4 +1,4 @@
-package com.solonarv.golemworld.proxy;
+package com.solonarv.mods.golemworld.proxy;
 
 public class CommonProxy {
     public void registerRenderers(){};

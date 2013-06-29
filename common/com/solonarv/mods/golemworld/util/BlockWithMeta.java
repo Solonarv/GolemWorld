@@ -1,4 +1,4 @@
-package com.solonarv.golemworld.util;
+package com.solonarv.mods.golemworld.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
