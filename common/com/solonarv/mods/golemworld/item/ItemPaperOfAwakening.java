@@ -28,7 +28,7 @@ public class ItemPaperOfAwakening extends Item {
 
     // @Override
     public void updateIcons(IconRegister iconRegister) {
-        iconRegister.registerIcon(Reference.MOD_ID.toLowerCase()
+        itemIcon = iconRegister.registerIcon(Reference.MOD_ID.toLowerCase()
                 + ":16xpaperAwakening");
     }
 
@@ -55,7 +55,7 @@ public class ItemPaperOfAwakening extends Item {
     }
 
     public String getTextureFile() {
-        return Reference.ITEM_TEXTURES + "/16xpaperAwakening.png";
+        return Reference.itemTexture("16xpaperAwakening");
     }
 
 }

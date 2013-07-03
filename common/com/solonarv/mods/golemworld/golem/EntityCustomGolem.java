@@ -12,9 +12,12 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import com.solonarv.mods.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.util.StringHelper;
+
 public class EntityCustomGolem extends EntityIronGolem {
 
-    protected int maxHealth;
+    protected int maxHealth = 0;
     protected String name;
 
     protected double attackDamageMean, attackDamageStdDev;
@@ -28,15 +31,26 @@ public class EntityCustomGolem extends EntityIronGolem {
 
     public EntityCustomGolem(World world) {
         this(world, 15, "Dirt Golem", 6, 1.2, new ItemStack[] { new ItemStack(
-                Block.dirt, 3) });
+                Block.dirt, 3) }, Reference.mobTexture("dirt_golem"));
+        System.out.println("Default constructor: (World) called");
     }
 
     public EntityCustomGolem(World world, int maxHealth, String name,
             double attackDamageMean, double attackDamageStdDev,
-            ItemStack[] droppedItems) {
+            ItemStack[] droppedItems, String texture) {
         super(world);
+        System.out.printf("Extended constructor called with args:\n"
+                + " - World world               = %s\n"
+                + " - int maxHealth             = %d\n"
+                + " - String name               = %s\n"
+                + " - double attackDamageMean   = %.2f\n"
+                + " - double attackDamageStdDev = %.2f\n"
+                + " - ItemStack[] droppedItems  = %s\n"
+                + " - String texture            = %s\n", world.toString(),
+                maxHealth, name, attackDamageMean, attackDamageStdDev,
+                StringHelper.stringify(droppedItems), texture);
         func_94058_c(name); // Displayed Nametag
-        texture = texture == null ? "/mob/villager_golem.png" : texture;
+        this.texture = texture == null ? "/mob/villager_golem.png" : texture;
 
         this.maxHealth = maxHealth;
         this.name = name;
@@ -48,6 +62,8 @@ public class EntityCustomGolem extends EntityIronGolem {
     @Override
     public void writeEntityToNBT(NBTTagCompound nbt) {
         super.writeEntityToNBT(nbt);
+        System.out.println(getClass().toString()
+                + ".writeEntityToNBT called with arg " + nbt.toString());
         // Write fields to NBT
         nbt.setByte("maxhealth", (byte) maxHealth);
         nbt.setString("name", name);
@@ -64,7 +80,9 @@ public class EntityCustomGolem extends EntityIronGolem {
 
     @Override
     public void readEntityFromNBT(NBTTagCompound nbt) {
-        super.writeEntityToNBT(nbt);
+        super.readEntityFromNBT(nbt);
+        System.out.println(getClass().toString()
+                + ".readEntityFromNBT called with arg " + nbt.toString());
         maxHealth = nbt.getByte("maxhealth");
         name = nbt.getString("name");
         attackDamageMean = nbt.getDouble("atkdmgMean");
@@ -85,7 +103,10 @@ public class EntityCustomGolem extends EntityIronGolem {
 
     @Override
     public int getMaxHealth() {
-        return maxHealth == 0 ? 10 : maxHealth;
+        int result = maxHealth == 0 ? 10 : maxHealth;
+        System.out.println(getClass().toString()
+                + ".getMaxHealth called: returning " + String.valueOf(result));
+        return result;
     };
 
     @Override
@@ -123,4 +144,12 @@ public class EntityCustomGolem extends EntityIronGolem {
     public String getName() {
         return name;
     }
+
+    @Override
+    public void dropFewItems(boolean recentlyHit, int lootingLevel) {
+        for (ItemStack is : droppedItems) {
+            entityDropItem(is, 0F);
+        }
+    }
+
 }

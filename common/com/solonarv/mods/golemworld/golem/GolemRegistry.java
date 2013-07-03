@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.solonarv.mods.golemworld.GolemWorld;
+import com.solonarv.mods.golemworld.lib.Reference;
 import com.solonarv.mods.golemworld.util.BlockWithMeta;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -96,9 +97,11 @@ public class GolemRegistry {
                 1.5, new ItemStack[] { new ItemStack(Item.ingotIron, 5),
                         new ItemStack(Block.plantRed, 1) }, null),
                 Block.blockIron, GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(new GolemFactory(15, "Dirt Golem", 6, 1.2,
-                new ItemStack[] { new ItemStack(Block.dirt, 3) }, null),
-                Block.dirt, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(
+                new GolemFactory(15, "Dirt Golem", 6, 1.2,
+                        new ItemStack[] { new ItemStack(Block.dirt, 3) },
+                        Reference.mobTexture("dirt_golem")), Block.dirt,
+                GolemShapes.DEFAULT);
         GolemRegistry.registerGolem(new GolemFactory(60, "Sandstone Golem", 10,
                 1, new ItemStack[] { new ItemStack(Block.sand, 4) }, null),
                 Block.sandStone, GolemShapes.DEFAULT);

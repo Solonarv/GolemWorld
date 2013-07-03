@@ -1,6 +1,8 @@
 package com.solonarv.mods.golemworld;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.monster.EntityIronGolem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.event.ForgeSubscribe;
@@ -39,7 +41,7 @@ public class GolemWorld {
     public static GolemWorld instance;
 
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.COMMON_PROXY)
-    public static CommonProxy proxy; // Will be fixed later
+    public static CommonProxy proxy;
 
     public static Configuration config;
 
@@ -61,17 +63,39 @@ public class GolemWorld {
         // TODO Stub Method
     }
 
+    /**
+     * Listens to an {@link EntityJoinWorldEvent} and responds depending on the
+     * type of entity that spawned. This code effectively disables the vanilla
+     * iron golem by replacing it with one of our golems if it spawns naturally,
+     * i.e. in a village, or dropping the blocks used to build it if it was
+     * built manually. Configurable.
+     * 
+     * @param e
+     *            the {@link EntityJoinWorldEvent}
+     */
     @ForgeSubscribe
     public void onEntityJoinWorld(EntityJoinWorldEvent e) {
+        // This code effectively disables the vanilla iron golem by replacing it
+        // with one of our golems if it spawns naturally, i.e. in a village, or
+        // dropping the blocks used to build it if it was built manually.
+        // Configurable.
         if (EntityIronGolem.class.isInstance(e.entity)) {
             EntityIronGolem theGolem = (EntityIronGolem) e.entity;
-            if (theGolem.isPlayerCreated()) {
-                int x, y, z;
-                x = MathHelper.floor_double(theGolem.posX);
-                y = MathHelper.floor_double(theGolem.posY);
-                z = MathHelper.floor_double(theGolem.posZ);
-                e.world.removeEntity(theGolem);
-                GolemRegistry.spawnRandomGolem(e.world, x, y, z);
+            if (!theGolem.isPlayerCreated()) {
+                if (config.get("Vanilla", "replaceVillageSpawns", true)
+                        .getBoolean(true)) {
+                    int x, y, z;
+                    x = MathHelper.floor_double(theGolem.posX);
+                    y = MathHelper.floor_double(theGolem.posY);
+                    z = MathHelper.floor_double(theGolem.posZ);
+                    e.world.removeEntity(theGolem);
+                    GolemRegistry.spawnRandomGolem(e.world, x, y, z);
+                }
+            } else if (config.get("Vanilla", "deleteConstructedGolems", false)
+                    .getBoolean(false)) {
+                theGolem.entityDropItem(new ItemStack(Block.blockIron, 3), 0F);
+                theGolem.entityDropItem(new ItemStack(Block.pumpkin), 0F);
+                theGolem.setDead();
             }
         }
     }

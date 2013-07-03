@@ -14,9 +14,8 @@ public class GolemFactory {
 
     protected String texture;
 
-    public GolemFactory(int maxHealth, String name,
-            double attackDamageMean, double attackDamageStdDev,
-            ItemStack[] droppedItems, String texture) {
+    public GolemFactory(int maxHealth, String name, double attackDamageMean,
+            double attackDamageStdDev, ItemStack[] droppedItems, String texture) {
         this.maxHealth = maxHealth;
         this.name = name;
         this.attackDamageMean = attackDamageMean;
@@ -27,7 +26,7 @@ public class GolemFactory {
 
     public EntityCustomGolem make(World world, int x, int y, int z) {
         EntityCustomGolem g = new EntityCustomGolem(world, maxHealth, name,
-                attackDamageMean, attackDamageStdDev, droppedItems);
+                attackDamageMean, attackDamageStdDev, droppedItems, texture);
         g.rotationYawHead = g.rotationYaw;
         g.renderYawOffset = g.rotationYaw;
         g.initCreature();

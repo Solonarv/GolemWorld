@@ -21,11 +21,18 @@ public class GolemRegistration {
             BlockWithMeta lowerBody, BlockWithMeta shoulders,
             BlockWithMeta arms, BlockWithMeta legs) {
         this.factory = factory;
-        this.upperBody = upperBody;
-        this.lowerBody = lowerBody;
-        this.shoulders = shoulders;
-        this.arms = arms;
-        this.legs = legs;
+        this.upperBody = upperBody != null ? upperBody
+                : new BlockWithMeta(null);
+        this.lowerBody = lowerBody != null ? lowerBody
+                : new BlockWithMeta(null);
+        ;
+        this.shoulders = shoulders != null ? shoulders
+                : new BlockWithMeta(null);
+        ;
+        this.arms = arms != null ? arms : new BlockWithMeta(null);
+        ;
+        this.legs = legs != null ? legs : new BlockWithMeta(null);
+        ;
     }
 
     public GolemRegistration(GolemFactory factory, Block upperBody,
