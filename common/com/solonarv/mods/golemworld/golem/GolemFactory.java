@@ -1,37 +1,43 @@
 package com.solonarv.mods.golemworld.golem;
 
-import net.minecraft.item.ItemStack;
+import java.lang.reflect.Method;
+
 import net.minecraft.world.World;
 
 public class GolemFactory {
 
-    protected int maxHealth;
-    protected String name;
+    protected Class<? extends EntityCustomGolem> golemClass;
+    public final boolean smart;
 
-    protected double attackDamageMean, attackDamageStdDev;
-
-    protected ItemStack[] droppedItems = new ItemStack[16];
-
-    protected String texture;
-
-    public GolemFactory(int maxHealth, String name, double attackDamageMean,
-            double attackDamageStdDev, ItemStack[] droppedItems, String texture) {
-        this.maxHealth = maxHealth;
-        this.name = name;
-        this.attackDamageMean = attackDamageMean;
-        this.attackDamageStdDev = attackDamageStdDev;
-        this.droppedItems = droppedItems;
-        this.texture = texture;
+    public GolemFactory(Class<? extends EntityCustomGolem> golemClass) {
+        this.golemClass = golemClass;
+        boolean tmp = false;
+        try {
+            Method isSmart = golemClass.getMethod("isSmart", new Class[] {});
+            if (isSmart != null) {
+                tmp = (Boolean) isSmart.invoke(null);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            smart = tmp;
+        }
     }
 
     public EntityCustomGolem make(World world, int x, int y, int z) {
-        EntityCustomGolem g = new EntityCustomGolem(world, maxHealth, name,
-                attackDamageMean, attackDamageStdDev, droppedItems, texture);
-        g.rotationYawHead = g.rotationYaw;
-        g.renderYawOffset = g.rotationYaw;
-        g.initCreature();
-        g.setPosition(x, y, z);
-        world.spawnEntityInWorld(g);
+        EntityCustomGolem g = null;
+        try {
+            g = golemClass.getConstructor(World.class).newInstance(world);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        if (g != null) {
+            g.rotationYawHead = g.rotationYaw;
+            g.renderYawOffset = g.rotationYaw;
+            g.initCreature();
+            g.setPosition(x, y, z);
+            world.spawnEntityInWorld(g);
+        }
         return g;
     }
 

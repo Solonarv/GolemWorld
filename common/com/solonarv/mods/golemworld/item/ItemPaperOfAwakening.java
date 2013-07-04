@@ -32,6 +32,7 @@ public class ItemPaperOfAwakening extends Item {
                 + ":16xpaperAwakening");
     }
 
+    @SuppressWarnings("static-access")
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer entityPlayer,
             World world, int x, int y, int z, int sideHit, float hitVecX,

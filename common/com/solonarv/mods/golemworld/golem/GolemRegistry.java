@@ -4,12 +4,20 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.solonarv.mods.golemworld.GolemWorld;
-import com.solonarv.mods.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.golem.simple.EntityClayGolem;
+import com.solonarv.mods.golemworld.golem.simple.EntityDiamondGolem;
+import com.solonarv.mods.golemworld.golem.simple.EntityDirtGolem;
+import com.solonarv.mods.golemworld.golem.simple.EntityEmeraldGolem;
+import com.solonarv.mods.golemworld.golem.simple.EntityGlassGolem;
+import com.solonarv.mods.golemworld.golem.simple.EntityGoldGolem;
+import com.solonarv.mods.golemworld.golem.simple.EntityIronGolem;
+import com.solonarv.mods.golemworld.golem.simple.EntityLapisGolem;
+import com.solonarv.mods.golemworld.golem.simple.EntityObsidianGolem;
+import com.solonarv.mods.golemworld.golem.simple.EntitySandstoneGolem;
+import com.solonarv.mods.golemworld.golem.simple.EntityStoneGolem;
 import com.solonarv.mods.golemworld.util.BlockWithMeta;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -93,42 +101,29 @@ public class GolemRegistry {
                 "Custom Golem", 1, GolemWorld.instance, 15, 1, true);
 
         // Register all OUR golems with the golemRegistry
-        GolemRegistry.registerGolem(new GolemFactory(100, "Iron Golem", 14.5,
-                1.5, new ItemStack[] { new ItemStack(Item.ingotIron, 5),
-                        new ItemStack(Block.plantRed, 1) }, null),
+        GolemRegistry.registerGolem(new GolemFactory(EntityIronGolem.class),
                 Block.blockIron, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(new GolemFactory(EntityDirtGolem.class),
+                Block.dirt, GolemShapes.DEFAULT);
         GolemRegistry.registerGolem(
-                new GolemFactory(15, "Dirt Golem", 6, 1.2,
-                        new ItemStack[] { new ItemStack(Block.dirt, 3) },
-                        Reference.mobTexture("dirt_golem")), Block.dirt,
+                new GolemFactory(EntitySandstoneGolem.class), Block.sandStone,
                 GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(new GolemFactory(60, "Sandstone Golem", 10,
-                1, new ItemStack[] { new ItemStack(Block.sand, 4) }, null),
-                Block.sandStone, GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(new GolemFactory(110, "Stone Golem", 12, 1,
-                new ItemStack[] { new ItemStack(Block.cobblestone, 2) }, null),
+        GolemRegistry.registerGolem(new GolemFactory(EntityStoneGolem.class),
                 Block.stone, GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(new GolemFactory(110, "Clay Golem", 8, 2.3,
-                new ItemStack[] { new ItemStack(Item.clay, 5) }, null),
+        GolemRegistry.registerGolem(new GolemFactory(EntityClayGolem.class),
                 Block.blockClay, GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(new GolemFactory(100, "Emerald Golem", 16,
-                0, new ItemStack[] { new ItemStack(Item.emerald, 2) }, null),
+        GolemRegistry.registerGolem(new GolemFactory(EntityEmeraldGolem.class),
                 Block.blockEmerald, GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(new GolemFactory(70, "Gold Golem", 16, 1,
-                new ItemStack[] { new ItemStack(Item.ingotGold, 2) }, null),
+        GolemRegistry.registerGolem(new GolemFactory(EntityGoldGolem.class),
                 Block.blockGold, GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(new GolemFactory(80, "Lapis Golem", 12,
-                2.6, new ItemStack[] { new ItemStack(Item.dyePowder, 5, 4) },
-                null), Block.blockLapis, GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(new GolemFactory(20, "Glass Golem", 10,
-                3.5, new ItemStack[] { new ItemStack(Block.glass, 3) }, null),
+        GolemRegistry.registerGolem(new GolemFactory(EntityLapisGolem.class),
+                Block.blockLapis, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(new GolemFactory(EntityGlassGolem.class),
                 Block.glass, GolemShapes.DEFAULT);
         GolemRegistry.registerGolem(
-                new GolemFactory(150, "Obsidian Golem", 10, .3,
-                        new ItemStack[] { new ItemStack(Block.obsidian, 2) },
-                        null), Block.obsidian, GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(new GolemFactory(80, "Diamond Golem", 18,
-                .8, new ItemStack[] { new ItemStack(Item.diamond, 2) }, null),
+                new GolemFactory(EntityObsidianGolem.class), Block.obsidian,
+                GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(new GolemFactory(EntityDiamondGolem.class),
                 Block.blockDiamond, GolemShapes.DEFAULT);
     }
 }
