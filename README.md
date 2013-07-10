@@ -11,3 +11,4 @@ More Golems. Adds dozens of new golems, similar to the Iron Golem.
  - Smart golems
  - Working textures
  - In-game list of golems and guide
+ - differing max helath (changed in 1.6)
