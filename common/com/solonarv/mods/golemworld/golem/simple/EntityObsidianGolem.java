@@ -18,9 +18,10 @@ public class EntityObsidianGolem extends EntitySimpleGolem {
         stats.droppedItems(new ItemStack(Block.obsidian, 2));
     }
 
+
     @Override
-    public int getMaxHealth() {
-        return stats.maxHealth;
+    public GolemStats stats() {
+        return stats;
     }
 
     public EntityObsidianGolem(World world) {

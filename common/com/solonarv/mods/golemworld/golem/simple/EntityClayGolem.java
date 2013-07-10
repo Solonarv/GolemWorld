@@ -18,12 +18,12 @@ public class EntityClayGolem extends EntitySimpleGolem {
         stats.droppedItems(new ItemStack(Item.clay, 5));
     }
 
-    @Override
-    public int getMaxHealth() {
-        return stats.maxHealth;
-    }
-
     public EntityClayGolem(World world) {
         super(world);
+    }
+
+    @Override
+    public GolemStats stats() {
+        return stats;
     }
 }

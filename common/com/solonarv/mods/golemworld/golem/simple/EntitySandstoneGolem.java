@@ -19,9 +19,10 @@ public class EntitySandstoneGolem extends EntitySimpleGolem {
         stats.droppedItems(new ItemStack(Block.sand, 4));
     }
 
+
     @Override
-    public int getMaxHealth() {
-        return stats.maxHealth;
+    public GolemStats stats() {
+        return stats;
     }
 
     public EntitySandstoneGolem(World world) {

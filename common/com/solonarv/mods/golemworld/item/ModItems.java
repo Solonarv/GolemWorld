@@ -9,7 +9,6 @@ import com.solonarv.mods.golemworld.lib.ItemIDs;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-
 /**
  * Golem-World
  * 
@@ -20,27 +19,23 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
  * 
  */
 public class ModItems {
-	
-	public static Item paperAwaken=new ItemPaperOfAwakening(ItemIDs.PAPER_OF_AWAKENING)
-	    .setMaxStackSize(64)
-		.setCreativeTab(CreativeTabs.tabMisc)
-		.setUnlocalizedName("paperOfAwakening");
-	
-	public static void registerItems(){
-	    LanguageRegistry.addName(paperAwaken, "Paper of Awakening");
-	    
-	    GameRegistry.addRecipe(new ItemStack(paperAwaken), new Object[] {
-	        "grg",
-	        "rpr",
-	        "grg", 'g',Item.lightStoneDust, 'r',Item.redstone, 'p',Item.paper});
-	    GameRegistry.addRecipe(new ItemStack(paperAwaken), new Object[] {
-            "grg",
-            "rpr",
-            "grg", 'g',Item.redstone, 'r',Item.lightStoneDust, 'p',Item.paper});
-	    
-	}
-	
-	public static void overrideVanillaPumpkin(){
-	    
-	}
+    
+    public static Item paperAwaken = new ItemPaperOfAwakening(
+                                           ItemIDs.PAPER_OF_AWAKENING)
+                                           .setMaxStackSize(64)
+                                           .setCreativeTab(CreativeTabs.tabMisc)
+                                           .setUnlocalizedName(
+                                                   "paperOfAwakening");
+    
+    public static void registerItems() {
+        LanguageRegistry.addName(paperAwaken, "Paper of Awakening");
+        
+        GameRegistry.addRecipe(new ItemStack(paperAwaken), new Object[] {
+                "grg", "rpr", "grg", 'g', Item.glowstone, 'r', Item.redstone,
+                'p', Item.paper });
+        GameRegistry.addRecipe(new ItemStack(paperAwaken), new Object[] {
+                "grg", "rpr", "grg", 'g', Item.redstone, 'r', Item.glowstone,
+                'p', Item.paper });
+        
+    }
 }

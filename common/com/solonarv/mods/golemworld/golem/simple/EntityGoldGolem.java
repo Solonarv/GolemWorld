@@ -18,9 +18,10 @@ public class EntityGoldGolem extends EntitySimpleGolem {
         stats.droppedItems(new ItemStack(Item.ingotGold, 2));
     }
 
+
     @Override
-    public int getMaxHealth() {
-        return stats.maxHealth;
+    public GolemStats stats() {
+        return stats;
     }
 
     public EntityGoldGolem(World world) {

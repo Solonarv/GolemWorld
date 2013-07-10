@@ -19,8 +19,8 @@ public class EntityGlassGolem extends EntitySimpleGolem {
     }
 
     @Override
-    public int getMaxHealth() {
-        return stats.maxHealth;
+    public GolemStats stats() {
+        return stats;
     }
 
     public EntityGlassGolem(World world) {

@@ -21,8 +21,8 @@ public class EntityDirtGolem extends EntitySimpleGolem {
     }
 
     @Override
-    public int getMaxHealth() {
-        return stats.maxHealth;
+    public GolemStats stats() {
+        return stats;
     }
 
     public EntityDirtGolem(World world) {

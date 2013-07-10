@@ -49,12 +49,12 @@ public class GolemWorld {
     public void preInit(FMLPreInitializationEvent event) {
         config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
+        ModItems.registerItems();
     }
 
     @Init
     public void load(FMLInitializationEvent event) {
         proxy.registerRenderers();
-        ModItems.registerItems();
         GolemRegistry.registerGolems();
     }
 

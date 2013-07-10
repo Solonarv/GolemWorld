@@ -21,9 +21,11 @@ public class EntityIronGolem extends EntitySimpleGolem {
                 Block.plantRed, 1));
     }
 
+
+
     @Override
-    public int getMaxHealth() {
-        return stats.maxHealth;
+    public GolemStats stats() {
+        return stats;
     }
 
     public EntityIronGolem(World world) {

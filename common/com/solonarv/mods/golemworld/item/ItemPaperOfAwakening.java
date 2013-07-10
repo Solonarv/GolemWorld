@@ -1,6 +1,5 @@
 package com.solonarv.mods.golemworld.item;
 
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,13 +25,6 @@ public class ItemPaperOfAwakening extends Item {
 
     }
 
-    // @Override
-    public void updateIcons(IconRegister iconRegister) {
-        itemIcon = iconRegister.registerIcon(Reference.MOD_ID.toLowerCase()
-                + ":16xpaperAwakening");
-    }
-
-    @SuppressWarnings("static-access")
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer entityPlayer,
             World world, int x, int y, int z, int sideHit, float hitVecX,
@@ -54,9 +46,4 @@ public class ItemPaperOfAwakening extends Item {
         }
         return g != null;
     }
-
-    public String getTextureFile() {
-        return Reference.itemTexture("16xpaperAwakening");
-    }
-
 }

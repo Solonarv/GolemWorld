@@ -24,10 +24,10 @@ public class Reference {
     public final static String COMMON_PROXY = "com.solonarv.mods.golemworld.proxy.CommonProxy";
 
     public final static String mobTexture(String textureName) {
-        return MOD_ID + "/textures/mob/" + textureName + ".png";
+        return "mods/" + MOD_ID + "/textures/mob/" + textureName + ".png";
     }
 
     public final static String itemTexture(String textureName) {
-        return MOD_ID + "/textures/item/" + textureName + ".png";
+        return MOD_ID + ":" + textureName;
     }
 }

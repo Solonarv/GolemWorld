@@ -15,12 +15,13 @@ import com.solonarv.mods.golemworld.util.TransactionDeleteBlocks;
 public class GolemRegistration {
 
     BlockWithMeta upperBody, lowerBody, shoulders, arms, legs;
-    GolemFactory factory;
+    protected Class<? extends EntityCustomGolem> golemClass;
+    public final boolean smart;
 
-    public GolemRegistration(GolemFactory factory, BlockWithMeta upperBody,
-            BlockWithMeta lowerBody, BlockWithMeta shoulders,
-            BlockWithMeta arms, BlockWithMeta legs) {
-        this.factory = factory;
+    public GolemRegistration(Class<? extends EntityCustomGolem> golemClass,
+            BlockWithMeta upperBody, BlockWithMeta lowerBody,
+            BlockWithMeta shoulders, BlockWithMeta arms, BlockWithMeta legs) {
+        this.golemClass = golemClass;
         this.upperBody = upperBody != null ? upperBody
                 : new BlockWithMeta(null);
         this.lowerBody = lowerBody != null ? lowerBody
@@ -33,20 +34,29 @@ public class GolemRegistration {
         ;
         this.legs = legs != null ? legs : new BlockWithMeta(null);
         ;
+        boolean temp = false;
+        try {
+            temp = (Boolean) golemClass.getMethod("isSmart").invoke(null);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            smart = temp;
+        }
     }
 
-    public GolemRegistration(GolemFactory factory, Block upperBody,
-            Block lowerBody, Block shoulders, Block arms, Block legs) {
-        this(factory, new BlockWithMeta(upperBody),
-                new BlockWithMeta(lowerBody), new BlockWithMeta(shoulders),
-                new BlockWithMeta(arms), new BlockWithMeta(legs));
+    public GolemRegistration(Class<? extends EntityCustomGolem> golemClass,
+            Block upperBody, Block lowerBody, Block shoulders, Block arms,
+            Block legs) {
+        this(golemClass, new BlockWithMeta(upperBody), new BlockWithMeta(
+                lowerBody), new BlockWithMeta(shoulders), new BlockWithMeta(
+                arms), new BlockWithMeta(legs));
     }
 
     public boolean checkAt(World world, int x, int y, int z, boolean clearShape) {
         int headID = world.getBlockId(x, y, z);
         TransactionDeleteBlocks remove = clearShape ? new TransactionDeleteBlocks()
                 : null;
-        if (headID == Block.pumpkinLantern.blockID || !factory.isSmart()
+        if (headID == Block.pumpkinLantern.blockID || !smart
                 && headID == Block.pumpkin.blockID) {
             if (upperBody.isAt(world, x, y - 1, z, remove)
                     && lowerBody.isAt(world, x, y - 2, z, remove)) {
@@ -83,5 +93,20 @@ public class GolemRegistration {
             }
         }
         return false;
+    }
+
+    public EntityCustomGolem spawn(World world, int x, int y, int z) {
+        EntityCustomGolem theGolem = null;
+        try {
+            theGolem = golemClass.getConstructor(World.class)
+                    .newInstance(world);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        if (theGolem != null) {
+            theGolem.setLocationAndAngles(x + .5d, y - 2, z + .5d, 0, 0);
+            world.spawnEntityInWorld(theGolem);
+        }
+        return theGolem;
     }
 }
