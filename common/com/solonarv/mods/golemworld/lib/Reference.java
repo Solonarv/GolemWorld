@@ -1,7 +1,5 @@
 package com.solonarv.mods.golemworld.lib;
 
-import net.minecraft.util.ResourceLocation;
-
 /**
  * Golem-World
  * 
@@ -25,7 +23,7 @@ public class Reference {
     
     public final static String COMMON_PROXY = "com.solonarv.mods.golemworld.proxy.CommonProxy";
     
-    public final static ResourceLocation texture(String texName) {
-        return new ResourceLocation(MOD_ID, texName);
+    public final static String texture(String texPath) {
+        return MOD_ID.substring(0, 5) + ":" + texPath;
     }
 }

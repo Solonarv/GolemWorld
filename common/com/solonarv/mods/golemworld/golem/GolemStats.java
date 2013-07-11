@@ -1,7 +1,6 @@
 package com.solonarv.mods.golemworld.golem;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 /**
  * GolemStats Holds stats of a golem: maxHealth, name, attackDamageMean/StdDev,
@@ -11,14 +10,14 @@ import net.minecraft.util.ResourceLocation;
  * 
  */
 public class GolemStats {
-    public int              maxHealth;
-    public String           name;
+    public int         maxHealth;
+    public String      name;
     
-    public double           attackDamageMean, attackDamageStdDev;
+    public double      attackDamageMean, attackDamageStdDev;
     
-    public ItemStack[]      droppedItems;
+    public ItemStack[] droppedItems;
     
-    public ResourceLocation texture;
+    public String      texture;
     
     public void droppedItems(ItemStack... itemStacks) {
         droppedItems = itemStacks;

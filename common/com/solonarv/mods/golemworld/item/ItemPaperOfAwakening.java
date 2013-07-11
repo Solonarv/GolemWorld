@@ -1,5 +1,6 @@
 package com.solonarv.mods.golemworld.item;
 
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,6 +24,11 @@ public class ItemPaperOfAwakening extends Item {
     public ItemPaperOfAwakening(int id) {
         super(id - Reference.ITEMID_SHIFT);
         
+    }
+    
+    @Override
+    public void registerIcons(IconRegister ir) {
+        itemIcon = ir.registerIcon(Reference.texture("paperOfAwakening"));
     }
     
     @Override
