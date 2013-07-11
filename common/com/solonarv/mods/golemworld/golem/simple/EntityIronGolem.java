@@ -20,14 +20,7 @@ public class EntityIronGolem extends EntitySimpleGolem {
         stats.droppedItems(new ItemStack(Item.ingotIron, 5), new ItemStack(
                 Block.plantRed, 1));
     }
-
-
-
-    @Override
-    public GolemStats stats() {
-        return stats;
-    }
-
+    
     public EntityIronGolem(World world) {
         super(world);
     }

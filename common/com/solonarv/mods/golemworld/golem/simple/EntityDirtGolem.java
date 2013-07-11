@@ -8,7 +8,7 @@ import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
 
 public class EntityDirtGolem extends EntitySimpleGolem {
-
+    
     public static final GolemStats stats = new GolemStats();
     static {
         // Initialize stats
@@ -19,14 +19,9 @@ public class EntityDirtGolem extends EntitySimpleGolem {
         stats.texture = Reference.mobTexture("dirt_golem");
         stats.droppedItems(new ItemStack(Block.dirt, 3));
     }
-
-    @Override
-    public GolemStats stats() {
-        return stats;
-    }
-
+    
     public EntityDirtGolem(World world) {
         super(world);
     }
-
+    
 }

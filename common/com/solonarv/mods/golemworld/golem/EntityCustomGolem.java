@@ -1,6 +1,7 @@
 package com.solonarv.mods.golemworld.golem;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -10,14 +11,24 @@ import net.minecraft.world.World;
 
 public abstract class EntityCustomGolem extends EntityIronGolem {
     
-    public abstract GolemStats stats();
+    private static GolemStats stats;
+    private GolemStats        actualStats = null;
     
     // Make private attackTimer from superclass visible
-    protected int attackTimer;
+    protected int             attackTimer;
     
     public EntityCustomGolem(World world) {
         super(world);
-        // func_94058_c(stats().name);
+        // func_94058_c(this.getStats().name);
+    }
+    
+    private void updateStats() {
+        try {
+            this.actualStats = (GolemStats) this.getClass().getField("stats")
+                    .get(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     @Override
@@ -44,21 +55,36 @@ public abstract class EntityCustomGolem extends EntityIronGolem {
     }
     
     public final int getAttackStrength() {
-        return MathHelper.floor_double(stats().attackDamageMean
-                + rand.nextGaussian() * stats().attackDamageStdDev);
+        return MathHelper.floor_double(this.getStats().attackDamageMean
+                + rand.nextGaussian() * this.getStats().attackDamageStdDev);
     };
+    
+    private GolemStats getStats() {
+        if (this.actualStats == null) this.updateStats();
+        return this.actualStats;
+    }
     
     public static boolean isSmart() {
         return false;
     }
     
     public final String getName() {
-        return stats() != null ? stats().name : "stats not initialized!";
+        return stats != null ? this.getStats().name : "stats not initialized!";
+    }
+    
+    /**
+     * Updates the mob's attributes, probably gets called on init.
+     */
+    @Override
+    protected void func_110147_ax() {
+        super.func_110147_ax();
+        this.func_110148_a(SharedMonsterAttributes.field_111267_a)
+                .func_111128_a(this.getStats().maxHealth);
     }
     
     @Override
     public final void dropFewItems(boolean recentlyHit, int lootingLevel) {
-        for (ItemStack is : stats().droppedItems) {
+        for (ItemStack is : this.getStats().droppedItems) {
             entityDropItem(is, 0F);
         }
     }

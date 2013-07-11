@@ -17,12 +17,7 @@ public class EntityEmeraldGolem extends EntitySimpleGolem {
         stats.texture = Reference.mobTexture("emerald_golem");
         stats.droppedItems(new ItemStack(Item.emerald, 2));
     }
-
-    @Override
-    public GolemStats stats() {
-        return stats;
-    }
-
+    
     public EntityEmeraldGolem(World world) {
         super(world);
     }

@@ -8,7 +8,7 @@ import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
 
 public class EntitySandstoneGolem extends EntitySimpleGolem {
-
+    
     public static final GolemStats stats = new GolemStats();
     static {
         stats.maxHealth = 60;
@@ -18,15 +18,9 @@ public class EntitySandstoneGolem extends EntitySimpleGolem {
         stats.texture = Reference.mobTexture("sandstone_golem");
         stats.droppedItems(new ItemStack(Block.sand, 4));
     }
-
-
-    @Override
-    public GolemStats stats() {
-        return stats;
-    }
-
+    
     public EntitySandstoneGolem(World world) {
         super(world);
     }
-
+    
 }

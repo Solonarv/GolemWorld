@@ -17,11 +17,7 @@ public class EntityLapisGolem extends EntitySimpleGolem {
         stats.texture = Reference.mobTexture("lapis_golem");
         stats.droppedItems(new ItemStack(Item.dyePowder, 5, 4));
     }
-    @Override
-    public GolemStats stats() {
-        return stats;
-    }
-
+    
     public EntityLapisGolem(World world) {
         super(world);
     }

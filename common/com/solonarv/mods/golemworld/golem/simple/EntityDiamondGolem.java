@@ -17,11 +17,7 @@ public class EntityDiamondGolem extends EntitySimpleGolem {
         stats.texture = Reference.mobTexture("diamond_golem");
         stats.droppedItems(new ItemStack(Item.diamond, 2));
     }
-    @Override
-    public GolemStats stats() {
-        return stats;
-    }
-
+    
     public EntityDiamondGolem(World world) {
         super(world);
     }

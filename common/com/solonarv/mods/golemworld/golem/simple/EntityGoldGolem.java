@@ -17,13 +17,7 @@ public class EntityGoldGolem extends EntitySimpleGolem {
         stats.texture = Reference.mobTexture("gold_golem");
         stats.droppedItems(new ItemStack(Item.ingotGold, 2));
     }
-
-
-    @Override
-    public GolemStats stats() {
-        return stats;
-    }
-
+    
     public EntityGoldGolem(World world) {
         super(world);
     }

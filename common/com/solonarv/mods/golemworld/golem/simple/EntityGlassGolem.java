@@ -17,12 +17,7 @@ public class EntityGlassGolem extends EntitySimpleGolem {
         stats.texture = Reference.mobTexture("glass_golem");
         stats.droppedItems(new ItemStack(Block.glass, 3));
     }
-
-    @Override
-    public GolemStats stats() {
-        return stats;
-    }
-
+    
     public EntityGlassGolem(World world) {
         super(world);
     }

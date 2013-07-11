@@ -17,13 +17,7 @@ public class EntityObsidianGolem extends EntitySimpleGolem {
         stats.texture = Reference.mobTexture("obsidian_golem");
         stats.droppedItems(new ItemStack(Block.obsidian, 2));
     }
-
-
-    @Override
-    public GolemStats stats() {
-        return stats;
-    }
-
+    
     public EntityObsidianGolem(World world) {
         super(world);
     }

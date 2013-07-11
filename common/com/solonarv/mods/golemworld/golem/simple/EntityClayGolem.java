@@ -17,13 +17,8 @@ public class EntityClayGolem extends EntitySimpleGolem {
         stats.texture = Reference.mobTexture("clay_golem");
         stats.droppedItems(new ItemStack(Item.clay, 5));
     }
-
+    
     public EntityClayGolem(World world) {
         super(world);
-    }
-
-    @Override
-    public GolemStats stats() {
-        return stats;
     }
 }
