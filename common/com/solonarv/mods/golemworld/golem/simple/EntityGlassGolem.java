@@ -14,7 +14,7 @@ public class EntityGlassGolem extends EntitySimpleGolem {
         stats.attackDamageMean = 10;
         stats.attackDamageStdDev = 3.5;
         stats.name = "Glass Golem";
-        stats.texture = Reference.mobTexture("glass_golem");
+        stats.texture = Reference.texture("glass_golem");
         stats.droppedItems(new ItemStack(Block.glass, 3));
     }
     

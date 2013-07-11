@@ -16,7 +16,7 @@ public class EntityIronGolem extends EntitySimpleGolem {
         stats.attackDamageMean = 14.5;
         stats.attackDamageStdDev = 1.5;
         stats.name = "Iron Golem";
-        stats.texture = Reference.mobTexture("iron_golem");
+        stats.texture = Reference.texture("iron_golem");
         stats.droppedItems(new ItemStack(Item.ingotIron, 5), new ItemStack(
                 Block.plantRed, 1));
     }

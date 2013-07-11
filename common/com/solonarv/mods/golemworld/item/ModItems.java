@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.solonarv.mods.golemworld.lib.ItemIDs;
+import com.solonarv.mods.golemworld.lib.Reference;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -25,7 +26,11 @@ public class ModItems {
                                            .setMaxStackSize(64)
                                            .setCreativeTab(CreativeTabs.tabMisc)
                                            .setUnlocalizedName(
-                                                   "paperOfAwakening");
+                                                   "paperOfAwakening")
+                                           .func_111206_d(
+                                                   Reference.texture(
+                                                           "paperOfAwakening")
+                                                           .toString());
     
     public static void registerItems() {
         LanguageRegistry.addName(paperAwaken, "Paper of Awakening");

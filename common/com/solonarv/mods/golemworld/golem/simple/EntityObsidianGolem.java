@@ -14,7 +14,7 @@ public class EntityObsidianGolem extends EntitySimpleGolem {
         stats.attackDamageMean = 10;
         stats.attackDamageStdDev = .3;
         stats.name = "Obsidian Golem";
-        stats.texture = Reference.mobTexture("obsidian_golem");
+        stats.texture = Reference.texture("obsidian_golem");
         stats.droppedItems(new ItemStack(Block.obsidian, 2));
     }
     

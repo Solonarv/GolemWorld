@@ -19,22 +19,18 @@ import com.solonarv.mods.golemworld.lib.Reference;
  * 
  */
 public class ItemPaperOfAwakening extends Item {
-
+    
     public ItemPaperOfAwakening(int id) {
         super(id - Reference.ITEMID_SHIFT);
-
+        
     }
-
+    
     @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer entityPlayer,
             World world, int x, int y, int z, int sideHit, float hitVecX,
             float hitVecY, float hitVecZ) {
-        if (world.isRemote) {
-            return true;
-        }
-        if (itemStack.stackSize <= 0) {
-            return false;
-        }
+        if (world.isRemote) { return true; }
+        if (itemStack.stackSize <= 0) { return false; }
         EntityCustomGolem g = GolemRegistry.trySpawn(world, x, y, z);
         if (g != null) {
             if (!entityPlayer.capabilities.isCreativeMode) {

@@ -14,7 +14,7 @@ public class EntityClayGolem extends EntitySimpleGolem {
         stats.attackDamageMean = 8;
         stats.attackDamageStdDev = 2.3;
         stats.name = "Clay Golem";
-        stats.texture = Reference.mobTexture("clay_golem");
+        stats.texture = Reference.texture("clay_golem");
         stats.droppedItems(new ItemStack(Item.clay, 5));
     }
     

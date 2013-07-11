@@ -16,7 +16,7 @@ public class EntityDirtGolem extends EntitySimpleGolem {
         stats.attackDamageMean = 6;
         stats.attackDamageStdDev = 1.2;
         stats.name = "Dirt Golem";
-        stats.texture = Reference.mobTexture("dirt_golem");
+        stats.texture = Reference.texture("dirt_golem");
         stats.droppedItems(new ItemStack(Block.dirt, 3));
     }
     

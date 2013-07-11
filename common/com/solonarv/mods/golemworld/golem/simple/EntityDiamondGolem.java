@@ -14,7 +14,7 @@ public class EntityDiamondGolem extends EntitySimpleGolem {
         stats.attackDamageMean = 18;
         stats.attackDamageStdDev = .8;
         stats.name = "Diamond Golem";
-        stats.texture = Reference.mobTexture("diamond_golem");
+        stats.texture = Reference.texture("diamond_golem");
         stats.droppedItems(new ItemStack(Item.diamond, 2));
     }
     
