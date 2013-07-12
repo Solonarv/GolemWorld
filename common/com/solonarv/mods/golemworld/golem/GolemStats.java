@@ -13,7 +13,7 @@ public class GolemStats {
     public int         maxHealth;
     public String      name;
     
-    public double      attackDamageMean, attackDamageStdDev;
+    public float       attackDamageMean, attackDamageStdDev;
     
     public ItemStack[] droppedItems;
     

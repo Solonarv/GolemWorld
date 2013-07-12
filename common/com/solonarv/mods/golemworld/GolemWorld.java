@@ -23,7 +23,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
 /**
- * Golem-World
+ * GolemWorld
  * 
  * GolemWorld
  * 
@@ -38,28 +38,38 @@ public class GolemWorld {
     @Instance(Reference.MOD_ID)
     public static GolemWorld    instance;
     
+    /**
+     * A proxy that client-/server-only stuff can be delegated to.
+     */
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.COMMON_PROXY)
     public static CommonProxy   proxy;
     
     public static Configuration config;
     
+    /**
+     * Initialize all our stuff: items, config, golems
+     * 
+     * @param event an {@link FMLPreInitializationEvent} containing some info
+     */
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
         ModItems.registerItems();
-        
         GolemRegistry.registerGolems();
     }
     
     @EventHandler
     public void load(FMLInitializationEvent event) {
-        proxy.registerRenderers();
     }
     
+    /**
+     * Interactions with other mods, eventually
+     * 
+     * @param event an {@link FMLPostInitializationEvent} containing some info
+     */
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        // TODO Stub Method
     }
     
     /**
