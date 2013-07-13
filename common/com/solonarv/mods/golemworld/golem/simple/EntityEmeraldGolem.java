@@ -11,8 +11,8 @@ public class EntityEmeraldGolem extends EntitySimpleGolem {
     public static final GolemStats stats = new GolemStats();
     static {
         stats.maxHealth = 100;
-        stats.attackDamageMean = 16;
-        stats.attackDamageStdDev = 0;
+        stats.attackDamageMean = 16f;
+        stats.attackDamageStdDev = 0f;
         stats.name = "Emerald Golem";
         stats.texture = Reference.texture("emerald_golem");
         stats.droppedItems(new ItemStack(Item.emerald, 2));

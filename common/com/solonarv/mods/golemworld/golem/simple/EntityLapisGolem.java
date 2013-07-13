@@ -11,8 +11,8 @@ public class EntityLapisGolem extends EntitySimpleGolem {
     public static final GolemStats stats = new GolemStats();
     static {
         stats.maxHealth = 80;
-        stats.attackDamageMean = 12;
-        stats.attackDamageStdDev = 2.6;
+        stats.attackDamageMean = 12f;
+        stats.attackDamageStdDev = 2.6f;
         stats.name = "Lapis Golem";
         stats.texture = Reference.texture("lapis_golem");
         stats.droppedItems(new ItemStack(Item.dyePowder, 5, 4));

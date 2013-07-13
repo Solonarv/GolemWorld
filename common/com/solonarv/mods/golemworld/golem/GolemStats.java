@@ -13,12 +13,20 @@ public class GolemStats {
     public int         maxHealth;
     public String      name;
     
+    /**
+     * Parameters of attack damage normal distr
+     */
     public float       attackDamageMean, attackDamageStdDev;
     
     public ItemStack[] droppedItems;
     
     public String      texture;
     
+    /**
+     * Utility method to fill the droppeItems array
+     * 
+     * @param itemStacks the dropped items
+     */
     public void droppedItems(ItemStack... itemStacks) {
         droppedItems = itemStacks;
     }

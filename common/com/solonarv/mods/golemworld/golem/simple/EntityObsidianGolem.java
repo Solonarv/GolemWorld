@@ -11,8 +11,8 @@ public class EntityObsidianGolem extends EntitySimpleGolem {
     public static final GolemStats stats = new GolemStats();
     static {
         stats.maxHealth = 150;
-        stats.attackDamageMean = 10;
-        stats.attackDamageStdDev = .3;
+        stats.attackDamageMean = 10f;
+        stats.attackDamageStdDev = .3f;
         stats.name = "Obsidian Golem";
         stats.texture = Reference.texture("obsidian_golem");
         stats.droppedItems(new ItemStack(Block.obsidian, 2));

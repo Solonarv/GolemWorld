@@ -11,9 +11,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 /**
- * Golem-World
- * 
- * ModItems
+ * Proxy of sorts that handles all the items I need to create.
  * 
  * @author solonarv
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
@@ -21,6 +19,12 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
  */
 public class ModItems {
     
+    /**
+     * The mythic Paper of Awakening; when placed into a pumpkin above a
+     * mystical construct, a fearsome creature known as a golem will form, ready
+     * to smash your foes into oblivion. This operation permanently destroys the
+     * paper used.
+     */
     public static Item paperAwaken = new ItemPaperOfAwakening(
                                            ItemIDs.PAPER_OF_AWAKENING)
                                            .setMaxStackSize(64)
@@ -32,6 +36,9 @@ public class ModItems {
                                                            "paperOfAwakening")
                                                            .toString());
     
+    /**
+     * Register my items with the game and make them craftable
+     */
     public static void registerItems() {
         LanguageRegistry.addName(paperAwaken, "Paper of Awakening");
         

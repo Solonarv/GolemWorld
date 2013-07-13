@@ -123,7 +123,7 @@ public abstract class EntityCustomGolem extends EntityIronGolem {
     @Override
     public final void dropFewItems(boolean recentlyHit, int lootingLevel) {
         for (ItemStack is : this.stats().droppedItems) {
-            entityDropItem(is, 0F);
+            entityDropItem(is.copy(), 0F);
         }
     }
     

@@ -11,8 +11,8 @@ public class EntityDiamondGolem extends EntitySimpleGolem {
     public static final GolemStats stats = new GolemStats();
     static {
         stats.maxHealth = 80;
-        stats.attackDamageMean = 18;
-        stats.attackDamageStdDev = .8;
+        stats.attackDamageMean = 18f;
+        stats.attackDamageStdDev = .8f;
         stats.name = "Diamond Golem";
         stats.texture = Reference.texture("diamond_golem");
         stats.droppedItems(new ItemStack(Item.diamond, 2));

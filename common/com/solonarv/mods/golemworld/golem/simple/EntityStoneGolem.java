@@ -11,8 +11,8 @@ public class EntityStoneGolem extends EntitySimpleGolem {
     public static final GolemStats stats = new GolemStats();
     static {
         stats.maxHealth = 110;
-        stats.attackDamageMean = 12;
-        stats.attackDamageStdDev = 1;
+        stats.attackDamageMean = 12f;
+        stats.attackDamageStdDev = 1f;
         stats.name = "Stone Golem";
         stats.texture = Reference.texture("stone_golem");
         stats.droppedItems(new ItemStack(Block.cobblestone, 2));
