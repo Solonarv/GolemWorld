@@ -39,12 +39,17 @@ public class ItemPaperOfAwakening extends Item {
         if (itemStack.stackSize <= 0) { return false; }
         EntityCustomGolem g = GolemRegistry.trySpawn(world, x, y, z);
         if (g != null) {
-            if (!entityPlayer.capabilities.isCreativeMode) {
+            if (entityPlayer == null
+                    || !entityPlayer.capabilities.isCreativeMode) {
                 itemStack.stackSize--;
             }
-            entityPlayer.addChatMessage("Spawned golem: " + g.getName());
-        } else {
+            if (entityPlayer != null)
+                entityPlayer.addChatMessage("Spawned golem: " + g.getName());
+        } else if (entityPlayer != null) {
             entityPlayer.addChatMessage("No golem could be spawned.");
+        }
+        if (g != null && entityPlayer != null) {
+            g.setPlayerCreated(true);
         }
         return g != null;
     }

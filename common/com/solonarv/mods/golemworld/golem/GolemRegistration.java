@@ -93,6 +93,8 @@ public class GolemRegistration {
                 } else if (clearShape) {
                     remove.abort();
                 }
+                remove.addAction(world, x, y - 1, z);
+                remove.addAction(world, x, y - 2, z);
                 // Check +-z now
                 if (shoulders.isAt(world, x, y, z - 1, remove)
                         && shoulders.isAt(world, x, y, z + 1, remove)
