@@ -61,6 +61,7 @@ public class GolemWorld {
     
     @EventHandler
     public void load(FMLInitializationEvent event) {
+        proxy.registerRenderer();
     }
     
     /**

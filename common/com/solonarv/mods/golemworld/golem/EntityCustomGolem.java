@@ -47,7 +47,7 @@ public abstract class EntityCustomGolem extends EntityIronGolem {
      * 
      * @return
      */
-    private GolemStats stats() {
+    public GolemStats stats() {
         if (this.actualStats == null) {
             try {
                 this.actualStats = (GolemStats) this.getClass()

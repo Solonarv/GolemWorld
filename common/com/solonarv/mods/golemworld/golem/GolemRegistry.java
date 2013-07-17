@@ -200,4 +200,12 @@ public class GolemRegistry {
         GolemRegistry.registerGolem(EntityDiamondGolem.class,
                 Block.blockDiamond, GolemShapes.DEFAULT);
     }
+    
+    public static List<Class<? extends EntityCustomGolem>> getGolemClasses() {
+        List<Class<? extends EntityCustomGolem>> ret = new ArrayList<Class<? extends EntityCustomGolem>>();
+        for (GolemRegistration reg : entries) {
+            ret.add(reg.golemClass);
+        }
+        return ret;
+    }
 }
