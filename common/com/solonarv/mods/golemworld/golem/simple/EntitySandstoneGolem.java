@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.solonarv.mods.golemworld.golem.GolemStats;
+import com.solonarv.mods.golemworld.lib.Reference;
 
 public class EntitySandstoneGolem extends EntitySimpleGolem {
     
@@ -14,7 +15,7 @@ public class EntitySandstoneGolem extends EntitySimpleGolem {
         stats.attackDamageMean = 10f;
         stats.attackDamageStdDev = 1f;
         stats.name = "Sandstone Golem";
-        stats.texture = "sandstone_golem";
+        stats.texture = Reference.mobResource("sandstone_golem");
         stats.droppedItems(new ItemStack(Block.sand, 4));
     }
     

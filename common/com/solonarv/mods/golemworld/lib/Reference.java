@@ -1,5 +1,7 @@
 package com.solonarv.mods.golemworld.lib;
 
+import net.minecraft.util.ResourceLocation;
+
 import com.solonarv.mods.golemworld.item.ItemPaperOfAwakening;
 
 /**
@@ -39,5 +41,9 @@ public class Reference {
      */
     public final static String texture(String texPath) {
         return MOD_ID.substring(0, 5) + ":" + texPath;
+    }
+    
+    public final static ResourceLocation mobResource(String texName) {
+        return new ResourceLocation(texture("textures/mob/" + texName + ".png"));
     }
 }

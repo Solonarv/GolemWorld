@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.solonarv.mods.golemworld.golem.GolemStats;
+import com.solonarv.mods.golemworld.lib.Reference;
 
 public class EntityGoldGolem extends EntitySimpleGolem {
     public static final GolemStats stats = new GolemStats();
@@ -13,7 +14,7 @@ public class EntityGoldGolem extends EntitySimpleGolem {
         stats.attackDamageMean = 16;
         stats.attackDamageStdDev = 1;
         stats.name = "Gold Golem";
-        stats.texture = "gold_golem";
+        stats.texture = Reference.mobResource("gold_golem");
         stats.droppedItems(new ItemStack(Item.ingotGold, 2));
     }
     

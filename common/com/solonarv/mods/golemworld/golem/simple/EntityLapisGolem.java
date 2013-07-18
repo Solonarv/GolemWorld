@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.solonarv.mods.golemworld.golem.GolemStats;
+import com.solonarv.mods.golemworld.lib.Reference;
 
 public class EntityLapisGolem extends EntitySimpleGolem {
     public static final GolemStats stats = new GolemStats();
@@ -13,7 +14,7 @@ public class EntityLapisGolem extends EntitySimpleGolem {
         stats.attackDamageMean = 12f;
         stats.attackDamageStdDev = 2.6f;
         stats.name = "Lapis Golem";
-        stats.texture = "lapis_golem";
+        stats.texture = Reference.mobResource("lapis_golem");
         stats.droppedItems(new ItemStack(Item.dyePowder, 5, 4));
     }
     

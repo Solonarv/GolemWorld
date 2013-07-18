@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.solonarv.mods.golemworld.golem.GolemStats;
+import com.solonarv.mods.golemworld.lib.Reference;
 
 public class EntityObsidianGolem extends EntitySimpleGolem {
     public static final GolemStats stats = new GolemStats();
@@ -13,7 +14,7 @@ public class EntityObsidianGolem extends EntitySimpleGolem {
         stats.attackDamageMean = 10f;
         stats.attackDamageStdDev = .3f;
         stats.name = "Obsidian Golem";
-        stats.texture = "obsidian_golem";
+        stats.texture = Reference.mobResource("obsidian_golem");
         stats.droppedItems(new ItemStack(Block.obsidian, 2));
     }
     
