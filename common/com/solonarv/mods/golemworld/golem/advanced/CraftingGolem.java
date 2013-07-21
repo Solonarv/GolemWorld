@@ -1,8 +1,10 @@
-package com.solonarv.mods.golemworld.inventory;
+package com.solonarv.mods.golemworld.golem.advanced;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import com.solonarv.mods.golemworld.golem.InventoryGolem;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

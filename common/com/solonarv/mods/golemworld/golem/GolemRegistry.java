@@ -8,6 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
 import com.solonarv.mods.golemworld.GolemWorld;
+import com.solonarv.mods.golemworld.golem.medium.EntityIceGolem;
+import com.solonarv.mods.golemworld.golem.medium.EntityNetherrackGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntityClayGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntityDiamondGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntityDirtGolem;
@@ -42,7 +44,7 @@ public class GolemRegistry {
     /**
      * The next ID available, for {@link EntityRegistry}.registerModEntity.
      */
-    private static int                       nextID  = 0;
+    private static int                       nextID  = 1;
     
     /**
      * Registers a new golem with the golemRegistry. This is the main method for
@@ -199,6 +201,10 @@ public class GolemRegistry {
                 GolemShapes.DEFAULT);
         GolemRegistry.registerGolem(EntityDiamondGolem.class,
                 Block.blockDiamond, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityIceGolem.class, Block.ice,
+                GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityNetherrackGolem.class,
+                Block.netherrack, GolemShapes.DEFAULT);
     }
     
     public static List<Class<? extends EntityCustomGolem>> getGolemClasses() {

@@ -1,4 +1,4 @@
-package com.solonarv.mods.golemworld.inventory;
+package com.solonarv.mods.golemworld.golem;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 
 /**
  * The inventory of a golem (this is also a base class for other smart golems'

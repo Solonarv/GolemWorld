@@ -12,6 +12,7 @@ import com.solonarv.mods.golemworld.golem.GolemRegistry;
 import com.solonarv.mods.golemworld.item.ModItems;
 import com.solonarv.mods.golemworld.lib.Reference;
 import com.solonarv.mods.golemworld.proxy.CommonProxy;
+import com.solonarv.mods.golemworld.util.EntityGolemFireball;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -21,6 +22,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.registry.EntityRegistry;
 
 /**
  * GolemWorld
@@ -57,6 +59,8 @@ public class GolemWorld {
         config.load();
         ModItems.registerItems();
         GolemRegistry.registerGolems();
+        EntityRegistry.registerModEntity(EntityGolemFireball.class,
+                EntityGolemFireball.class.getName(), 0, this, 40, 1, true);
     }
     
     @EventHandler
@@ -70,8 +74,7 @@ public class GolemWorld {
      * @param event an {@link FMLPostInitializationEvent} containing some info
      */
     @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-    }
+    public void postInit(FMLPostInitializationEvent event) {}
     
     /**
      * Listens to an {@link EntityJoinWorldEvent} and responds depending on the

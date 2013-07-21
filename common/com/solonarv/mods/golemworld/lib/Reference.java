@@ -2,7 +2,7 @@ package com.solonarv.mods.golemworld.lib;
 
 import net.minecraft.util.ResourceLocation;
 
-import com.solonarv.mods.golemworld.item.ItemPaperOfAwakening;
+import com.solonarv.mods.golemworld.item.ItemGolemWorldUniversal;
 
 /**
  * GolemWorld
@@ -13,7 +13,7 @@ import com.solonarv.mods.golemworld.item.ItemPaperOfAwakening;
  * Holds a few constants used throughout my mod, so I don't need to go through
  * all of my code when something here changes. Also, in the case of numbers, it
  * makes it easier to see what these numbers actually mean; e.g. why is there a
- * random "-256" in {@link ItemPaperOfAwakening}'s constructor?
+ * random "-256" in {@link ItemGolemWorldUniversal}'s constructor?
  * 
  * @author solonarv
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
