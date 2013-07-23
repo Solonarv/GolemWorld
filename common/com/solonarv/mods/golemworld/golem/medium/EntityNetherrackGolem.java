@@ -2,7 +2,17 @@ package com.solonarv.mods.golemworld.golem.medium;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IRangedAttackMob;
+import net.minecraft.entity.ai.EntityAIArrowAttack;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.EntityAILookAtVillager;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
+import net.minecraft.entity.ai.EntityAITaskEntry;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
@@ -11,13 +21,24 @@ import net.minecraft.world.World;
 import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
-import com.solonarv.mods.golemworld.util.AIHelper;
 import com.solonarv.mods.golemworld.util.EntityGolemFireball;
 
-public class EntityNetherrackGolem extends EntityCustomGolem {
+public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedAttackMob {
     public EntityNetherrackGolem(World world) {
         super(world);
-        AIHelper.clearAITasks(this.tasks, EntityAIMoveTowardsTarget.class);
+        this.tasks.taskEntries.clear();
+        this.tasks.addTask(1, new EntityAIArrowAttack(this, this.getAIMoveSpeed(), 60, 64));
+        this.tasks.addTask(2, new EntityAIMoveThroughVillage(this, .9d, true));
+        this.tasks.addTask(3, new EntityAILookAtVillager(this));
+        this.tasks.addTask(4, new EntityAIWander(this, 0.6D));
+        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+        this.tasks.addTask(6, new EntityAILookIdle(this));
+        
+        
+        for(Object taskObj: this.tasks.taskEntries){
+            EntityAIBase ai=((EntityAITaskEntry)taskObj).action;
+            System.out.println(ai);
+        }
     }
     
     public static final GolemStats stats                 = new GolemStats();
@@ -26,7 +47,7 @@ public class EntityNetherrackGolem extends EntityCustomGolem {
         stats.attackDamageMean = 10f;
         stats.attackDamageStdDev = 1f;
         stats.name = "Netherrack Golem";
-        stats.texture = Reference.mobResource("netherrack_golem");
+        stats.texture = Reference.mobTexture("netherrack_golem");
         stats.droppedItems(new ItemStack(Block.netherrack, 4));
     }
     
@@ -35,23 +56,11 @@ public class EntityNetherrackGolem extends EntityCustomGolem {
     private boolean burning;
     
     @Override
-    public void attackEntity(Entity e, float foo) {
-        double distanceSq = e.getDistanceSqToEntity(this);
-        if (distanceSq <= 4096f && this.fireballCharges > 0) { // 64m
-                                                               // range
-            double x = e.posX - this.posX;
-            double y = e.posY - this.posY;
-            double z = e.posZ - this.posZ;
-            for (int i = 0; i < 3; i++) {
-                EntityGolemFireball egf = new EntityGolemFireball(this.worldObj, this,
-                        x + this.rand.nextGaussian() * distanceSq,
-                        y + this.rand.nextGaussian() * distanceSq,
-                        z + this.rand.nextGaussian() * distanceSq);
-                this.worldObj.spawnEntityInWorld(egf);
-            }
-        } else if (distanceSq <= 8f) {
-            this.attackEntityAsMob(e);
+    public boolean attackEntityAsMob(Entity e) {
+        if (this.fireballCharges<=0) {
+            return super.attackEntityAsMob(e);
         }
+        else return false;
     }
     
     @Override
@@ -65,7 +74,7 @@ public class EntityNetherrackGolem extends EntityCustomGolem {
         } else if (this.fireballCharges < 64) {
             // Normal distro, I like these!
             this.fireballCharges += MathHelper.clamp_int((int) Math.round(this.rand.nextGaussian() * 2 + 3), 1, 5);
-            this.fireballRechargeTimer = this.rand.nextInt(400) + 200;
+            this.fireballRechargeTimer = this.rand.nextInt(200)-this.rand.nextInt(200) + 400;
         }
     }
     
@@ -84,4 +93,20 @@ public class EntityNetherrackGolem extends EntityCustomGolem {
     }
     
     protected void dealFireDamage(int i){}
+
+    @Override
+    public void attackEntityWithRangedAttack(EntityLivingBase target, float distSq) {
+        double x = target.posX - this.posX;
+        double y = target.posY - this.posY;
+        double z = target.posZ - this.posZ;
+        for (int i = 0; i < 3; i++) {
+            EntityGolemFireball egf = new EntityGolemFireball(this.worldObj,
+                    this.posX, this.posY + 2.5D, this.posZ,
+                    x + this.rand.nextGaussian() * distSq,
+                    y + this.rand.nextGaussian() * distSq - 2.5D,
+                    z + this.rand.nextGaussian() * distSq);
+            egf.shootingEntity=this;
+            this.worldObj.spawnEntityInWorld(egf);
+        }
+    }
 }

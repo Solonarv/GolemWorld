@@ -6,8 +6,8 @@ import net.minecraft.world.World;
 
 public class EntityGolemFireball extends EntitySmallFireball {
     
-    public EntityGolemFireball(World par1World) {
-        super(par1World);
+    public EntityGolemFireball(World world){
+        super(world);
     }
     
     public EntityGolemFireball(World par1World,

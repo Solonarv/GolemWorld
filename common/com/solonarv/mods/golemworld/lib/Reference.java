@@ -43,7 +43,11 @@ public class Reference {
         return MOD_ID.substring(0, 5) + ":" + texPath;
     }
     
-    public final static ResourceLocation mobResource(String texName) {
+    public final static ResourceLocation mobTexture(String texName) {
         return new ResourceLocation(texture("textures/mob/" + texName + ".png"));
+    }
+
+    public final static ResourceLocation guiTexture(String texName) {
+        return new ResourceLocation(texture("textures/gui/" + texName + ".png"));
     }
 }

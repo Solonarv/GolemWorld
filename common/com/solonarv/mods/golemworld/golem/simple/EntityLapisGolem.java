@@ -14,7 +14,7 @@ public class EntityLapisGolem extends EntitySimpleGolem {
         stats.attackDamageMean = 12f;
         stats.attackDamageStdDev = 2.6f;
         stats.name = "Lapis Golem";
-        stats.texture = Reference.mobResource("lapis_golem");
+        stats.texture = Reference.mobTexture("lapis_golem");
         stats.droppedItems(new ItemStack(Item.dyePowder, 5, 4));
     }
     

@@ -14,7 +14,7 @@ public class EntityEmeraldGolem extends EntitySimpleGolem {
         stats.attackDamageMean = 16f;
         stats.attackDamageStdDev = 0f;
         stats.name = "Emerald Golem";
-        stats.texture = Reference.mobResource("emerald_golem");
+        stats.texture = Reference.mobTexture("emerald_golem");
         stats.droppedItems(new ItemStack(Item.emerald, 2));
     }
     

@@ -14,7 +14,7 @@ public class EntityStoneGolem extends EntitySimpleGolem {
         stats.attackDamageMean = 12f;
         stats.attackDamageStdDev = 1f;
         stats.name = "Stone Golem";
-        stats.texture = Reference.mobResource("stone_golem");
+        stats.texture = Reference.mobTexture("stone_golem");
         stats.droppedItems(new ItemStack(Block.cobblestone, 2));
     }
     
