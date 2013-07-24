@@ -5,16 +5,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.ai.EntityAIArrowAttack;
-import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAILookAtVillager;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
-import net.minecraft.entity.ai.EntityAITaskEntry;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -33,12 +32,6 @@ public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedA
         this.tasks.addTask(4, new EntityAIWander(this, 0.6D));
         this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(6, new EntityAILookIdle(this));
-        
-        
-        for(Object taskObj: this.tasks.taskEntries){
-            EntityAIBase ai=((EntityAITaskEntry)taskObj).action;
-            System.out.println(ai);
-        }
     }
     
     public static final GolemStats stats                 = new GolemStats();
@@ -66,9 +59,6 @@ public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedA
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
-        if(this.isWet()){
-            this.burning=false;
-        }
         if (this.fireballRechargeTimer > 0) {
             this.fireballRechargeTimer--;
         } else if (this.fireballCharges < 64) {
@@ -76,6 +66,8 @@ public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedA
             this.fireballCharges += MathHelper.clamp_int((int) Math.round(this.rand.nextGaussian() * 2 + 3), 1, 5);
             this.fireballRechargeTimer = this.rand.nextInt(200)-this.rand.nextInt(200) + 400;
         }
+        
+        //this.setPlayerCreated(false);
     }
     
     @Override
@@ -101,12 +93,26 @@ public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedA
         double z = target.posZ - this.posZ;
         for (int i = 0; i < 3; i++) {
             EntityGolemFireball egf = new EntityGolemFireball(this.worldObj,
-                    this.posX, this.posY + 2.5D, this.posZ,
-                    x + this.rand.nextGaussian() * distSq,
-                    y + this.rand.nextGaussian() * distSq - 2.5D,
-                    z + this.rand.nextGaussian() * distSq);
+                    this.posX + this.rand.nextGaussian() * .1D,
+                    this.posY + 2.5D + this.rand.nextGaussian() * .1D,
+                    this.posZ + this.rand.nextGaussian() * .1D,
+                    x + this.rand.nextGaussian() * distSq * 5D,
+                    y + this.rand.nextGaussian() * distSq * 5D - 2D,
+                    z + this.rand.nextGaussian() * distSq * 5D);
             egf.shootingEntity=this;
             this.worldObj.spawnEntityInWorld(egf);
+        }
+    }
+    
+    @Override
+    public boolean attackEntityFrom(DamageSource src, float dmg){
+        // Make this golem immune to any kind of fire
+        // Also, he reignites on burn tick, so he'll burn forever omghax!
+        if(src==DamageSource.inFire || src==DamageSource.onFire || src==DamageSource.lava){
+            this.setFire(10); // Will burn for 1 day straight
+            return false;
+        }else{
+            return super.attackEntityFrom(src, dmg);
         }
     }
 }

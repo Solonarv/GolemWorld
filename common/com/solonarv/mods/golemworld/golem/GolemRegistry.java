@@ -179,32 +179,19 @@ public class GolemRegistry {
      */
     public static final void registerGolems() {
         // Register all OUR golems with the golemRegistry
-        GolemRegistry.registerGolem(EntityIronGolem.class, Block.blockIron,
-                GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(EntityDirtGolem.class, Block.dirt,
-                GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(EntitySandstoneGolem.class,
-                Block.sandStone, GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(EntityStoneGolem.class, Block.stone,
-                GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(EntityClayGolem.class, Block.blockClay,
-                GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(EntityEmeraldGolem.class,
-                Block.blockEmerald, GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(EntityGoldGolem.class, Block.blockGold,
-                GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(EntityLapisGolem.class, Block.blockLapis,
-                GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(EntityGlassGolem.class, Block.glass,
-                GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(EntityObsidianGolem.class, Block.obsidian,
-                GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(EntityDiamondGolem.class,
-                Block.blockDiamond, GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(EntityIceGolem.class, Block.ice,
-                GolemShapes.DEFAULT);
-        GolemRegistry.registerGolem(EntityNetherrackGolem.class,
-                Block.netherrack, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityIronGolem.class, Block.blockIron, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityDirtGolem.class, Block.dirt, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntitySandstoneGolem.class, Block.sandStone, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityStoneGolem.class, Block.stone, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityClayGolem.class, Block.blockClay, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityEmeraldGolem.class, Block.blockEmerald, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityGoldGolem.class, Block.blockGold, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityLapisGolem.class, Block.blockLapis, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityGlassGolem.class, Block.glass, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityObsidianGolem.class, Block.obsidian, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityDiamondGolem.class, Block.blockDiamond, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityIceGolem.class, Block.ice, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntityNetherrackGolem.class, Block.netherrack, Block.netherrack, Block.fire, Block.netherrack, null);
     }
     
     public static List<Class<? extends EntityCustomGolem>> getGolemClasses() {
