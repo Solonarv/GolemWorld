@@ -6,9 +6,8 @@ More Golems. Adds dozens of new golems, similar to the Iron Golem.
 ### Implemented
  - For modders: ability to add golems of any block and type
  - Simple golems (ALL of them; see wiki for a list of them)
+ - Medium golems: Netherrack, Ice
 
 ### Not Yet Implemented (NYI)
- - Smart golems
- - Working textures
+ - Advanced golems
  - In-game list of golems and guide
- - differing max helath (changed in 1.6)
