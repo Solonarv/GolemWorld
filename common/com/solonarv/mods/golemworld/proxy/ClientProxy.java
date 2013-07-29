@@ -1,5 +1,6 @@
 package com.solonarv.mods.golemworld.proxy;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.monster.EntityIronGolem;
 
@@ -23,5 +24,10 @@ public class ClientProxy extends CommonProxy {
         RenderManager.instance.entityRenderMap.put(EntityCustomGolem.class,
                 golemRenderer);
         golemRenderer.setRenderManager(RenderManager.instance);
+    }
+    
+    @Override
+    public void tellPlayer(String string) {
+        Minecraft.getMinecraft().thePlayer.addChatMessage(string);
     }
 }

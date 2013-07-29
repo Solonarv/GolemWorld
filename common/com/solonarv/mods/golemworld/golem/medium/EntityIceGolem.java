@@ -1,18 +1,26 @@
 package com.solonarv.mods.golemworld.golem.medium;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
+import com.solonarv.mods.golemworld.GolemWorld;
 import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.potion.PotionFreeze;
 
 public class EntityIceGolem extends EntityCustomGolem {
     public static final GolemStats stats = new GolemStats();
+    
+    public static final int freezeDuration=GolemWorld.config.get("Golem", "iceGolemFreezeTime", 5).getInt() * Reference.MAX_TPS;
+    
     static {
         stats.maxHealth = 20;
         stats.attackDamageMean = 10f;
@@ -43,19 +51,11 @@ public class EntityIceGolem extends EntityCustomGolem {
             for (int z = zmin; z < zmax; z++)
                 if (this.worldObj.getBlockId(x, y, z) == Block.waterMoving.blockID
                         || this.worldObj.getBlockId(x, y, z) == Block.waterStill.blockID) {
-                    this.worldObj.setBlock(x, y, z, Block.ice.blockID); // Water
-                                                                        // ->
-                                                                        // Ice
+                    this.worldObj.setBlock(x, y, z, Block.ice.blockID); // Water -> Ice
                 } else if (this.worldObj.getBlockId(x, y, z) == Block.lavaStill.blockID) {
-                    this.worldObj.setBlock(x, y, z, Block.obsidian.blockID); // Lava
-                                                                             // source
-                                                                             // ->
-                                                                             // Obsidian
+                    this.worldObj.setBlock(x, y, z, Block.obsidian.blockID); // Lava source -> Obsidian
                 } else if (this.worldObj.getBlockId(x, y, z) == Block.lavaMoving.blockID) {
-                    this.worldObj.setBlock(x, y, z, Block.cobblestone.blockID); // Lava
-                                                                                // flow
-                                                                                // ->
-                                                                                // Cobble
+                    this.worldObj.setBlock(x, y, z, Block.cobblestone.blockID); // Lava flow -> Cobble
                 }
         if (this.rand.nextInt(20) < 3) { // He /may/ extinguish himself
             this.extinguish();
@@ -75,5 +75,18 @@ public class EntityIceGolem extends EntityCustomGolem {
                 this.worldObj.scheduleBlockUpdate(x, y, z, Block.waterStill.blockID, 1);
             }
         }
+    }
+    
+    @Override
+    public boolean attackEntityAsMob(Entity par1Entity) {
+        boolean ret=super.attackEntityAsMob(par1Entity);
+        if(par1Entity instanceof EntityLivingBase && ret){
+            EntityLivingBase living=(EntityLivingBase) par1Entity;
+            // Freeze da target
+            if(this.rand.nextInt(20)<7){
+                living.addPotionEffect(new PotionEffect(PotionFreeze.instance.id, freezeDuration));
+            }
+        }
+        return ret;
     }
 }

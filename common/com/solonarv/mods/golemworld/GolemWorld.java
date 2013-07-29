@@ -1,16 +1,19 @@
 package com.solonarv.mods.golemworld;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
+
+import net.minecraft.potion.Potion;
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.common.MinecraftForge;
 
 import com.solonarv.mods.golemworld.golem.GolemRegistry;
 import com.solonarv.mods.golemworld.item.ModItems;
+import com.solonarv.mods.golemworld.lib.GolemWorldEventHooks;
 import com.solonarv.mods.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.localization.Localization;
+import com.solonarv.mods.golemworld.potion.PotionFreeze;
 import com.solonarv.mods.golemworld.proxy.CommonProxy;
 import com.solonarv.mods.golemworld.util.EntityGolemFireball;
 
@@ -61,11 +64,30 @@ public class GolemWorld {
         GolemRegistry.registerGolems();
         EntityRegistry.registerModEntity(EntityGolemFireball.class,
                 EntityGolemFireball.class.getName(), 0, this, 40, 1, true);
+        try {
+            for(Field f: Potion.class.getDeclaredFields()){
+                f.setAccessible(true);
+                if(f.getName().equals("potionTypes") || f.getName().equals("field_76425_a")){
+                    Field modifiers=Field.class.getDeclaredField("modifiers");
+                    modifiers.setAccessible(true);
+                    modifiers.setInt(f, f.getModifiers() & ~Modifier.FINAL);
+                    Potion[] oldPotionTypes=(Potion[]) f.get(null);
+                    Potion[] newPotionTypes=Arrays.copyOf(oldPotionTypes, 256);
+                    f.set(null, newPotionTypes);
+                }
+            }
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
     
     @EventHandler
     public void load(FMLInitializationEvent event) {
         proxy.registerRenderer();
+        PotionFreeze.init();
+        
+        MinecraftForge.EVENT_BUS.register(GolemWorldEventHooks.instance());
+       Localization.registerNames();
     }
     
     /**
@@ -75,40 +97,4 @@ public class GolemWorld {
      */
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {}
-    
-    /**
-     * Listens to an {@link EntityJoinWorldEvent} and responds depending on the
-     * type of entity that spawned. This code effectively disables the vanilla
-     * iron golem by replacing it with one of our golems if it spawns naturally,
-     * i.e. in a village, or dropping the blocks used to build it if it was
-     * built manually. Configurable.
-     * 
-     * @param e the {@link EntityJoinWorldEvent}
-     */
-    @ForgeSubscribe
-    public void onEntityJoinWorld(EntityJoinWorldEvent e) {
-        // This code effectively disables the vanilla iron golem by replacing it
-        // with one of our golems if it spawns naturally, i.e. in a village, or
-        // dropping the blocks used to build it if it was built manually.
-        // Configurable.
-        if (EntityIronGolem.class.isInstance(e.entity)) {
-            EntityIronGolem theGolem = (EntityIronGolem) e.entity;
-            if (!theGolem.isPlayerCreated()) {
-                if (config.get("Vanilla", "replaceVillageSpawns", true)
-                        .getBoolean(true)) {
-                    int x, y, z;
-                    x = MathHelper.floor_double(theGolem.posX);
-                    y = MathHelper.floor_double(theGolem.posY);
-                    z = MathHelper.floor_double(theGolem.posZ);
-                    e.world.removeEntity(theGolem);
-                    GolemRegistry.spawnRandomGolem(e.world, x, y, z);
-                }
-            } else if (config.get("Vanilla", "deleteConstructedGolems", false)
-                    .getBoolean(false)) {
-                theGolem.entityDropItem(new ItemStack(Block.blockIron, 3), 0F);
-                theGolem.entityDropItem(new ItemStack(Block.pumpkin), 0F);
-                theGolem.setDead();
-            }
-        }
-    }
 }

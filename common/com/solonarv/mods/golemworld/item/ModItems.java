@@ -7,7 +7,6 @@ import com.solonarv.mods.golemworld.GolemWorld;
 import com.solonarv.mods.golemworld.lib.Reference;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 /**
  * Proxy of sorts that handles all the items I need to create.
@@ -33,8 +32,6 @@ public class ModItems {
      * Register my items with the game and make them craftable
      */
     public static void registerItems() {
-        LanguageRegistry.addName(golemWorldUniversal, "Paper of Awakening");
-        
         GameRegistry.addRecipe(golemWorldUniversal.stack(0),new Object[] {"grg", "rpr", "grg",
             'g', Item.glowstone,
             'r', Item.redstone,

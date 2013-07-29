@@ -27,10 +27,7 @@ public class Reference {
     public final static int    MAX_TPS      = 20;
     public final static int    ITEMID_SHIFT = 256;
     
-    public final static String CONFIG_FILE  = "";
-    
     public final static String CLIENT_PROXY = "com.solonarv.mods.golemworld.proxy.ClientProxy";
-    
     public final static String COMMON_PROXY = "com.solonarv.mods.golemworld.proxy.CommonProxy";
     
     /**
