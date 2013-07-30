@@ -7,8 +7,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import com.solonarv.mods.golemworld.GolemWorld;
@@ -45,6 +47,20 @@ public class GolemWorldEventHooks {
     
     @ForgeSubscribe
     public void onBreakSpeed(PlayerEvent.BreakSpeed event){
+        if(event.entityLiving.isPotionActive(PotionFreeze.instance)){
+            event.setCanceled(true);
+        }
+    }
+    
+    @ForgeSubscribe
+    public void onEnderTeleport(EnderTeleportEvent event){
+        if(event.entityLiving.isPotionActive(PotionFreeze.instance)){
+            event.setCanceled(true);
+        }
+    }
+    
+    @ForgeSubscribe
+    public void onArrowNock(ArrowNockEvent event){
         if(event.entityLiving.isPotionActive(PotionFreeze.instance)){
             event.setCanceled(true);
         }

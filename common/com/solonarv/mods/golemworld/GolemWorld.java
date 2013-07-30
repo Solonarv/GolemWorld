@@ -76,7 +76,7 @@ public class GolemWorld {
                     f.set(null, newPotionTypes);
                 }
             }
-        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
