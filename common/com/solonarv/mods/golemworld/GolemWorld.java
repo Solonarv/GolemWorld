@@ -8,6 +8,7 @@ import net.minecraft.potion.Potion;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.solonarv.mods.golemworld.block.TileEntityTicker;
 import com.solonarv.mods.golemworld.golem.GolemRegistry;
 import com.solonarv.mods.golemworld.item.ModItems;
 import com.solonarv.mods.golemworld.lib.GolemWorldEventHooks;
@@ -26,6 +27,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * GolemWorld
@@ -64,6 +66,7 @@ public class GolemWorld {
         GolemRegistry.registerGolems();
         EntityRegistry.registerModEntity(EntityGolemFireball.class,
                 EntityGolemFireball.class.getName(), 0, this, 40, 1, true);
+        GameRegistry.registerTileEntity(TileEntityTicker.class, "TileEntityTicker");
         try {
             for(Field f: Potion.class.getDeclaredFields()){
                 f.setAccessible(true);
