@@ -1,6 +1,7 @@
 package com.solonarv.mods.golemworld.golem.medium;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAISwimming;
@@ -49,13 +50,15 @@ public class EntityIceGolem extends EntityCustomGolem {
         int y = MathHelper.floor_double(this.posY) - 1;
         for (int x = xmin; x < xmax; x++)
             for (int z = zmin; z < zmax; z++)
-                if (this.worldObj.getBlockId(x, y, z) == Block.waterMoving.blockID
-                        || this.worldObj.getBlockId(x, y, z) == Block.waterStill.blockID) {
+                if (this.worldObj.getBlockMaterial(x, y, z) == Material.water) {
                     this.worldObj.setBlock(x, y, z, Block.ice.blockID); // Water -> Ice
-                } else if (this.worldObj.getBlockId(x, y, z) == Block.lavaStill.blockID) {
-                    this.worldObj.setBlock(x, y, z, Block.obsidian.blockID); // Lava source -> Obsidian
-                } else if (this.worldObj.getBlockId(x, y, z) == Block.lavaMoving.blockID) {
-                    this.worldObj.setBlock(x, y, z, Block.cobblestone.blockID); // Lava flow -> Cobble
+                } else if (this.worldObj.getBlockMaterial(x, y, z) == Material.lava) {
+                    int meta=this.worldObj.getBlockMetadata(x, y, z);
+                    if(meta == 0){ // Source block
+                        this.worldObj.setBlock(x, y, z, Block.obsidian.blockID); // Lava source -> Obsidian
+                    }else if(meta < 8){
+                        this.worldObj.setBlock(x, y, z, Block.cobblestone.blockID); // Lava flow -> Cobble
+                    }
                 }
         if (this.rand.nextInt(20) < 3) { // He /may/ extinguish himself
             this.extinguish();
