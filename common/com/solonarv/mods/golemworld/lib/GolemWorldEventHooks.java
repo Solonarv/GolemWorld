@@ -1,10 +1,7 @@
 package com.solonarv.mods.golemworld.lib;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
@@ -13,15 +10,13 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
-import com.solonarv.mods.golemworld.GolemWorld;
-import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemRegistry;
 import com.solonarv.mods.golemworld.potion.DamageSourceShatter;
 import com.solonarv.mods.golemworld.potion.PotionFreeze;
 
 public class GolemWorldEventHooks {
     @ForgeSubscribe
-    public void onLvingUpdate(LivingUpdateEvent event){
+    public void onLivingUpdate(LivingUpdateEvent event){
         if(event.entityLiving.isPotionActive(PotionFreeze.instance)){
             if(event.entityLiving.getActivePotionEffect(PotionFreeze.instance).getDuration() <= 0){
                 event.entityLiving.removePotionEffect(PotionFreeze.instance.id);
@@ -81,23 +76,13 @@ public class GolemWorldEventHooks {
         // with one of our golems if it spawns naturally, i.e. in a village, or
         // dropping the blocks used to build it if it was built manually.
         // Configurable.
-        if (e.entity instanceof EntityIronGolem && !(e.entity instanceof EntityCustomGolem)) {
+        if (!e.world.isRemote && e.entity.getClass() == EntityIronGolem.class) {
             EntityIronGolem theGolem = (EntityIronGolem) e.entity;
-            if (!theGolem.isPlayerCreated()) {
-                if (GolemWorld.config.get("Vanilla", "replaceVillageSpawns", true)
-                        .getBoolean(true)) {
-                    int x, y, z;
-                    x = MathHelper.floor_double(theGolem.posX);
-                    y = MathHelper.floor_double(theGolem.posY);
-                    z = MathHelper.floor_double(theGolem.posZ);
-                    e.world.removeEntity(theGolem);
-                    GolemRegistry.spawnRandomGolem(e.world, x, y, z);
-                }
-            } else if (GolemWorld.config.get("Vanilla", "deleteConstructedGolems", false)
-                    .getBoolean(false)) {
-                theGolem.entityDropItem(new ItemStack(Block.blockIron, 3), 0F);
-                theGolem.entityDropItem(new ItemStack(Block.pumpkin), 0F);
-                theGolem.setDead();
+            theGolem.worldObj.removeEntity(theGolem);
+            if(theGolem.isPlayerCreated()){
+                GolemRegistry.spawnGolem("iron golem", theGolem.worldObj, theGolem.posX, theGolem.posY, theGolem.posZ).setCreator(theGolem.isPlayerCreated()?"$unknown$":null);
+            }else{
+                GolemRegistry.spawnRandomVillageGolem(theGolem.worldObj, theGolem.posX, theGolem.posY, theGolem.posZ);
             }
         }
     }

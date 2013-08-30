@@ -29,6 +29,7 @@ public class EntityIceGolem extends EntityCustomGolem {
         stats.name = "Ice Golem";
         stats.texture = Reference.mobTexture("ice_golem_light");
         stats.droppedItems(new ItemStack(Block.ice, 3));
+        stats.villageSpawnable = false;
     }
     
     public EntityIceGolem(World world) {

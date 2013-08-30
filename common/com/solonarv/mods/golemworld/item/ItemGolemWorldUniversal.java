@@ -59,10 +59,9 @@ public class ItemGolemWorldUniversal extends Item {
                     || !entityPlayer.capabilities.isCreativeMode) {
                 itemStack.stackSize--;
             }
-            if (entityPlayer != null)
-                entityPlayer.addChatMessage("Spawned golem: " + g.getName());
-        } else if (entityPlayer != null) {
-            entityPlayer.addChatMessage("No golem could be spawned.");
+            if (entityPlayer != null){
+                g.setCreator(entityPlayer.username);
+            }
         }
         if (g != null && entityPlayer != null) {
             g.setPlayerCreated(true);

@@ -52,7 +52,7 @@ public class BlockWithMeta {
      */
     public boolean isAt(World world, int x, int y, int z,
             TransactionDeleteBlocks remover) {
-        boolean result = b == null || world.getBlockId(x, y, z) == b.blockID
+        boolean result = b == null || b.isAssociatedBlockID(world.getBlockId(x, y, z))
                 && (m == -1 || world.getBlockMetadata(x, y, z) == m);
         if (result && b != null && remover != null) {
             remover.addAction(world, x, y, z);

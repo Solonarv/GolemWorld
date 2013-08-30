@@ -11,17 +11,19 @@ import net.minecraft.util.ResourceLocation;
  * 
  */
 public class GolemStats {
-    public int              maxHealth;
-    public String           name;
+    public int maxHealth;
+    public String name;
     
     /**
      * Parameters of attack damage normal distr
      */
-    public float            attackDamageMean, attackDamageStdDev;
+    public float attackDamageMean, attackDamageStdDev;
     
-    public ItemStack[]      droppedItems;
+    public ItemStack[] droppedItems;
     
     public ResourceLocation texture;
+    
+    public boolean smart = false, villageSpawnable = true;
     
     /**
      * Utility method to fill the droppeItems array

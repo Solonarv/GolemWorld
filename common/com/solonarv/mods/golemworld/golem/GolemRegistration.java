@@ -19,10 +19,11 @@ public class GolemRegistration {
      * The blocks that the golem is built out of. null means that the block at
      * that position does not matter.
      */
-    BlockWithMeta                                upperBody, lowerBody,
+    BlockWithMeta upperBody, lowerBody,
             shoulders, arms, legs;
     protected Class<? extends EntityCustomGolem> golemClass;
-    public final boolean                         smart;
+    public final boolean smart, villageSpawnable;
+    private String golemName;
     
     /**
      * Full constructor: all other constructors delegate to this one. Also
@@ -47,13 +48,16 @@ public class GolemRegistration {
                 : new BlockWithMeta(null);;
         this.arms = arms != null ? arms : new BlockWithMeta(null);;
         this.legs = legs != null ? legs : new BlockWithMeta(null);;
-        boolean temp = false;
+        boolean tsmart = false, tvillage = true;
         try {
-            temp = (Boolean) golemClass.getMethod("isSmart").invoke(null);
+            GolemStats stats = (GolemStats) golemClass.getDeclaredField("stats").get(null);
+            tsmart = stats.smart;
+            tvillage = stats.villageSpawnable;
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            smart = temp;
+            this.smart = tsmart;
+            this.villageSpawnable = tvillage;
         }
     }
     
@@ -125,7 +129,7 @@ public class GolemRegistration {
      * @param z The z coord to spawn at
      * @return
      */
-    public EntityCustomGolem spawn(World world, int x, int y, int z) {
+    public EntityCustomGolem spawn(World world, double x, double y, double z) {
         EntityCustomGolem theGolem = null;
         try {
             theGolem = golemClass.getConstructor(World.class)
@@ -134,9 +138,20 @@ public class GolemRegistration {
             ex.printStackTrace();
         }
         if (theGolem != null) {
-            theGolem.setLocationAndAngles(x + .5d, y - 2, z + .5d, 0, 0);
+            theGolem.setLocationAndAngles(x, y, z, 0, 0);
             world.spawnEntityInWorld(theGolem);
         }
         return theGolem;
+    }
+
+    public String getGolemName() {
+        if(this.golemName == null){
+            try{
+                this.golemName = ((GolemStats) this.golemClass.getDeclaredField("stats").get(null)).name;
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return this.golemName;
     }
 }

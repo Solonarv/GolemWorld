@@ -13,11 +13,11 @@ import net.minecraft.world.World;
 import com.solonarv.mods.golemworld.golem.medium.EntityGlowstoneGolem;
 import com.solonarv.mods.golemworld.golem.medium.EntityRedstoneGolem;
 
-public class BlockGlowingRedstoneAir extends BlockContainer {
+public class BlockEnhancedAir extends BlockContainer {
     
-    public static final int LIGHT=1, REDSTONE=2;
+    public static final int LIGHT = 1, REDSTONE = 2;
     
-    public BlockGlowingRedstoneAir(int par1) {
+    public BlockEnhancedAir(int par1) {
         super(par1, Material.air);
         this.setBlockBounds(0, 0, 0, 0, 0, 0);
     }
@@ -84,7 +84,7 @@ public class BlockGlowingRedstoneAir extends BlockContainer {
         if(collidingGlowstoneGolems.isEmpty() && collidingRedstoneGolems.isEmpty()){
             world.setBlock(x, y, z, 0);
         }else{
-            world.setBlockMetadataWithNotify(x, y, z, (collidingGlowstoneGolems.isEmpty()?0:BlockGlowingRedstoneAir.LIGHT) | (collidingRedstoneGolems.isEmpty()?0:BlockGlowingRedstoneAir.REDSTONE), 3);
+            world.setBlockMetadataWithNotify(x, y, z, (collidingGlowstoneGolems.isEmpty()?0:LIGHT) | (collidingRedstoneGolems.isEmpty()?0:REDSTONE), 3);
         }
     }
 

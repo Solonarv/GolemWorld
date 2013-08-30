@@ -12,6 +12,7 @@ import com.solonarv.mods.golemworld.golem.medium.EntityGlowstoneGolem;
 import com.solonarv.mods.golemworld.golem.medium.EntityIceGolem;
 import com.solonarv.mods.golemworld.golem.medium.EntityNetherrackGolem;
 import com.solonarv.mods.golemworld.golem.medium.EntityRedstoneGolem;
+import com.solonarv.mods.golemworld.golem.medium.EntitySwitchableGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntityClayGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntityDiamondGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntityDirtGolem;
@@ -38,7 +39,8 @@ public class GolemRegistry {
     /**
      * A list of all the {@link GolemRegistration}s
      */
-    protected static List<GolemRegistration> entries = new ArrayList<GolemRegistration>();
+    protected static List<GolemRegistration> entries = new ArrayList<GolemRegistration>(),
+            villageSpawnableGolems = new ArrayList<GolemRegistration>();
     /**
      * The GolemRegistry has its own RNG
      */
@@ -64,8 +66,11 @@ public class GolemRegistry {
             Class<? extends EntityCustomGolem> golemClass,
             BlockWithMeta upperBody, BlockWithMeta lowerBody,
             BlockWithMeta shoulders, BlockWithMeta arms, BlockWithMeta legs) {
-        entries.add(new GolemRegistration(golemClass, upperBody, lowerBody,
-                shoulders, arms, legs));
+        GolemRegistration reg = new GolemRegistration(golemClass, upperBody, lowerBody,
+                shoulders, arms, legs); 
+        entries.add(reg);
+        if(reg.villageSpawnable)
+            villageSpawnableGolems.add(reg);
         EntityRegistry.registerModEntity(golemClass, golemClass.getName(),
                 nextID++, GolemWorld.instance, 40, 1, true);
     }
@@ -161,19 +166,12 @@ public class GolemRegistry {
      * Iron Golems spawned in villages.
      * 
      * @param world The world to spawn in
-     * @param x x coord to spawn at
-     * @param y y coord to spawn at
-     * @param z z coord to spawn at
+     * @param posX x coord to spawn at
+     * @param posY y coord to spawn at
+     * @param posZ z coord to spawn at
      */
-    public static void spawnRandomGolem(World world, int x, int y, int z) {
-        ArrayList<GolemRegistration> dumbGolems = new ArrayList<GolemRegistration>();
-        for (GolemRegistration gr : entries) {
-            if (!gr.smart) {
-                dumbGolems.add(gr);
-            }
-        }
-        int i = rand.nextInt(dumbGolems.size());
-        dumbGolems.get(i).spawn(world, x, y, z);
+    public static void spawnRandomVillageGolem(World world, double posX, double posY, double posZ) {
+        villageSpawnableGolems.get(rand.nextInt(villageSpawnableGolems.size())).spawn(world, posX, posY, posZ);
     }
     
     /**
@@ -196,6 +194,7 @@ public class GolemRegistry {
         GolemRegistry.registerGolem(EntityNetherrackGolem.class, Block.netherrack, Block.netherrack, Block.fire, Block.netherrack, null);
         GolemRegistry.registerGolem(EntityRedstoneGolem.class, Block.blockRedstone, GolemShapes.DEFAULT);
         GolemRegistry.registerGolem(EntityGlowstoneGolem.class, Block.glowStone, GolemShapes.DEFAULT);
+        GolemRegistry.registerGolem(EntitySwitchableGolem.class, Block.lever, Block.blockRedstone, null, Block.blockIron, null);
     }
     
     public static List<Class<? extends EntityCustomGolem>> getGolemClasses() {
@@ -204,5 +203,18 @@ public class GolemRegistry {
             ret.add(reg.golemClass);
         }
         return ret;
+    }
+    
+    public static EntityCustomGolem spawnGolem(String golemName, World world, double x, double y, double z){
+        GolemRegistration reg = null;
+        for(GolemRegistration gr : entries){
+            if(golemName.equalsIgnoreCase(gr.getGolemName())){
+                reg=gr;
+                break;
+            }
+        }
+        if(reg != null){
+            return reg.spawn(world, x, y, z);
+        } else return null;
     }
 }
