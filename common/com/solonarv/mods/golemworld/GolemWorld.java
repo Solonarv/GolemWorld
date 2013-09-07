@@ -1,13 +1,13 @@
 package com.solonarv.mods.golemworld;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 import net.minecraft.potion.Potion;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.solonarv.mods.golemworld.block.ModBlocks;
 import com.solonarv.mods.golemworld.block.TileEntityTicker;
 import com.solonarv.mods.golemworld.golem.GolemRegistry;
 import com.solonarv.mods.golemworld.item.ModItems;
@@ -17,6 +17,7 @@ import com.solonarv.mods.golemworld.localization.Localization;
 import com.solonarv.mods.golemworld.potion.PotionFreeze;
 import com.solonarv.mods.golemworld.proxy.CommonProxy;
 import com.solonarv.mods.golemworld.util.EntityGolemFireball;
+import com.solonarv.mods.golemworld.util.ReflectionHelper;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -63,26 +64,15 @@ public class GolemWorld {
         config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
         ModItems.registerItems();
+        ModBlocks.init();
         GolemRegistry.registerGolems();
         EntityRegistry.registerModEntity(EntityGolemFireball.class,
                 EntityGolemFireball.class.getName(), 0, this, 40, 1, true);
         GameRegistry.registerTileEntity(TileEntityTicker.class, "TileEntityTicker");
-        try {
-            for(Field f: Potion.class.getDeclaredFields()){
-                f.setAccessible(true);
-                if(f.getName().equals("potionTypes") || f.getName().equals("field_76425_a")){
-                    Field modifiers=Field.class.getDeclaredField("modifiers");
-                    modifiers.setAccessible(true);
-                    modifiers.setInt(f, f.getModifiers() & ~Modifier.FINAL);
-                    Potion[] oldPotionTypes=(Potion[]) f.get(null);
-                    Potion[] newPotionTypes=Arrays.copyOf(oldPotionTypes, 256);
-                    f.set(null, newPotionTypes);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        fixPotionArray();
     }
+
+    
     
     @EventHandler
     public void load(FMLInitializationEvent event) {
@@ -100,4 +90,20 @@ public class GolemWorld {
      */
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {}
+    
+    /**
+     * Make potion array bigger so so we can have more then 32 different potion effects
+     */
+    public void fixPotionArray() {
+        try {
+            Field f = ReflectionHelper.getFieldByNames(Potion.class, "potionTypes", "field_76425_a");
+            Field modifiers=Field.class.getDeclaredField("modifiers");
+            ReflectionHelper.makeNotFinal(f);
+            Potion[] oldPotionTypes=(Potion[]) f.get(null);
+            Potion[] newPotionTypes=Arrays.copyOf(oldPotionTypes, 256);
+            f.set(null, newPotionTypes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
