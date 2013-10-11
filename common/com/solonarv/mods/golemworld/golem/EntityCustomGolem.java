@@ -106,10 +106,10 @@ public abstract class EntityCustomGolem extends EntityIronGolem implements Entit
      * Updates the mob's attributes, probably gets called on init.
      */
     @Override
-    protected void func_110147_ax() {
-        super.func_110147_ax();
-        this.func_110148_a(SharedMonsterAttributes.field_111267_a)
-                .func_111128_a(this.stats().maxHealth);
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute((SharedMonsterAttributes.maxHealth))
+                .setAttribute(this.stats().maxHealth);
     }
     
     /**

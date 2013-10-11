@@ -25,7 +25,7 @@ public class ModBlocks {
             try {
                 pumpkinField.set(null, null);
                 Block.blocksList[pumpkinID] = null;
-                fixedPumpkin = (BlockPumpkinFixed) new BlockPumpkinFixed(pumpkinID, false).setHardness(1.0F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("pumpkin").func_111022_d("pumpkin");
+                fixedPumpkin = (BlockPumpkinFixed) new BlockPumpkinFixed(pumpkinID, false).setHardness(1.0F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("pumpkin").setTextureName("pumpkin");
                 Block.blocksList[pumpkinID] = fixedPumpkin;
                 pumpkinField.set(null, fixedPumpkin);
             } catch (IllegalArgumentException e) {
@@ -41,7 +41,7 @@ public class ModBlocks {
             try {
                 pumpkinLanternField.set(null, null);
                 Block.blocksList[pumpkinLanternID] = null;
-                fixedPumpkinLantern = (BlockPumpkinFixed) new BlockPumpkinFixed(pumpkinLanternID, true).setHardness(1.0F).setStepSound(Block.soundWoodFootstep).setLightValue(1.0F).setUnlocalizedName("litpumpkin").func_111022_d("pumpkin");
+                fixedPumpkinLantern = (BlockPumpkinFixed) new BlockPumpkinFixed(pumpkinLanternID, true).setHardness(1.0F).setStepSound(Block.soundWoodFootstep).setLightValue(1.0F).setUnlocalizedName("litpumpkin").setTextureName("pumpkin");
                 Block.blocksList[pumpkinLanternID] = fixedPumpkinLantern;
                 pumpkinLanternField.set(null, fixedPumpkinLantern);
             } catch (IllegalArgumentException e) {

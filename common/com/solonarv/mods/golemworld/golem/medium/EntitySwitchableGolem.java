@@ -27,7 +27,7 @@ public class EntitySwitchableGolem extends EntityCustomGolem {
         stats.villageSpawnable = false;
     }
     
-    private boolean active;
+    private boolean active; 
     
     public EntitySwitchableGolem(World world) {
         super(world);
@@ -36,9 +36,9 @@ public class EntitySwitchableGolem extends EntityCustomGolem {
     public void toggle(){
         this.active = !this.active;
         if(this.active){
-            this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111128_a(0.25D);
+            this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(.25D);
         }else{
-            this.func_110148_a(SharedMonsterAttributes.field_111263_d).func_111128_a(0);
+            this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0D);
         }
     }
     
@@ -51,7 +51,8 @@ public class EntitySwitchableGolem extends EntityCustomGolem {
     @Override
     public void readEntityFromNBT(NBTTagCompound nbt){
         super.readEntityFromNBT(nbt);
-        this.active=nbt.getBoolean("active");
+        this.active = !nbt.getBoolean("active");
+        this.toggle();
     }
     
     @Override

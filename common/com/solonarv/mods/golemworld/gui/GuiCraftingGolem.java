@@ -1,6 +1,5 @@
 package com.solonarv.mods.golemworld.gui;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 
@@ -23,7 +22,6 @@ public class GuiCraftingGolem extends GuiGolem {
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
         GL11.glColor4f(1,1,1,1);
         
-        Minecraft.getMinecraft().func_110434_K().func_110577_a(texture);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, this.xSize, this.ySize);
     }
     

@@ -26,17 +26,17 @@ public class ModItems {
      * paper used.
      */
     public static ItemGolemWorldUniversal golemWorldUniversal = (ItemGolemWorldUniversal) new ItemGolemWorldUniversal(ItemGWId).setMaxStackSize(64)
-            .setCreativeTab(CreativeTabs.tabMisc).setUnlocalizedName("paperOfAwakening").func_111206_d(Reference.texture("paperOfAwakening").toString());
+            .setCreativeTab(CreativeTabs.tabMisc).setUnlocalizedName("paperOfAwakening").setTextureName(Reference.texture("paperOfAwakening").toString());
     
     /**
      * Register my items with the game and make them craftable
      */
     public static void registerItems() {
-        GameRegistry.addRecipe(golemWorldUniversal.stack(0),new Object[] {"grg", "rpr", "grg",
+        GameRegistry.addRecipe(golemWorldUniversal.stack(8, 0),new Object[] {"grg", "rpr", "grg",
             'g', Item.glowstone,
             'r', Item.redstone,
             'p', Item.paper });
-        GameRegistry.addRecipe(golemWorldUniversal.stack(0),new Object[] {"grg", "rpr", "grg",
+        GameRegistry.addRecipe(golemWorldUniversal.stack(8, 0),new Object[] {"grg", "rpr", "grg",
             'r', Item.glowstone,
             'g', Item.redstone,
             'p', Item.paper });

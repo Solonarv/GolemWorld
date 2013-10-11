@@ -18,6 +18,6 @@ public class PotionFreeze extends Potion {
     
     public static void init(){
         instance=(PotionFreeze) new PotionFreeze(32, true, 0).setIconIndex(0, 0).setPotionName("potion.freeze");
-        instance.func_111184_a(SharedMonsterAttributes.field_111263_d, "6a80c830-745d-4edd-8a17-e580f813bf20", -1D, 2);
+        instance.func_111184_a(SharedMonsterAttributes.movementSpeed, "6a80c830-745d-4edd-8a17-e580f813bf20", -1D, 2);
     }
 }
