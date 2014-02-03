@@ -23,9 +23,9 @@ public class EntityIceGolem extends EntityCustomGolem {
     public static final int freezeDuration=GolemWorld.config.get("Golem", "iceGolemFreezeTime", 5).getInt() * Reference.MAX_TPS;
     
     static {
-        stats.maxHealth = 20;
-        stats.attackDamageMean = 10f;
-        stats.attackDamageStdDev = 3.5f;
+        stats.maxHealth = 15;
+        stats.attackDamageMean = 8;
+        stats.attackDamageStdDev = 3;
         stats.name = "Ice Golem";
         stats.texture = Reference.mobTexture("ice_golem_light");
         stats.droppedItems(new ItemStack(Block.ice, 3));

@@ -14,9 +14,9 @@ public class EntityQuartzGolem extends EntityCustomGolem {
     
     public static final GolemStats stats = new GolemStats();
     static {
-        stats.maxHealth = 110;
-        stats.attackDamageMean = 12f;
-        stats.attackDamageStdDev = 1f;
+        stats.maxHealth = 100;
+        stats.attackDamageMean = 14;
+        stats.attackDamageStdDev = 2;
         stats.name = "Quartz Golem";
         stats.texture = Reference.mobTexture("quartz_golem");
         stats.droppedItems(new ItemStack(Item.netherQuartz, 5));
@@ -35,8 +35,8 @@ public class EntityQuartzGolem extends EntityCustomGolem {
     }
     
     @Override
-    public float getAttackStrength(Entity target){
-        return super.getAttackStrength(target) * (this.charging > 0 && target == this.getAttackTarget() ? 1.5f: 1);
+    public float getAttackStrength(Entity target, boolean used){
+        return super.getAttackStrength(target, used) * (this.charging > 0 && target == this.getAttackTarget() ? 1.5f: 1);
     }
     
     @Override

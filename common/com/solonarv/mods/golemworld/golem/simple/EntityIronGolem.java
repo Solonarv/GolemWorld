@@ -13,8 +13,8 @@ public class EntityIronGolem extends EntitySimpleGolem {
     static {
         // Initialize stats
         stats.maxHealth = 100;
-        stats.attackDamageMean = 14.5f;
-        stats.attackDamageStdDev = 1.5f;
+        stats.attackDamageMean = 14;
+        stats.attackDamageStdDev = 3;
         stats.name = "Iron Golem";
         stats.texture = new ResourceLocation("textures/entity/iron_golem.png");
         stats.droppedItems(new ItemStack(Item.ingotIron, 5), new ItemStack(

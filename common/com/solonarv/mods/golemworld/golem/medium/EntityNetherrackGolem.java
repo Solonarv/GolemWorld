@@ -36,9 +36,9 @@ public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedA
     
     public static final GolemStats stats                 = new GolemStats();
     static {
-        stats.maxHealth = 60;
-        stats.attackDamageMean = 10f;
-        stats.attackDamageStdDev = 1f;
+        stats.maxHealth = 30;
+        stats.attackDamageMean = 0;
+        stats.attackDamageStdDev = 0;
         stats.name = "Netherrack Golem";
         stats.texture = Reference.mobTexture("netherrack_golem");
         stats.droppedItems(new ItemStack(Block.netherrack, 4));

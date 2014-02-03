@@ -10,9 +10,9 @@ import com.solonarv.mods.golemworld.lib.Reference;
 public class EntityStoneGolem extends EntitySimpleGolem {
     public static final GolemStats stats = new GolemStats();
     static {
-        stats.maxHealth = 110;
-        stats.attackDamageMean = 12f;
-        stats.attackDamageStdDev = 1f;
+        stats.maxHealth = 50;
+        stats.attackDamageMean = 10;
+        stats.attackDamageStdDev = 1.5f;
         stats.name = "Stone Golem";
         stats.texture = Reference.mobTexture("stone_golem");
         stats.droppedItems(new ItemStack(Block.cobblestone, 2));

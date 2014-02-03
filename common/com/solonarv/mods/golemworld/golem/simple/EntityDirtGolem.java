@@ -12,9 +12,9 @@ public class EntityDirtGolem extends EntitySimpleGolem {
     public static final GolemStats stats = new GolemStats();
     static {
         // Initialize stats
-        stats.maxHealth = 15;
-        stats.attackDamageMean = 6f;
-        stats.attackDamageStdDev = 1.2f;
+        stats.maxHealth = 10;
+        stats.attackDamageMean = 2;
+        stats.attackDamageStdDev = 1;
         stats.name = "Dirt Golem";
         stats.texture = Reference.mobTexture("dirt_golem");
         stats.droppedItems(new ItemStack(Block.dirt, 3));

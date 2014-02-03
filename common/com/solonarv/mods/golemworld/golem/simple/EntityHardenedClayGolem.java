@@ -12,9 +12,9 @@ public class EntityHardenedClayGolem extends EntityCustomGolem{
     
     public static final GolemStats stats = new GolemStats();
     static {
-        stats.maxHealth = 60;
-        stats.attackDamageMean = 10f;
-        stats.attackDamageStdDev = 1f;
+        stats.maxHealth = 35;
+        stats.attackDamageMean = 8;
+        stats.attackDamageStdDev = 4;
         stats.name = "Hardened Clay Golem";
         stats.texture = Reference.mobTexture("hardened_clay_golem");
         stats.droppedItems(new ItemStack(Block.hardenedClay, 3));

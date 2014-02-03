@@ -17,9 +17,9 @@ public class EntityGlowstoneGolem extends EntityCustomGolem {
     public static final GolemStats stats = new GolemStats();
     
     static {
-        stats.maxHealth = 20;
-        stats.attackDamageMean = 10f;
-        stats.attackDamageStdDev = .5f;
+        stats.maxHealth = 15;
+        stats.attackDamageMean = 6;
+        stats.attackDamageStdDev = 1;
         stats.name = "Glowstone Golem";
         stats.texture = Reference.mobTexture("glowstone_golem");
         stats.droppedItems(new ItemStack(Item.glowstone, 3));

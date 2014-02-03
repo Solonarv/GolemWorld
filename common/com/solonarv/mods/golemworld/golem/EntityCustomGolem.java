@@ -72,7 +72,7 @@ public abstract class EntityCustomGolem extends EntityIronGolem implements Entit
         attackTimer = 10;
         worldObj.setEntityState(this, (byte) 4);
         boolean flag = par1Entity.attackEntityFrom(
-                DamageSource.causeMobDamage(this), this.getAttackStrength(par1Entity));
+                DamageSource.causeMobDamage(this), this.getAttackStrength(par1Entity,true));
         
         if (flag) {
             par1Entity.motionY += 0.4000000059604645D;
@@ -88,7 +88,7 @@ public abstract class EntityCustomGolem extends EntityIronGolem implements Entit
      * 
      * @return randomized attack damage
      */
-    public float getAttackStrength(Entity attackTarget) {
+    public float getAttackStrength(Entity attackTarget, boolean used) {
         return this.stats().attackDamageMean + ((float) (rand.nextGaussian()))
                 * this.stats().attackDamageStdDev;
     };

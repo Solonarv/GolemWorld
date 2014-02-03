@@ -18,9 +18,9 @@ public class EntityRedstoneGolem extends EntityCustomGolem {
     public static final GolemStats stats = new GolemStats();
     
     static {
-        stats.maxHealth = 20;
-        stats.attackDamageMean = 5f;
-        stats.attackDamageStdDev = 1f;
+        stats.maxHealth = 30;
+        stats.attackDamageMean = 6;
+        stats.attackDamageStdDev = .5f;
         stats.name = "Redstone Golem";
         stats.texture = Reference.mobTexture("redstone_golem");
         stats.droppedItems(new ItemStack(Item.redstone, 5));

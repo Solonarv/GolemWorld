@@ -1,18 +1,20 @@
-package com.solonarv.mods.golemworld.golem.simple;
+package com.solonarv.mods.golemworld.golem.medium;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
 
-public class EntityObsidianGolem extends EntitySimpleGolem {
+public class EntityObsidianGolem extends EntityCustomGolem {
     public static final GolemStats stats = new GolemStats();
     static {
-        stats.maxHealth = 150;
-        stats.attackDamageMean = 10f;
-        stats.attackDamageStdDev = .3f;
+        stats.maxHealth = 300;
+        stats.attackDamageMean = 8;
+        stats.attackDamageStdDev = .5f;
         stats.name = "Obsidian Golem";
         stats.texture = Reference.mobTexture("obsidian_golem");
         stats.droppedItems(new ItemStack(Block.obsidian, 2));
@@ -20,5 +22,11 @@ public class EntityObsidianGolem extends EntitySimpleGolem {
     
     public EntityObsidianGolem(World world) {
         super(world);
+    }
+    
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float dmg){
+        // Immune to explosions
+        return source.isExplosion() ? false : super.attackEntityFrom(source, dmg);
     }
 }

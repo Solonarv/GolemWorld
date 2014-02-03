@@ -10,8 +10,8 @@ import com.solonarv.mods.golemworld.lib.Reference;
 public class EntityEmeraldGolem extends EntitySimpleGolem {
     public static final GolemStats stats = new GolemStats();
     static {
-        stats.maxHealth = 100;
-        stats.attackDamageMean = 16f;
+        stats.maxHealth = 200;
+        stats.attackDamageMean = 17f;
         stats.attackDamageStdDev = 0f;
         stats.name = "Emerald Golem";
         stats.texture = Reference.mobTexture("emerald_golem");
