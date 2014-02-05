@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
 import com.solonarv.mods.golemworld.GolemWorld;
+import com.solonarv.mods.golemworld.golem.medium.EntityGlassGolem;
 import com.solonarv.mods.golemworld.golem.medium.EntityGlowstoneGolem;
 import com.solonarv.mods.golemworld.golem.medium.EntityGoldGolem;
 import com.solonarv.mods.golemworld.golem.medium.EntityIceGolem;
@@ -21,7 +22,6 @@ import com.solonarv.mods.golemworld.golem.simple.EntityClayGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntityDiamondGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntityDirtGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntityEmeraldGolem;
-import com.solonarv.mods.golemworld.golem.simple.EntityGlassGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntityHardenedClayGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntityIronGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntitySandstoneGolem;
