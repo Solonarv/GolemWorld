@@ -1,16 +1,15 @@
 package com.solonarv.mods.golemworld.golem.medium;
 
-import java.util.LinkedList;
-
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import com.solonarv.mods.golemworld.GolemWorld;
 import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.proxy.ClientProxy;
 
 public class EntityLapisGolem extends EntityCustomGolem {
     public static final GolemStats stats = new GolemStats();
@@ -27,30 +26,32 @@ public class EntityLapisGolem extends EntityCustomGolem {
         super(world);
     }
     
-    private LinkedList<Vec3> lastPositions=new LinkedList<Vec3>();
+    private double lastX, lastY, lastZ;
     
-    public static final String LAPIS_PARTICLE="tilecrack_"+Block.blockLapis.blockID+"_0";
-    public static final int MAX_TRAIL_LENGTH=64;
+    public static final int TRAIL_LIFETIME=1800; //Half an hour
+    public static final double TRAIL_STEP=.1;
     
     public void onLivingUpdate(){
         super.onLivingUpdate();
-        if(!this.worldObj.isRemote){
-            // Advance the past position queue if necessary
-            Vec3 lastPos=lastPositions.peekLast();
-            if(lastPos==null || lastPos.squareDistanceTo(this.posX, this.posY, this.posZ)>=1){
-                if(lastPositions.size()>=MAX_TRAIL_LENGTH){
-                    lastPositions.remove();
-                }
-                lastPositions.offer(Vec3.fakePool.getVecFromPool(this.posX, this.posY, this.posZ));
+        int particleCount=(int) (this.rand.nextGaussian()*3+10);
+        if((this.posX-this.lastX) * (this.posX-this.lastX) +
+                (this.posY-this.lastY) * (this.posY-this.lastY) +
+                (this.posZ-this.lastZ) * (this.posZ-this.lastZ) >= TRAIL_STEP){
+            if(GolemWorld.proxy instanceof ClientProxy) for(int i=0; i<particleCount; i++){
+                GolemWorld.proxy.spawnLapisTrailFX(this.worldObj,
+                        this.posX+this.rand.nextGaussian()*2,
+                        (this.boundingBox.maxY+this.boundingBox.minY)/2+this.rand.nextGaussian()*3,
+                        this.posZ+this.rand.nextGaussian()*2,TRAIL_LIFETIME);
             }
         }
-        for(Vec3 point: lastPositions){
-            int particleCount=this.rand.nextInt(10);
-            for(int i=0; i<particleCount; i++){
-                this.worldObj.spawnParticle(LAPIS_PARTICLE,
-                        point.xCoord-1+this.rand.nextDouble()*2, point.yCoord-1+this.rand.nextDouble()*2, point.zCoord-1+this.rand.nextDouble()*2,
-                        4 * ((double)this.rand.nextDouble() - 0.5D), 1, ((double)this.rand.nextDouble() - 0.5D) * 4.0D);
-            }
-        }
+    }
+    
+    @Override
+    public boolean attackEntityFrom(DamageSource src, float dmg){
+        /*System.out.println("Stored positions:");
+        for(Vec3 pos: lastPositions){
+            System.out.println(String.format("  Vec3[%.2f,%.2f,%.2f]", pos.xCoord, pos.yCoord, pos.zCoord));
+        }*/
+        return super.attackEntityFrom(src, dmg);
     }
 }
