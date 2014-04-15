@@ -2,6 +2,7 @@ package com.solonarv.mods.golemworld.golem.medium;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -9,6 +10,7 @@ import net.minecraft.world.World;
 import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.util.ItemHelper;
 
 public class EntityQuartzGolem extends EntityCustomGolem {
     
@@ -19,7 +21,7 @@ public class EntityQuartzGolem extends EntityCustomGolem {
         stats.attackDamageStdDev = 2;
         stats.name = "Quartz Golem";
         stats.texture = Reference.mobTexture("quartz_golem");
-        stats.droppedItems(new ItemStack(Item.netherQuartz, 5));
+        stats.droppedItems(new ItemStack(Items.quartz, 5));
     }
 
     private int charging=0, chargeCooldown=0;

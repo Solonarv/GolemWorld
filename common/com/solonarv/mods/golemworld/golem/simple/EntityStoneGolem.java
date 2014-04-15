@@ -1,6 +1,6 @@
 package com.solonarv.mods.golemworld.golem.simple;
 
-import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -15,7 +15,7 @@ public class EntityStoneGolem extends EntitySimpleGolem {
         stats.attackDamageStdDev = 1.5f;
         stats.name = "Stone Golem";
         stats.texture = Reference.mobTexture("stone_golem");
-        stats.droppedItems(new ItemStack(Block.cobblestone, 2));
+        stats.droppedItems(new ItemStack(Blocks.cobblestone, 2));
     }
     
     public EntityStoneGolem(World world) {

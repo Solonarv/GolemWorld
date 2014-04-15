@@ -1,5 +1,6 @@
 package com.solonarv.mods.golemworld.golem.medium;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -10,6 +11,7 @@ import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
 import com.solonarv.mods.golemworld.proxy.ClientProxy;
+import com.solonarv.mods.golemworld.util.ItemHelper;
 
 public class EntityLapisGolem extends EntityCustomGolem {
     public static final GolemStats stats = new GolemStats();
@@ -19,7 +21,7 @@ public class EntityLapisGolem extends EntityCustomGolem {
         stats.attackDamageStdDev = 1.5f;
         stats.name = "Lapis Golem";
         stats.texture = Reference.mobTexture("lapis_golem");
-        stats.droppedItems(new ItemStack(Item.dyePowder, 5, 4));
+        stats.droppedItems(new ItemStack(Items.dye, 5, 4));
     }
     
     public EntityLapisGolem(World world) {

@@ -1,7 +1,7 @@
 package com.solonarv.mods.golemworld.golem.simple;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -17,8 +17,8 @@ public class EntityIronGolem extends EntitySimpleGolem {
         stats.attackDamageStdDev = 3;
         stats.name = "Iron Golem";
         stats.texture = new ResourceLocation("textures/entity/iron_golem.png");
-        stats.droppedItems(new ItemStack(Item.ingotIron, 5), new ItemStack(
-                Block.plantRed, 1));
+        stats.droppedItems(new ItemStack(Items.iron_ingot, 5), new ItemStack(
+                Blocks.red_flower, 1));
     }
     
     public EntityIronGolem(World world) {

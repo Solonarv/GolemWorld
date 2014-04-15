@@ -1,11 +1,13 @@
 package com.solonarv.mods.golemworld.golem.simple;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.util.ItemHelper;
 
 public class EntityDiamondGolem extends EntitySimpleGolem {
     public static final GolemStats stats = new GolemStats();
@@ -15,7 +17,7 @@ public class EntityDiamondGolem extends EntitySimpleGolem {
         stats.attackDamageStdDev = 2f;
         stats.name = "Diamond Golem";
         stats.texture = Reference.mobTexture("diamond_golem");
-        stats.droppedItems(new ItemStack(Item.diamond, 2));
+        stats.droppedItems(new ItemStack(Items.diamond, 2));
     }
     
     public EntityDiamondGolem(World world) {

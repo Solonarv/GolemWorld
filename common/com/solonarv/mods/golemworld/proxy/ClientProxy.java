@@ -31,7 +31,7 @@ public class ClientProxy extends CommonProxy {
     
     @Override
     public void tellPlayer(String string) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(string);
+        Minecraft.getMinecraft().thePlayer.sendChatMessage(string);
     }
     
     @Override

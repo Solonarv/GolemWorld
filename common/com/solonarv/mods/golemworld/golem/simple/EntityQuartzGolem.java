@@ -1,6 +1,6 @@
 package com.solonarv.mods.golemworld.golem.simple;
 
-import net.minecraft.item.Item;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -17,7 +17,7 @@ public class EntityQuartzGolem extends EntityCustomGolem {
         stats.attackDamageStdDev = 1f;
         stats.name = "Quartz Golem";
         stats.texture = Reference.mobTexture("quartz_golem");
-        stats.droppedItems(new ItemStack(Item.netherQuartz, 9));
+        stats.droppedItems(new ItemStack(Items.quartz, 9));
     }
     
     public EntityQuartzGolem(World world) {

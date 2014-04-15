@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
@@ -12,6 +13,7 @@ import net.minecraft.world.World;
 import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.util.ItemHelper;
 
 public class EntitySwitchableGolem extends EntityCustomGolem {
     
@@ -23,7 +25,7 @@ public class EntitySwitchableGolem extends EntityCustomGolem {
         stats.attackDamageStdDev = 2.5f;
         stats.name = "Switchable Golem";
         stats.texture = Reference.mobTexture("redstone_golem");
-        stats.droppedItems(new ItemStack(Block.pistonBase), new ItemStack(Block.lever));
+        stats.droppedItems(new ItemStack(Blocks.piston), new ItemStack(Blocks.lever));
         stats.villageSpawnable = false;
     }
     
@@ -36,9 +38,9 @@ public class EntitySwitchableGolem extends EntityCustomGolem {
     public void toggle(){
         this.active = !this.active;
         if(this.active){
-            this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(.25D);
+            this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(.25D);
         }else{
-            this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0D);
+            this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0D);
         }
     }
     

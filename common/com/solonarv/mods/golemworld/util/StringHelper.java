@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 public class StringHelper {
     public static String stringify(ItemStack is) {
         return is != null ? String.format(
-                "ItemStack{ ItemID=%d, stackSize=%d, damage=%d}", is.itemID,
+                "ItemStack{ Item=%s, stackSize=%d, damage=%d}", is.getUnlocalizedName(),
                 is.stackSize, is.getItemDamage()) : "ItemStack:null";
     }
     

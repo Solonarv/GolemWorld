@@ -11,6 +11,7 @@ import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
@@ -21,6 +22,7 @@ import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
 import com.solonarv.mods.golemworld.util.EntityGolemFireball;
+import com.solonarv.mods.golemworld.util.ItemHelper;
 
 public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedAttackMob {
     public EntityNetherrackGolem(World world) {
@@ -41,7 +43,7 @@ public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedA
         stats.attackDamageStdDev = 0;
         stats.name = "Netherrack Golem";
         stats.texture = Reference.mobTexture("netherrack_golem");
-        stats.droppedItems(new ItemStack(Block.netherrack, 4));
+        stats.droppedItems(new ItemStack(Blocks.netherrack, 4));
     }
     
     private int fireballCharges       = 64;

@@ -1,6 +1,7 @@
 package com.solonarv.mods.golemworld.golem.medium;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,6 +11,7 @@ import net.minecraft.world.World;
 import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.util.ItemHelper;
 
 public class EntityGoldGolem extends EntityCustomGolem {
     public static final GolemStats stats = new GolemStats();
@@ -19,7 +21,7 @@ public class EntityGoldGolem extends EntityCustomGolem {
         stats.attackDamageStdDev = .15f; // Actually this * theGolem.atkStrength 
         stats.name = "Gold Golem";
         stats.texture = Reference.mobTexture("gold_golem");
-        stats.droppedItems(new ItemStack(Item.ingotGold, 2));
+        stats.droppedItems(new ItemStack(Items.gold_ingot, 2));
     }
     
     public EntityGoldGolem(World world) {

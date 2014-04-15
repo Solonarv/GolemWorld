@@ -1,10 +1,13 @@
 package com.solonarv.mods.golemworld.item;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import javax.swing.Icon;
+
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
@@ -22,22 +25,17 @@ import com.solonarv.mods.golemworld.lib.Reference;
  */
 public class ItemGolemWorldUniversal extends Item {
     
-    public ItemGolemWorldUniversal(int id) {
-        super(id - Reference.ITEMID_SHIFT);
-        
-    }
-    
-    protected Icon[] icons;
+    protected IIcon[] icons;
     
     @Override
-    public void registerIcons(IconRegister ir) {
-        icons = new Icon[] {
+    public void registerIcons(IIconRegister ir) {
+        icons = new IIcon[] {
                 ir.registerIcon(Reference.texture("paperOfAwakening")),
-                Item.fireballCharge.getIconFromDamage(0) };
+                Items.fire_charge.getIconFromDamage(0) };
     }
     
     @Override
-    public Icon getIconFromDamage(int meta){
+    public IIcon getIconFromDamage(int meta){
         return this.icons[meta];
     }
     
@@ -60,7 +58,7 @@ public class ItemGolemWorldUniversal extends Item {
                 itemStack.stackSize--;
             }
             if (entityPlayer != null){
-                g.setCreator(entityPlayer.username);
+                g.setCreator(entityPlayer.getDisplayName());
             }
         }
         if (g != null && entityPlayer != null) {

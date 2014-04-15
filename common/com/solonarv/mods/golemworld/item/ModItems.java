@@ -1,9 +1,9 @@
 package com.solonarv.mods.golemworld.item;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
-import com.solonarv.mods.golemworld.GolemWorld;
 import com.solonarv.mods.golemworld.lib.Reference;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -17,29 +17,28 @@ import cpw.mods.fml.common.registry.GameRegistry;
  */
 public class ModItems {
     
-    public static final int ItemGWId = GolemWorld.config.getItem("GolemWorldUniversal", 5000).getInt();
-    
     /**
      * The mythic Paper of Awakening; when placed into a pumpkin above a
      * mystical construct, a fearsome creature known as a golem will form, ready
      * to smash your foes into oblivion. This operation permanently destroys the
      * paper used.
      */
-    public static ItemGolemWorldUniversal golemWorldUniversal = (ItemGolemWorldUniversal) new ItemGolemWorldUniversal(ItemGWId).setMaxStackSize(64)
+    public static ItemGolemWorldUniversal golemWorldUniversal = (ItemGolemWorldUniversal) new ItemGolemWorldUniversal().setMaxStackSize(64)
             .setCreativeTab(CreativeTabs.tabMisc).setUnlocalizedName("paperOfAwakening").setTextureName(Reference.texture("paperOfAwakening").toString());
     
     /**
      * Register my items with the game and make them craftable
      */
     public static void registerItems() {
+    	GameRegistry.registerItem(golemWorldUniversal, "itemGolemworldUniversal");
         GameRegistry.addRecipe(golemWorldUniversal.stack(8, 0),new Object[] {"grg", "rpr", "grg",
-            'g', Item.glowstone,
-            'r', Item.redstone,
-            'p', Item.paper });
+            'g', Items.glowstone_dust,
+            'r', Items.redstone,
+            'p', Items.paper });
         GameRegistry.addRecipe(golemWorldUniversal.stack(8, 0),new Object[] {"grg", "rpr", "grg",
-            'r', Item.glowstone,
-            'g', Item.redstone,
-            'p', Item.paper });
+            'r', Items.glowstone_dust,
+            'g', Items.redstone,
+            'p', Items.paper });
         
     }
 }

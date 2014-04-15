@@ -2,6 +2,7 @@ package com.solonarv.mods.golemworld.golem.medium;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -19,7 +20,7 @@ public class EntityGlassGolem extends EntityCustomGolem {
         stats.attackDamageStdDev = 6;
         stats.name = "Glass Golem";
         stats.texture = Reference.mobTexture("glass_golem");
-        stats.droppedItems(ItemHelper.stackFromName("glass", 3));
+        stats.droppedItems(new ItemStack(Blocks.glass, 3));
     }
 
     private float lastDamageDealt;

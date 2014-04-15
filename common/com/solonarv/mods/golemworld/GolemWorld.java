@@ -70,7 +70,7 @@ public class GolemWorld {
     @EventHandler
     public void load(FMLInitializationEvent event) {
         proxy.registerRenderer();
-        PotionFreeze.init();
+        //PotionFreeze.init();
         
         MinecraftForge.EVENT_BUS.register(GolemWorldEventHooks.instance());
        Localization.registerNames();

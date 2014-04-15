@@ -1,5 +1,7 @@
 package com.solonarv.mods.golemworld.golem.medium;
 
+import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -12,6 +14,7 @@ import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.golem.ai.GolemAIMoveTowardsRSTorch;
 import com.solonarv.mods.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.util.ItemHelper;
 
 public class EntityRedstoneGolem extends EntityCustomGolem {
     
@@ -23,7 +26,7 @@ public class EntityRedstoneGolem extends EntityCustomGolem {
         stats.attackDamageStdDev = .5f;
         stats.name = "Redstone Golem";
         stats.texture = Reference.mobTexture("redstone_golem");
-        stats.droppedItems(new ItemStack(Item.redstone, 5));
+        stats.droppedItems(new ItemStack(Items.redstone, 5));
     }
     
     public int lastX, lastY, lastZ;
@@ -33,6 +36,7 @@ public class EntityRedstoneGolem extends EntityCustomGolem {
         super(world);
     }
     
+
     @Override
     public void onLivingUpdate(){
         super.onLivingUpdate();
@@ -42,10 +46,10 @@ public class EntityRedstoneGolem extends EntityCustomGolem {
         if(mx!=this.lastX || my!=this.lastY || mz!=this.lastZ){
             this.lastX=mx; this.lastY=my; this.lastZ=mz;
             for(int x=mx; x<mx+2; x++) for(int y=my; y<my+3; y++) for(int z=mz; z<mz+2; z++)
-                if(this.worldObj.getBlockId(x, y, z) == ModBlocks.enhancedAir.blockID){
-                    this.worldObj.setBlockMetadataWithNotify(x, y, z, this.worldObj.getBlockMetadata(x, y, z) | BlockEnhancedAir.REDSTONE, 3);
+                if(Block.isEqualTo(this.worldObj.getBlock(x, y, z), ModBlocks.enhancedAir)){
+                    this.worldObj.setBlockMetadataWithNotify(x, y, z, this.worldObj.getBlockMetadata(x, y, z) | BlockEnhancedAir.LIGHT, 3);
                 }else if(this.worldObj.isAirBlock(x, y, z)){
-                    this.worldObj.setBlock(x, y, z, ModBlocks.enhancedAir.blockID, BlockEnhancedAir.REDSTONE, 3);
+                    this.worldObj.setBlock(x, y, z, ModBlocks.enhancedAir, BlockEnhancedAir.REDSTONE, 3);
                 }
         }
     }
@@ -57,9 +61,9 @@ public class EntityRedstoneGolem extends EntityCustomGolem {
         int my=MathHelper.floor_double(this.posY);
         int mz=MathHelper.floor_double(this.posZ);
         for(int x=mx; x<mx+2; x++) for(int y=my; y<my+3; y++) for(int z=mz; z<mz+2; z++)
-            if(this.worldObj.getBlockId(x, y, z)==ModBlocks.enhancedAir.blockID){
+            if(Block.isEqualTo(this.worldObj.getBlock(x, y, z), ModBlocks.enhancedAir)){
                 int meta=this.worldObj.getBlockMetadata(x, y, z);
-                if(meta == BlockEnhancedAir.REDSTONE){
+                if(meta == BlockEnhancedAir.LIGHT){
                     this.worldObj.setBlockToAir(x, y, z);
                 }else{
                     this.worldObj.setBlockMetadataWithNotify(x, y, z, meta & ~BlockEnhancedAir.REDSTONE, 3);

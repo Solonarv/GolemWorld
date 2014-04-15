@@ -5,6 +5,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -16,11 +17,12 @@ import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
 import com.solonarv.mods.golemworld.potion.PotionFreeze;
+import com.solonarv.mods.golemworld.util.ItemHelper;
 
 public class EntityIceGolem extends EntityCustomGolem {
     public static final GolemStats stats = new GolemStats();
     
-    public static final int freezeDuration=GolemWorld.config.get("Golem", "iceGolemFreezeTime", 5).getInt() * Reference.MAX_TPS;
+    public static final int freezeDuration=5 * Reference.MAX_TPS;
     
     static {
         stats.maxHealth = 15;
@@ -28,7 +30,7 @@ public class EntityIceGolem extends EntityCustomGolem {
         stats.attackDamageStdDev = 3;
         stats.name = "Ice Golem";
         stats.texture = Reference.mobTexture("ice_golem_light");
-        stats.droppedItems(new ItemStack(Block.ice, 3));
+        stats.droppedItems(new ItemStack(Blocks.ice, 3));
         stats.villageSpawnable = false;
     }
     
@@ -50,17 +52,21 @@ public class EntityIceGolem extends EntityCustomGolem {
                 .ceiling_double_int(this.posZ) + 1;
         int y = MathHelper.floor_double(this.posY) - 1;
         for (int x = xmin; x < xmax; x++)
-            for (int z = zmin; z < zmax; z++)
-                if (this.worldObj.getBlockMaterial(x, y, z) == Material.water) {
-                    this.worldObj.setBlock(x, y, z, Block.ice.blockID); // Water -> Ice
-                } else if (this.worldObj.getBlockMaterial(x, y, z) == Material.lava) {
+            for (int z = zmin; z < zmax; z++){
+            	Block block=this.worldObj.getBlock(x, y, z);
+                if (Block.isEqualTo(block, Block.getBlockFromName("water"))
+                		|| Block.isEqualTo(block, Block.getBlockFromName("flowing_water"))) {
+                    this.worldObj.setBlock(x, y, z, Block.getBlockFromName("ice")); // Water -> Ice
+                } else if (Block.isEqualTo(block, Block.getBlockFromName("lava"))
+                		|| Block.isEqualTo(block, Block.getBlockFromName("flowing_lava"))) {
                     int meta=this.worldObj.getBlockMetadata(x, y, z);
                     if(meta == 0){ // Source block
-                        this.worldObj.setBlock(x, y, z, Block.obsidian.blockID); // Lava source -> Obsidian
+                        this.worldObj.setBlock(x, y, z, Block.getBlockFromName("obsidian")); // Lava source -> Obsidian
                     }else if(meta < 8){
-                        this.worldObj.setBlock(x, y, z, Block.cobblestone.blockID); // Lava flow -> Cobble
+                        this.worldObj.setBlock(x, y, z, Block.getBlockFromName("cobblestone")); // Lava flow -> Cobble
                     }
                 }
+            }
         if (this.rand.nextInt(20) < 3) { // He /may/ extinguish himself
             this.extinguish();
         }
@@ -73,10 +79,10 @@ public class EntityIceGolem extends EntityCustomGolem {
         int _y = MathHelper.ceiling_double_int(this.posY);
         int _z = MathHelper.ceiling_double_int(this.posZ);
         for(int x=_x-1; x<=_x; x++) for(int y=_y-1; y<=_y; y++) for(int z=_z-1; z<=_z; z++){
-            Block blockAtFeet=Block.blocksList[this.worldObj.getBlockId(x, y, z)];
-            if(blockAtFeet==null || blockAtFeet.isAirBlock(this.worldObj, x, y, z)){
-                this.worldObj.setBlock(x, y, z, Block.waterStill.blockID);
-                this.worldObj.scheduleBlockUpdate(x, y, z, Block.waterStill.blockID, 1);
+            Block blockAtFeet=this.worldObj.getBlock(x, y, z);
+            if(blockAtFeet==null || blockAtFeet.isAir(this.worldObj, x, y, z)){
+                this.worldObj.setBlock(x, y, z, Block.getBlockFromName("water"));
+                this.worldObj.scheduleBlockUpdate(x, y, z, Block.getBlockFromName("water"), 1);
             }
         }
     }

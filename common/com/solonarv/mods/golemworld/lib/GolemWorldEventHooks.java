@@ -18,6 +18,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class GolemWorldEventHooks {
     @SubscribeEvent
     public void onLivingUpdate(LivingUpdateEvent event){
+    	/*
         if(event.entityLiving.isPotionActive(PotionFreeze.instance)){
             if(event.entityLiving.getActivePotionEffect(PotionFreeze.instance).getDuration() <= 0){
                 event.entityLiving.removePotionEffect(PotionFreeze.instance.id);
@@ -26,11 +27,12 @@ public class GolemWorldEventHooks {
             event.entityLiving.motionX=0;
             event.entityLiving.motionY=0;
             event.entityLiving.motionZ=0;
-        }   
+        }   /**/
     }
     
     @SubscribeEvent
     public void onLivingAttack(LivingAttackEvent event){
+    	/*
         if(event.entityLiving.isPotionActive(PotionFreeze.instance) && !(event.source instanceof DamageSourceShatter)){
             event.entityLiving.attackEntityFrom(DamageSourceShatter.instance(), Math.max((float) (3 * event.ammount), 6));
             event.entityLiving.removePotionEffect(PotionFreeze.instance.id);
@@ -38,28 +40,31 @@ public class GolemWorldEventHooks {
                 && event.source.getSourceOfDamage() instanceof EntityLivingBase
                 && ((EntityLivingBase)event.source.getSourceOfDamage()).isPotionActive(PotionFreeze.instance)){
             event.setCanceled(true);
-        }
+        } /**/
     }
     
     @SubscribeEvent
     public void onBreakSpeed(PlayerEvent.BreakSpeed event){
+    	/*
         if(event.entityLiving.isPotionActive(PotionFreeze.instance)){
             event.setCanceled(true);
-        }
+        }  /**/
     }
     
     @SubscribeEvent
     public void onEnderTeleport(EnderTeleportEvent event){
+    	/*
         if(event.entityLiving.isPotionActive(PotionFreeze.instance)){
             event.setCanceled(true);
-        }
+        }  /**/
     }
     
     @SubscribeEvent
     public void onArrowNock(ArrowNockEvent event){
+    	/*
         if(event.entityLiving.isPotionActive(PotionFreeze.instance)){
             event.setCanceled(true);
-        }
+        } /**/
     }
     
     /**

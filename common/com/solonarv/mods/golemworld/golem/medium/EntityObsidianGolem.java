@@ -1,6 +1,7 @@
 package com.solonarv.mods.golemworld.golem.medium;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -8,6 +9,7 @@ import net.minecraft.world.World;
 import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.util.ItemHelper;
 
 public class EntityObsidianGolem extends EntityCustomGolem {
     public static final GolemStats stats = new GolemStats();
@@ -17,7 +19,7 @@ public class EntityObsidianGolem extends EntityCustomGolem {
         stats.attackDamageStdDev = .5f;
         stats.name = "Obsidian Golem";
         stats.texture = Reference.mobTexture("obsidian_golem");
-        stats.droppedItems(new ItemStack(Block.obsidian, 2));
+        stats.droppedItems(new ItemStack(Blocks.obsidian, 2));
     }
     
     public EntityObsidianGolem(World world) {

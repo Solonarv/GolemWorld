@@ -37,7 +37,7 @@ public class Reference {
      * @return the texture location in Minecraft's new domain:name format
      */
     public final static String texture(String texPath) {
-        return MOD_ID.substring(0, 5) + ":" + texPath;
+        return MOD_ID + ":" + texPath;
     }
     
     public final static ResourceLocation mobTexture(String texName) {
