@@ -14,8 +14,9 @@ import com.solonarv.mods.golemworld.golem.GolemRegistry;
  * 
  */
 public class BlockWithMeta {
-    public Block b;
-    public int   m;
+    public String blockName;
+    public Block block;
+    public int   meta;
     
     /**
      * A simple identity constructor
@@ -23,9 +24,10 @@ public class BlockWithMeta {
      * @param block
      * @param meta
      */
-    public BlockWithMeta(Block block, int meta) {
-        b = block;
-        m = meta;
+    public BlockWithMeta(String block, int meta) {
+        this.blockName = block;
+        this.block=(block==null || block=="" || block=="air")?null:Block.getBlockFromName(block);
+        this.meta = meta;
     }
     
     /**
@@ -34,7 +36,7 @@ public class BlockWithMeta {
      * 
      * @param b
      */
-    public BlockWithMeta(Block b) {
+    public BlockWithMeta(String b) {
         this(b, -1);
     }
     
@@ -52,9 +54,9 @@ public class BlockWithMeta {
      */
     public boolean isAt(World world, int x, int y, int z,
             TransactionDeleteBlocks remover) {
-        boolean result = b == null || b.isAssociatedBlockID(world.getBlockId(x, y, z))
-                && (m == -1 || world.getBlockMetadata(x, y, z) == m);
-        if (result && b != null && remover != null) {
+        boolean result = this.block == null || Block.isEqualTo(world.getBlock(x, y, z), this.block)
+                && (this.meta == -1 || world.getBlockMetadata(x, y, z) == this.meta);
+        if (result && this.block != null && remover != null) {
             remover.addAction(world, x, y, z);
         }
         return result;

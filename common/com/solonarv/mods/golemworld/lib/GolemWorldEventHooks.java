@@ -2,7 +2,6 @@ package com.solonarv.mods.golemworld.lib;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -14,8 +13,10 @@ import com.solonarv.mods.golemworld.golem.GolemRegistry;
 import com.solonarv.mods.golemworld.potion.DamageSourceShatter;
 import com.solonarv.mods.golemworld.potion.PotionFreeze;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
 public class GolemWorldEventHooks {
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onLivingUpdate(LivingUpdateEvent event){
         if(event.entityLiving.isPotionActive(PotionFreeze.instance)){
             if(event.entityLiving.getActivePotionEffect(PotionFreeze.instance).getDuration() <= 0){
@@ -28,7 +29,7 @@ public class GolemWorldEventHooks {
         }   
     }
     
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onLivingAttack(LivingAttackEvent event){
         if(event.entityLiving.isPotionActive(PotionFreeze.instance) && !(event.source instanceof DamageSourceShatter)){
             event.entityLiving.attackEntityFrom(DamageSourceShatter.instance(), Math.max((float) (3 * event.ammount), 6));
@@ -40,21 +41,21 @@ public class GolemWorldEventHooks {
         }
     }
     
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onBreakSpeed(PlayerEvent.BreakSpeed event){
         if(event.entityLiving.isPotionActive(PotionFreeze.instance)){
             event.setCanceled(true);
         }
     }
     
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onEnderTeleport(EnderTeleportEvent event){
         if(event.entityLiving.isPotionActive(PotionFreeze.instance)){
             event.setCanceled(true);
         }
     }
     
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onArrowNock(ArrowNockEvent event){
         if(event.entityLiving.isPotionActive(PotionFreeze.instance)){
             event.setCanceled(true);
@@ -70,7 +71,7 @@ public class GolemWorldEventHooks {
      * 
      * @param e the {@link EntityJoinWorldEvent}
      */
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onEntityJoinWorld(EntityJoinWorldEvent e) {
         // This code effectively disables the vanilla iron golem by replacing it
         // with one of our golems if it spawns naturally, i.e. in a village, or

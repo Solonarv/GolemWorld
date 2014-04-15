@@ -31,8 +31,8 @@ public class GolemAIMoveTowardsRSTorch {
         for(int x = x0 - this.searchRadius; x < this.searchRadius; x++)
             for(int y = y0 - this.searchRadius; y < this.searchRadius; y++)
                 for(int z = z0 - this.searchRadius; z < this.searchRadius; z++){
-                    int id = this.theGolem.worldObj.getBlockId(x, y, z);
-                    if(id == Block.torchRedstoneActive.blockID){
+                    Block blk = this.theGolem.worldObj.getBlock(x, y, z);
+                    if(Block.isEqualTo(blk, Block.getBlockFromName("redstone_torch"))){
                         possibleTargets.add(Vec3.fakePool.getVecFromPool(x, y, z));
                     }
                 }

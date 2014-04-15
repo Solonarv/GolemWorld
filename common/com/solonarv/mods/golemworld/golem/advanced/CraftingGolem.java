@@ -33,7 +33,7 @@ public class CraftingGolem extends InventoryGolem {
                     temp.add(is);
                 } else {
                     for (ItemStack tis : temp) {
-                        if (tis.itemID == is.itemID
+                        if (tis.getItem() == is.getItem()
                                 && tis.getItemDamage() == is.getItemDamage()
                                 && ((tis.stackTagCompound == null && is.stackTagCompound == null) || (tis.stackTagCompound != null && is.stackTagCompound != null)
                                         && tis.stackTagCompound
@@ -52,4 +52,16 @@ public class CraftingGolem extends InventoryGolem {
         }
         return this.collatedRecipe;
     }
+
+	@Override
+	public void openInventory() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeInventory() {
+		// TODO Auto-generated method stub
+		
+	}
 }

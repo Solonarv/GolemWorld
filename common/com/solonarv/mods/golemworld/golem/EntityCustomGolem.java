@@ -1,7 +1,7 @@
 package com.solonarv.mods.golemworld.golem;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityOwnable;
+import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityIronGolem;
@@ -21,7 +21,7 @@ import net.minecraft.world.World;
  * @author Solonarv
  * @license LGPL v3
  */
-public abstract class EntityCustomGolem extends EntityIronGolem implements EntityOwnable{
+public abstract class EntityCustomGolem extends EntityIronGolem implements IEntityOwnable{
     
     /**
      * Overridden by all non-abstract subclasses: Holds this golem's maximum
@@ -109,7 +109,7 @@ public abstract class EntityCustomGolem extends EntityIronGolem implements Entit
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         this.getEntityAttribute((SharedMonsterAttributes.maxHealth))
-                .setAttribute(this.stats().maxHealth);
+                .setBaseValue(this.stats().maxHealth);
     }
     
     /**

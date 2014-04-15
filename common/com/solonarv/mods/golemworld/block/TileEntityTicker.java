@@ -16,7 +16,7 @@ public class TileEntityTicker extends TileEntity {
     public void updateEntity(){
         if(++this.timer > this.interval){
             this.timer=0;
-            Block b=Block.blocksList[this.worldObj.getBlockId(this.xCoord, this.yCoord, this.zCoord)];
+            Block b=this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord);
             if(b!=null){
                 b.updateTick(this.worldObj, this.xCoord, this.yCoord, this.zCoord, this.worldObj.rand);
             }

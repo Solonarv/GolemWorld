@@ -75,11 +75,11 @@ public class GolemRegistration {
      *         location
      */
     public boolean checkAt(World world, int x, int y, int z, boolean clearShape) {
-        int headID = world.getBlockId(x, y, z);
+        Block headBlock = world.getBlock(x, y, z);
         TransactionDeleteBlocks remove = clearShape ? new TransactionDeleteBlocks()
                 : null;
-        if (headID == Block.pumpkinLantern.blockID || !smart
-                && headID == Block.pumpkin.blockID) {
+        if (Block.isEqualTo(headBlock, Block.getBlockFromName("lit_pumpkin")) || !smart
+                && Block.isEqualTo(headBlock, Block.getBlockFromName("pumpkin"))) {
             if (upperBody.isAt(world, x, y - 1, z, remove)
                     && lowerBody.isAt(world, x, y - 2, z, remove)) {
                 // Check +-x first

@@ -3,6 +3,7 @@ package com.solonarv.mods.golemworld.block;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
@@ -17,13 +18,13 @@ public class BlockEnhancedAir extends BlockContainer {
     
     public static final int LIGHT = 1, REDSTONE = 2;
     
-    public BlockEnhancedAir(int par1) {
-        super(par1, Material.air);
+    public BlockEnhancedAir() {
+        super(Material.air);
         this.setBlockBounds(0, 0, 0, 0, 0, 0);
     }
     
     @Override
-    public boolean isAirBlock(World world, int x, int y, int z){
+    public boolean isAir(IBlockAccess world, int x, int y, int z){
         return true;
     }
     
@@ -73,23 +74,24 @@ public class BlockEnhancedAir extends BlockContainer {
     }
     
     @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, int id){
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block neighbor){
         this.recheckBlockState(world, x, y, z);
     }
     
-    public void recheckBlockState(World world, int x, int y, int z){
+    @SuppressWarnings("rawtypes")
+	public void recheckBlockState(World world, int x, int y, int z){
         AxisAlignedBB myAABB=AxisAlignedBB.getAABBPool().getAABB(x, y, z, x+1, y+1, z+1);
         List collidingGlowstoneGolems=world.getEntitiesWithinAABB(EntityGlowstoneGolem.class, myAABB);
         List collidingRedstoneGolems=world.getEntitiesWithinAABB(EntityRedstoneGolem.class, myAABB);
         if(collidingGlowstoneGolems.isEmpty() && collidingRedstoneGolems.isEmpty()){
-            world.setBlock(x, y, z, 0);
+            world.setBlock(x, y, z, Block.getBlockFromName("air"));
         }else{
             world.setBlockMetadataWithNotify(x, y, z, (collidingGlowstoneGolems.isEmpty()?0:LIGHT) | (collidingRedstoneGolems.isEmpty()?0:REDSTONE), 3);
         }
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world) {
+    public TileEntity createNewTileEntity(World world, int x) {
         return new TileEntityTicker(10);
     }
 }

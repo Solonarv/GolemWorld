@@ -6,13 +6,13 @@ import net.minecraft.world.World;
 
 public class BlockPumpkinFixed extends BlockPumpkin {
 
-    protected BlockPumpkinFixed(int par1, boolean par2) {
-        super(par1, par2);
+    protected BlockPumpkinFixed(boolean isLit) {
+        super(isLit);
     }
     
     @Override
     public boolean canPlaceBlockAt(World world, int x, int y, int z){
-        Block block = Block.blocksList[world.getBlockId(x, y, z)];
-        return block == null || block.isBlockReplaceable(world, x, y, z);
+        Block block = world.getBlock(x, y, z);
+        return block == null || block.isReplaceable(world, x, y, z);
     }
 }

@@ -13,7 +13,7 @@ public class RenderCustomGolem extends RenderIronGolem {
     }
     
     @Override
-    protected ResourceLocation getIronGolemTextures(EntityIronGolem theGolem) {
+    protected ResourceLocation getEntityTexture(EntityIronGolem theGolem) {
         return this.getGolemTexture((EntityCustomGolem) theGolem);
     }
     

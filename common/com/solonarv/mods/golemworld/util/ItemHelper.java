@@ -1,5 +1,7 @@
 package com.solonarv.mods.golemworld.util;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ItemHelper {
@@ -14,7 +16,7 @@ public class ItemHelper {
     public static boolean areStacksStackable(ItemStack par1, ItemStack par2,
             boolean checkNBT) {
         if (par1 == null || par2 == null) return false;
-        if (par1.itemID != par2.itemID) return false;
+        if (par1.getItem() != par2.getItem()) return false;
         if (par1.getItemDamage() != par2.getItemDamage()) return false;
         if (!checkNBT) return true;
         if (par1.stackTagCompound == null && par2.stackTagCompound == null)
@@ -37,5 +39,13 @@ public class ItemHelper {
             return true;
         } else
             return false;
+    }
+    
+    public static ItemStack stackFromName(String itemName, int qty, int meta){
+    	return new ItemStack((Item) Item.itemRegistry.getObject("glass"), qty, meta);
+    }
+    
+    public static ItemStack stackFromName(String itemName, int qty){
+    	return stackFromName(itemName, qty, 0);
     }
 }

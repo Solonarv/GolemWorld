@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
+import com.solonarv.mods.golemworld.util.ItemHelper;
 
 public class EntityGlassGolem extends EntityCustomGolem {
     public static final GolemStats stats = new GolemStats();
@@ -18,7 +19,7 @@ public class EntityGlassGolem extends EntityCustomGolem {
         stats.attackDamageStdDev = 6;
         stats.name = "Glass Golem";
         stats.texture = Reference.mobTexture("glass_golem");
-        stats.droppedItems(new ItemStack(Block.glass, 3));
+        stats.droppedItems(ItemHelper.stackFromName("glass", 3));
     }
 
     private float lastDamageDealt;

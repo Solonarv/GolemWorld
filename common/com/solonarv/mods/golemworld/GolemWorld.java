@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 
 import net.minecraft.potion.Potion;
-import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.solonarv.mods.golemworld.block.ModBlocks;
@@ -26,7 +25,6 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -40,7 +38,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
  * 
  */
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class GolemWorld {
     
     @Instance(Reference.MOD_ID)
@@ -52,24 +49,20 @@ public class GolemWorld {
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.COMMON_PROXY)
     public static CommonProxy   proxy;
     
-    public static Configuration config;
-    
     /**
-     * Initialize all our stuff: items, config, golems
+     * Initialize all our stuff: items, blocks, golems
      * 
      * @param event an {@link FMLPreInitializationEvent} containing some info
      */
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        config = new Configuration(event.getSuggestedConfigurationFile());
-        config.load();
         ModItems.registerItems();
         ModBlocks.init();
         GolemRegistry.registerGolems();
         EntityRegistry.registerModEntity(EntityGolemFireball.class,
                 EntityGolemFireball.class.getName(), 0, this, 40, 1, true);
         GameRegistry.registerTileEntity(TileEntityTicker.class, "TileEntityTicker");
-        fixPotionArray();
+        //fixPotionArray(); // Disabled until tested/adapted to 1.7
     }
 
     
@@ -94,6 +87,7 @@ public class GolemWorld {
     /**
      * Make potion array bigger so so we can have more then 32 different potion effects
      */
+    @Deprecated // TODO update to 1.7
     public void fixPotionArray() {
         try {
             Field f = ReflectionHelper.getFieldByNames(Potion.class, "potionTypes", "field_76425_a");
