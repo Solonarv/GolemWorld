@@ -23,19 +23,22 @@ public class ModItems {
      * to smash your foes into oblivion. This operation permanently destroys the
      * paper used.
      */
-    public static ItemGolemWorldUniversal golemWorldUniversal = (ItemGolemWorldUniversal) new ItemGolemWorldUniversal().setMaxStackSize(64)
-            .setCreativeTab(CreativeTabs.tabMisc).setUnlocalizedName("paperOfAwakening").setTextureName(Reference.texture("paperOfAwakening").toString());
+    public static ItemPaperOfAwakening paperOfAwakening = (ItemPaperOfAwakening) new ItemPaperOfAwakening()
+    	.setMaxStackSize(64)
+    	.setCreativeTab(CreativeTabs.tabMisc)
+    	.setUnlocalizedName(ItemPaperOfAwakening.itemName)
+    	.setTextureName(Reference.texture(ItemPaperOfAwakening.itemName));
     
     /**
      * Register my items with the game and make them craftable
      */
     public static void registerItems() {
-    	GameRegistry.registerItem(golemWorldUniversal, "itemGolemworldUniversal");
-        GameRegistry.addRecipe(golemWorldUniversal.stack(8, 0),new Object[] {"grg", "rpr", "grg",
+    	GameRegistry.registerItem(paperOfAwakening, "paperOfAwakening");
+        GameRegistry.addRecipe(paperOfAwakening.stack(8, 0),new Object[] {"grg", "rpr", "grg",
             'g', Items.glowstone_dust,
             'r', Items.redstone,
             'p', Items.paper });
-        GameRegistry.addRecipe(golemWorldUniversal.stack(8, 0),new Object[] {"grg", "rpr", "grg",
+        GameRegistry.addRecipe(paperOfAwakening.stack(8, 0),new Object[] {"grg", "rpr", "grg",
             'r', Items.glowstone_dust,
             'g', Items.redstone,
             'p', Items.paper });
