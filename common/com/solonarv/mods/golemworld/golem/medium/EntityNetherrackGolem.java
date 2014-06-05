@@ -63,9 +63,9 @@ public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedA
     	fuelValues.put(Items.blaze_rod, 12);
     }
     
-    private int fireballChargesReady = 0;
-    private int fireballRechargeTimer = 60;
-    private int fireballChargesStored = 16;
+    public int fireballChargesReady = 0;
+    public int fireballRechargeTimer = 60;
+    public int fireballChargesStored = 16;
     private boolean burning;
     
     @Override
