@@ -1,6 +1,9 @@
 package com.solonarv.mods.golemworld.golem.medium;
 
-import net.minecraft.block.Block;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
@@ -10,10 +13,14 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -22,7 +29,9 @@ import com.solonarv.mods.golemworld.golem.EntityCustomGolem;
 import com.solonarv.mods.golemworld.golem.GolemStats;
 import com.solonarv.mods.golemworld.lib.Reference;
 import com.solonarv.mods.golemworld.util.EntityGolemFireball;
-import com.solonarv.mods.golemworld.util.ItemHelper;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedAttackMob {
     public EntityNetherrackGolem(World world) {
@@ -46,13 +55,22 @@ public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedA
         stats.droppedItems(new ItemStack(Blocks.netherrack, 4));
     }
     
-    private int fireballCharges       = 64;
+    public static final Map<Item,Integer> fuelValues = new HashMap<Item, Integer>();
+    static {
+    	fuelValues.put(Items.fire_charge, 16);
+    	fuelValues.put(Items.coal, 4);
+    	fuelValues.put(Items.blaze_powder, 6);
+    	fuelValues.put(Items.blaze_rod, 12);
+    }
+    
+    private int fireballChargesReady = 0;
     private int fireballRechargeTimer = 60;
+    private int fireballChargesStored = 16;
     private boolean burning;
     
     @Override
     public boolean attackEntityAsMob(Entity e) {
-        if (this.fireballCharges<=0) {
+        if (this.fireballChargesReady<=0) {
             return super.attackEntityAsMob(e);
         }
         else return false;
@@ -63,27 +81,41 @@ public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedA
         super.onLivingUpdate();
         if (this.fireballRechargeTimer > 0) {
             this.fireballRechargeTimer--;
-        } else if (this.fireballCharges < 64) {
-            // Normal distro, I like these!
-            this.fireballCharges += MathHelper.clamp_int((int) Math.round(this.rand.nextGaussian() * 2 + 3), 1, 5);
-            this.fireballRechargeTimer = this.rand.nextInt(200)-this.rand.nextInt(200) + 400;
+        } else if (this.fireballChargesReady < 8 && this.fireballChargesStored > 0) {
+            this.fireballChargesReady++;
+            this.fireballChargesStored--;
+            this.fireballRechargeTimer = this.rand.nextInt(20)-this.rand.nextInt(20) + 40;
         }
         
+        if(!this.worldObj.isRemote){
+        	@SuppressWarnings("unchecked") // GGWP for clean Vanilla code
+			List<Entity> intersectingItems = this.worldObj.getEntitiesWithinAABB(EntityItem.class, this.boundingBox);
+	        for(Entity e: intersectingItems){
+	        	EntityItem theItem = (EntityItem) e; // No need to check, since we ask for only EntityItem's
+	        	ItemStack istack = theItem.getEntityItem();
+	        	if(fuelValues.containsKey(istack.getItem()) && istack.stackSize>0){
+	        		this.fireballChargesStored+=istack.stackSize * fuelValues.get(istack.getItem());
+	        		theItem.setDead();
+	        	}
+	        }
+        }
         //this.setPlayerCreated(false);
     }
     
     @Override
     public void writeEntityToNBT(NBTTagCompound nbt) {
         super.writeEntityToNBT(nbt);
-        nbt.setInteger("fireballCharges", this.fireballCharges);
+        nbt.setInteger("fireballChargesReady", this.fireballChargesReady);
         nbt.setInteger("fireballRechargeTimer", this.fireballRechargeTimer);
+        nbt.setInteger("fireballChargesStored", this.fireballChargesStored);
     }
     
     @Override
     public void readEntityFromNBT(NBTTagCompound nbt) {
         super.readEntityFromNBT(nbt);
-        this.fireballCharges = nbt.getInteger("fireballCharges");
+        this.fireballChargesReady = nbt.getInteger("fireballChargesReady");
         this.fireballRechargeTimer = nbt.getInteger("fireballRechargeTimer");
+        this.fireballChargesStored = nbt.getInteger("fireballChargesStored");
     }
     
     protected void dealFireDamage(int i){}
@@ -93,16 +125,19 @@ public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedA
         double x = target.posX - this.posX;
         double y = target.posY - this.posY;
         double z = target.posZ - this.posZ;
-        for (int i = 0; i < 3; i++) {
-            EntityGolemFireball egf = new EntityGolemFireball(this.worldObj,
-                    this.posX + this.rand.nextGaussian() * .1D,
-                    this.posY + 2.5D + this.rand.nextGaussian() * .1D,
-                    this.posZ + this.rand.nextGaussian() * .1D,
-                    x + this.rand.nextGaussian() * distSq * 5D,
-                    y + this.rand.nextGaussian() * distSq * 5D - 2D,
-                    z + this.rand.nextGaussian() * distSq * 5D);
-            egf.shootingEntity=this;
-            this.worldObj.spawnEntityInWorld(egf);
+        if (this.fireballChargesReady > 0){
+        	for (int i = 0; i < 3; i++) {
+	            EntityGolemFireball egf = new EntityGolemFireball(this.worldObj,
+	                    this.posX + this.rand.nextGaussian() * .1D,
+	                    this.posY + 2.5D + this.rand.nextGaussian() * .1D,
+	                    this.posZ + this.rand.nextGaussian() * .1D,
+	                    x + this.rand.nextGaussian() * distSq * 5D,
+	                    y + this.rand.nextGaussian() * distSq * 5D - 2D,
+	                    z + this.rand.nextGaussian() * distSq * 5D);
+	            egf.shootingEntity=this;
+	            this.worldObj.spawnEntityInWorld(egf);
+        	}
+        	this.fireballChargesReady--;
         }
     }
     
@@ -116,5 +151,14 @@ public class EntityNetherrackGolem extends EntityCustomGolem implements IRangedA
         }else{
             return super.attackEntityFrom(src, dmg);
         }
+    }
+    
+    // DEBUG
+    @Override
+    public boolean interact(EntityPlayer player){
+    	if(!this.worldObj.isRemote){
+    			player.addChatMessage(new ChatComponentText("Current fuel value (stored,ready): " + this.fireballChargesStored + ", "+ this.fireballChargesReady));
+    	}
+    	return true;
     }
 }

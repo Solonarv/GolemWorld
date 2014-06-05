@@ -36,7 +36,7 @@ public class ClientProxy extends CommonProxy {
     
     @Override
     public void spawnLapisTrailFX(World world, double x, double y, double z, int lifetime){
-        EntityFX particle=new EntityLapisTrailFX(world,x,y,z,lifetime);
-        Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+        // EntityFX particle=new EntityLapisTrailFX(world,x,y,z,lifetime);
+        // Minecraft.getMinecraft().effectRenderer.addEffect(particle);
     }
 }
