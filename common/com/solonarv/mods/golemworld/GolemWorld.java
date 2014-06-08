@@ -37,7 +37,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  * 
  */
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, dependencies = "required-after:iChunUtil@[3.0.0,)")
 public class GolemWorld {
     
     @Instance(Reference.MOD_ID)
