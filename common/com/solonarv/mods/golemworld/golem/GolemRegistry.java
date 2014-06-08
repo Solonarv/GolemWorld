@@ -9,6 +9,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 import com.solonarv.mods.golemworld.GolemWorld;
+import com.solonarv.mods.golemworld.golem.advanced.EntityCraftingGolem;
 import com.solonarv.mods.golemworld.golem.medium.EntityGlassGolem;
 import com.solonarv.mods.golemworld.golem.medium.EntityGlowstoneGolem;
 import com.solonarv.mods.golemworld.golem.medium.EntityGoldGolem;
@@ -193,6 +194,7 @@ public class GolemRegistry {
         registerGolem(EntitySwitchableGolem.class, Blocks.lever, Blocks.redstone_block, null, Blocks.iron_block, null);
         registerGolem(EntityQuartzGolem.class, Blocks.quartz_block, GolemShapes.DEFAULT);
         registerGolem(EntityHardenedClayGolem.class, Blocks.hardened_clay, GolemShapes.DEFAULT);
+        registerGolem(EntityCraftingGolem.class, Blocks.crafting_table, GolemShapes.DEFAULT);
     }
     
     public static List<Class<? extends EntityCustomGolem>> getGolemClasses() {
