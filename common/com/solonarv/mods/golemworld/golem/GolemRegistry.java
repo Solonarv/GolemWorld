@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 import com.solonarv.mods.golemworld.GolemWorld;
@@ -26,7 +27,7 @@ import com.solonarv.mods.golemworld.golem.simple.EntityHardenedClayGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntityIronGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntitySandstoneGolem;
 import com.solonarv.mods.golemworld.golem.simple.EntityStoneGolem;
-import com.solonarv.mods.golemworld.util.BlockWithMeta;
+import com.solonarv.mods.golemworld.util.BlockRef;
 
 import cpw.mods.fml.common.registry.EntityRegistry;
 
@@ -52,24 +53,8 @@ public class GolemRegistry {
      */
     private static int                       nextID  = 1;
     
-    /**
-     * Registers a new golem with the golemRegistry. This is the main method for
-     * doing so: all overloads ultimately delegate to this one. It allows the
-     * most control of all.
-     * 
-     * @param golemClass The class of the golem to register.
-     * @param upperBody The BlockWithMeta that is the golem's upper body
-     * @param lowerBody The BlockWithMeta that is the golem's lower body
-     * @param shoulders The BlockWithMeta that is the golem's shoulders
-     * @param arms The BlockWithMeta that is the golem's arms
-     * @param legs The BlockWithMeta that is the golem's legs
-     */
-    public static void registerGolem(
-            Class<? extends EntityCustomGolem> golemClass,
-            BlockWithMeta upperBody, BlockWithMeta lowerBody,
-            BlockWithMeta shoulders, BlockWithMeta arms, BlockWithMeta legs) {
-        GolemRegistration reg = new GolemRegistration(golemClass, upperBody, lowerBody,
-                shoulders, arms, legs); 
+    public static void registerGolem(Class<? extends EntityCustomGolem> golemClass, IShapeMatcher shapeMatcher){
+        GolemRegistration reg = new GolemRegistration(golemClass, shapeMatcher); 
         entries.add(reg);
         if(reg.villageSpawnable)
             villageSpawnableGolems.add(reg);
@@ -77,31 +62,38 @@ public class GolemRegistry {
                 nextID++, GolemWorld.instance, 40, 1, true);
     }
     
+    public static void registerGolem(
+            Class<? extends EntityCustomGolem> golemClass,
+            BlockRef upperBody, BlockRef lowerBody,
+            BlockRef shoulders, BlockRef arms, BlockRef legs) {
+        registerGolem(golemClass, new ExactShapeMatcher(shoulders, shoulders, upperBody, arms, arms, lowerBody, legs, legs));
+    }
+    
     /**
-     * Wrapper for registerGolem(golemClass, BlockWithMeta, ...) that lets one
+     * Wrapper for registerGolem(golemClass, BlockRef, ...) that lets one
      * use just plain old Block instances. Params are the same as wrapped
      * method.
      */
     public static void registerGolem(
-            Class<? extends EntityCustomGolem> golemClass, String upperBody,
-            String lowerBody, String shoulders, String arms, String legs) {
-        registerGolem(golemClass, new BlockWithMeta(upperBody),
-                new BlockWithMeta(lowerBody), new BlockWithMeta(shoulders),
-                new BlockWithMeta(arms), new BlockWithMeta(legs));
+            Class<? extends EntityCustomGolem> golemClass, Block upperBody,
+            Block lowerBody, Block shoulders, Block arms, Block legs) {
+        registerGolem(golemClass, new BlockRef(upperBody),
+                new BlockRef(lowerBody), new BlockRef(shoulders),
+                new BlockRef(arms), new BlockRef(legs));
     }
     
     /**
-     * Another wrapper for registerGolem(golemClass, BlockWithMeta, ...) that
-     * lets one specify a shape from an enum and a material (a BlockWithMeta
+     * Another wrapper for registerGolem(golemClass, BlockRef, ...) that
+     * lets one specify a shape from an enum and a material (a BlockRef
      * that the golem is built out of); generally more readable and shorter that
      * the full invocation.
      * 
      * @param golemClass The class of the golem to register
-     * @param mat A {@link BlockWithMeta} the golem is built out of
+     * @param mat A {@link BlockRef} the golem is built out of
      * @param shape A {@link GolemShapes} the golem is built in
      */
     public static void registerGolem(
-            Class<? extends EntityCustomGolem> golemClass, BlockWithMeta mat,
+            Class<? extends EntityCustomGolem> golemClass, BlockRef mat,
             GolemShapes shape) {
         switch (shape) {
             case DEFAULT:
@@ -120,14 +112,14 @@ public class GolemRegistry {
     }
     
     /**
-     * A wrapper for registerGolem(Class golemClass, {@link BlockWithMeta} mat,
+     * A wrapper for registerGolem(Class golemClass, {@link BlockRef} mat,
      * {@link GolemShapes} shape) that takes a {@link Block} as material
      * instead. Params are the same as wrapped method.
      */
     public static void registerGolem(
-            Class<? extends EntityCustomGolem> golemClass, String mat,
+            Class<? extends EntityCustomGolem> golemClass, Block mat,
             GolemShapes shape) {
-        registerGolem(golemClass, new BlockWithMeta(mat), shape);
+        registerGolem(golemClass, new BlockRef(mat), shape);
     }
     
     /**
@@ -143,7 +135,7 @@ public class GolemRegistry {
      */
     public static GolemRegistration findMatch(World world, int x, int y, int z) {
         for (GolemRegistration gr : entries) {
-            if (gr.checkAt(world, x, y, z, true)) { return gr; }
+            if (gr.checkAt(world, x, y, z, false)!=-1) { return gr; }
         }
         return null;
     }
@@ -158,8 +150,10 @@ public class GolemRegistry {
      * @return The spawned golem if successful, null otherwise
      */
     public static EntityCustomGolem trySpawn(World world, int x, int y, int z) {
-        GolemRegistration f = findMatch(world, x, y, z);
-        if (f != null) { return f.spawn(world, x, y, z); }
+        for (GolemRegistration gr : entries){
+            EntityCustomGolem theGolem=gr.checkAndSpawn(world, x, y, z);
+            if(theGolem!=null) return theGolem;
+        }
         return null;
     }
     
@@ -181,24 +175,24 @@ public class GolemRegistry {
      */
     public static final void registerGolems() {
         // Register all OUR golems with the GolemRegistry
-        registerGolem(EntityIronGolem.class, "iron_block", GolemShapes.DEFAULT);
-        registerGolem(EntityDirtGolem.class, "dirt", GolemShapes.DEFAULT);
-        registerGolem(EntitySandstoneGolem.class, "sandstone", GolemShapes.DEFAULT);
-        registerGolem(EntityStoneGolem.class, "stone", GolemShapes.DEFAULT);
-        registerGolem(EntityClayGolem.class, "clay", GolemShapes.DEFAULT);
-        registerGolem(EntityEmeraldGolem.class, "emerald_block", GolemShapes.DEFAULT);
-        registerGolem(EntityGoldGolem.class, "gold_block", GolemShapes.DEFAULT);
-        registerGolem(EntityLapisGolem.class, "lapis_block", GolemShapes.DEFAULT);
-        registerGolem(EntityGlassGolem.class, "glass", GolemShapes.DEFAULT);
-        registerGolem(EntityObsidianGolem.class, "obsidian", GolemShapes.DEFAULT);
-        registerGolem(EntityDiamondGolem.class, "diamond_block", GolemShapes.DEFAULT);
-        registerGolem(EntityIceGolem.class, "ice", GolemShapes.DEFAULT);
-        registerGolem(EntityNetherrackGolem.class, "netherrack", "netherrack", "fire", "netherrack", null);
-        registerGolem(EntityRedstoneGolem.class, "redstone_block", GolemShapes.DEFAULT);
-        registerGolem(EntityGlowstoneGolem.class, "glowstone", GolemShapes.DEFAULT);
-        registerGolem(EntitySwitchableGolem.class, "lever", "redstone_block", null, "iron_block", null);
-        registerGolem(EntityQuartzGolem.class, "quartz_block", GolemShapes.DEFAULT);
-        registerGolem(EntityHardenedClayGolem.class, "hardened_clay", GolemShapes.DEFAULT);
+        registerGolem(EntityIronGolem.class, Blocks.iron_block, GolemShapes.DEFAULT);
+        registerGolem(EntityDirtGolem.class, Blocks.dirt, GolemShapes.DEFAULT);
+        registerGolem(EntitySandstoneGolem.class, Blocks.sandstone, GolemShapes.DEFAULT);
+        registerGolem(EntityStoneGolem.class, Blocks.stone, GolemShapes.DEFAULT);
+        registerGolem(EntityClayGolem.class, Blocks.clay, GolemShapes.DEFAULT);
+        registerGolem(EntityEmeraldGolem.class, Blocks.emerald_block, GolemShapes.DEFAULT);
+        registerGolem(EntityGoldGolem.class, Blocks.gold_block, GolemShapes.DEFAULT);
+        registerGolem(EntityLapisGolem.class, Blocks.lapis_block, GolemShapes.DEFAULT);
+        registerGolem(EntityGlassGolem.class, Blocks.glass, GolemShapes.DEFAULT);
+        registerGolem(EntityObsidianGolem.class, Blocks.obsidian, GolemShapes.DEFAULT);
+        registerGolem(EntityDiamondGolem.class, Blocks.diamond_block, GolemShapes.DEFAULT);
+        registerGolem(EntityIceGolem.class, Blocks.ice, GolemShapes.DEFAULT);
+        registerGolem(EntityNetherrackGolem.class, Blocks.netherrack, Blocks.netherrack, Blocks.fire, Blocks.netherrack, null);
+        registerGolem(EntityRedstoneGolem.class, Blocks.redstone_block, GolemShapes.DEFAULT);
+        registerGolem(EntityGlowstoneGolem.class, Blocks.glowstone, GolemShapes.DEFAULT);
+        registerGolem(EntitySwitchableGolem.class, Blocks.lever, Blocks.redstone_block, null, Blocks.iron_block, null);
+        registerGolem(EntityQuartzGolem.class, Blocks.quartz_block, GolemShapes.DEFAULT);
+        registerGolem(EntityHardenedClayGolem.class, Blocks.hardened_clay, GolemShapes.DEFAULT);
     }
     
     public static List<Class<? extends EntityCustomGolem>> getGolemClasses() {

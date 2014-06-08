@@ -1,10 +1,11 @@
 package com.solonarv.mods.golemworld.golem;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
-import com.solonarv.mods.golemworld.util.BlockWithMeta;
-import com.solonarv.mods.golemworld.util.TransactionDeleteBlocks;
+import com.solonarv.mods.golemworld.util.BlockRef;
 
 /**
  * A single entry in the golem registry. Stores the golem's in-world
@@ -15,15 +16,11 @@ import com.solonarv.mods.golemworld.util.TransactionDeleteBlocks;
  */
 public class GolemRegistration {
     
-    /**
-     * The blocks that the golem is built out of. null means that the block at
-     * that position does not matter.
-     */
-    BlockWithMeta upperBody, lowerBody,
-            shoulders, arms, legs;
     protected Class<? extends EntityCustomGolem> golemClass;
     public final boolean smart, villageSpawnable;
     private String golemName;
+    public IShapeMatcher shape;
+    private boolean[][] toRemove;
     
     /**
      * Full constructor: all other constructors delegate to this one. Also
@@ -36,18 +33,9 @@ public class GolemRegistration {
      * @param arms The block used as the golem's arms
      * @param legs The block used as the golem's legs
      */
-    public GolemRegistration(Class<? extends EntityCustomGolem> golemClass,
-            BlockWithMeta upperBody, BlockWithMeta lowerBody,
-            BlockWithMeta shoulders, BlockWithMeta arms, BlockWithMeta legs) {
+    public GolemRegistration(Class<? extends EntityCustomGolem> golemClass, IShapeMatcher shape) {
         this.golemClass = golemClass;
-        this.upperBody = upperBody != null ? upperBody
-                : new BlockWithMeta(null);
-        this.lowerBody = lowerBody != null ? lowerBody
-                : new BlockWithMeta(null);;
-        this.shoulders = shoulders != null ? shoulders
-                : new BlockWithMeta(null);;
-        this.arms = arms != null ? arms : new BlockWithMeta(null);;
-        this.legs = legs != null ? legs : new BlockWithMeta(null);;
+        this.shape=shape;
         boolean tsmart = false, tvillage = true;
         try {
             GolemStats stats = (GolemStats) golemClass.getDeclaredField("stats").get(null);
@@ -58,6 +46,10 @@ public class GolemRegistration {
         } finally {
             this.smart = tsmart;
             this.villageSpawnable = tvillage;
+        }
+        this.toRemove=shape.removeWhich();
+        if(!(toRemove.length==3 && toRemove[0].length==2 && toRemove[1].length==3 && toRemove[2].length==3)){
+            throw new IllegalArgumentException("IShapeMatcher returned invalid outline when registering golem " + golemClass.getSimpleName());
         }
     }
     
@@ -71,52 +63,97 @@ public class GolemRegistration {
      * @param z The z coord to check at
      * @param clearShape Whether or not to remove the affected blocks on
      *        successful match
-     * @return Whether or not a golem is correctly built at the specified
-     *         location
+     * @return The direction the golem is facing, or null if it's not a valid build
      */
-    public boolean checkAt(World world, int x, int y, int z, boolean clearShape) {
-        Block headBlock = world.getBlock(x, y, z);
-        TransactionDeleteBlocks remove = clearShape ? new TransactionDeleteBlocks()
-                : null;
-        if (Block.isEqualTo(headBlock, Block.getBlockFromName("lit_pumpkin")) || !smart
-                && Block.isEqualTo(headBlock, Block.getBlockFromName("pumpkin"))) {
-            if (upperBody.isAt(world, x, y - 1, z, remove)
-                    && lowerBody.isAt(world, x, y - 2, z, remove)) {
-                // Check +-x first
-                if (shoulders.isAt(world, x - 1, y, z, remove)
-                        && shoulders.isAt(world, x + 1, y, z, remove)
-                        && arms.isAt(world, x - 1, y - 1, z, remove)
-                        && arms.isAt(world, x + 1, y - 1, z, remove)
-                        && legs.isAt(world, x - 1, y - 1, z, remove)
-                        && legs.isAt(world, x + 1, y - 1, z, remove)) {
-                    if (clearShape) {
-                        world.setBlockToAir(x, y, z);
-                        remove.commit();
-                    }
-                    return true;
-                } else if (clearShape) {
-                    remove.abort();
-                }
-                remove.addAction(world, x, y - 1, z);
-                remove.addAction(world, x, y - 2, z);
-                // Check +-z now
-                if (shoulders.isAt(world, x, y, z - 1, remove)
-                        && shoulders.isAt(world, x, y, z + 1, remove)
-                        && arms.isAt(world, x, y - 1, z - 1, remove)
-                        && arms.isAt(world, x, y - 1, z + 1, remove)
-                        && legs.isAt(world, x, y - 1, z - 1, remove)
-                        && legs.isAt(world, x, y - 1, z + 1, remove)) {
-                    if (clearShape) {
-                        world.setBlockToAir(x, y, z);
-                        remove.commit();
-                    }
-                    return true;
-                } else if (clearShape) {
-                    remove.abort();
-                }
+    public int checkAt(World world, int x, int y, int z, boolean remove) {
+        Block head = world.getBlock(x, y, z);
+        if(! (head==Blocks.lit_pumpkin || (!this.smart && head==Blocks.pumpkin)) ){
+            return -1;
+        }
+        // Check for the golem facing North (-z)
+        if(shape.isMatched(BlockRef.fromWorld(world, x-1, y, z), BlockRef.fromWorld(world, x+1, y, z),
+                BlockRef.fromWorld(world, x, y-1, z), BlockRef.fromWorld(world, x-1, y-1, z), BlockRef.fromWorld(world, x+1, y-1, z),
+                BlockRef.fromWorld(world, x, y-2, z), BlockRef.fromWorld(world, x-1, y-2, z), BlockRef.fromWorld(world, x+1, y-2, z))){
+            if(remove){
+                world.setBlockToAir(x, y, z);
+                if(toRemove[0][0]) world.setBlockToAir(x-1, y, z);
+                if(toRemove[0][1]) world.setBlockToAir(x+1, y, z);
+                if(toRemove[1][0]) world.setBlockToAir(x-1, y-1, z);
+                if(toRemove[1][1]) world.setBlockToAir(x, y-1, z);
+                if(toRemove[1][2]) world.setBlockToAir(x+1, y-1, z);
+                if(toRemove[2][0]) world.setBlockToAir(x-1, y-2, z);
+                if(toRemove[2][1]) world.setBlockToAir(x, y-2, z);
+                if(toRemove[2][2]) world.setBlockToAir(x+1, y-2, z);
+            }
+            return 2;
+        }
+     // Check for the golem facing South (+z)
+        if(shape.isMatched(BlockRef.fromWorld(world, x+1, y, z), BlockRef.fromWorld(world, x-1, y, z),
+                BlockRef.fromWorld(world, x, y-1, z), BlockRef.fromWorld(world, x+1, y-1, z), BlockRef.fromWorld(world, x-1, y-1, z),
+                BlockRef.fromWorld(world, x, y-2, z), BlockRef.fromWorld(world, x+1, y-2, z), BlockRef.fromWorld(world, x-1, y-2, z))){
+            if(remove){
+                world.setBlockToAir(x, y, z);
+                if(toRemove[0][0]) world.setBlockToAir(x+1, y, z);
+                if(toRemove[0][1]) world.setBlockToAir(x-1, y, z);
+                if(toRemove[1][0]) world.setBlockToAir(x+1, y-1, z);
+                if(toRemove[1][1]) world.setBlockToAir(x, y-1, z);
+                if(toRemove[1][2]) world.setBlockToAir(x-1, y-1, z);
+                if(toRemove[2][0]) world.setBlockToAir(x+1, y-2, z);
+                if(toRemove[2][1]) world.setBlockToAir(x, y-2, z);
+                if(toRemove[2][2]) world.setBlockToAir(x-1, y-2, z);
+            }
+            return 0;
+        }
+        // Check for the golem facing East (+x)
+        if(shape.isMatched(BlockRef.fromWorld(world, x, y, z-1), BlockRef.fromWorld(world, x, y, z+1),
+                BlockRef.fromWorld(world, x, y-1, z), BlockRef.fromWorld(world, x, y-1, z-1), BlockRef.fromWorld(world, x, y-1, z+1),
+                BlockRef.fromWorld(world, x, y-2, z), BlockRef.fromWorld(world, x, y-2, z-1), BlockRef.fromWorld(world, x, y-2, z+1))){
+            if(remove){
+                world.setBlockToAir(x, y, z);
+                if(toRemove[0][0]) world.setBlockToAir(x, y, z-1);
+                if(toRemove[0][1]) world.setBlockToAir(x, y, z+1);
+                if(toRemove[1][0]) world.setBlockToAir(x, y-1, z-1);
+                if(toRemove[1][1]) world.setBlockToAir(x, y-1, z);
+                if(toRemove[1][2]) world.setBlockToAir(x, y-1, z+1);
+                if(toRemove[2][0]) world.setBlockToAir(x, y-2, z-1);
+                if(toRemove[2][1]) world.setBlockToAir(x, y-2, z);
+                if(toRemove[2][2]) world.setBlockToAir(x, y-2, z+1);
+            }
+            return 1;
+        }
+        // Check for the golem facing West (-x)
+        if(shape.isMatched(BlockRef.fromWorld(world, x, y, z+1), BlockRef.fromWorld(world, x, y, z-1),
+                BlockRef.fromWorld(world, x, y-1, z), BlockRef.fromWorld(world, x, y-1, z+1), BlockRef.fromWorld(world, x, y-1, z-1),
+                BlockRef.fromWorld(world, x, y-2, z), BlockRef.fromWorld(world, x, y-2, z+1), BlockRef.fromWorld(world, x, y-2, z-1))){
+            if(remove){
+                world.setBlockToAir(x, y, z);
+                if(toRemove[0][0]) world.setBlockToAir(x, y, z+1);
+                if(toRemove[0][1]) world.setBlockToAir(x, y, z-1);
+                if(toRemove[1][0]) world.setBlockToAir(x, y-1, z+1);
+                if(toRemove[1][1]) world.setBlockToAir(x, y-1, z);
+                if(toRemove[1][2]) world.setBlockToAir(x, y-1, z-1);
+                if(toRemove[2][0]) world.setBlockToAir(x, y-2, z+1);
+                if(toRemove[2][1]) world.setBlockToAir(x, y-2, z);
+                if(toRemove[2][2]) world.setBlockToAir(x, y-2, z-1);
+            }
+            return 3;
+        }
+        return -1;
+    }
+    
+    /**
+     * Spawn a golem after passing a check for valid construction.
+     */
+    public EntityCustomGolem checkAndSpawn(World world, int x, int y, int z){
+        int golemFacing=this.checkAt(world, x, y, z, true);
+        if(golemFacing!=-1){
+            EntityCustomGolem theGolem=this.spawn(world, x, y-2, z);
+            if(theGolem!=null){
+                theGolem.setAngles(golemFacing*90.0F, 0);
+                return theGolem;
             }
         }
-        return false;
+        return null;
     }
     
     /**
