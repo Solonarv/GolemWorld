@@ -2,6 +2,7 @@ package com.solonarv.mods.golemworld.item;
 
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -17,7 +18,7 @@ import com.solonarv.mods.golemworld.golem.GolemRegistry;
  * @license Lesser GNU Public License v3 (http://www.gnu.org/licenses/lgpl.html)
  * 
  */
-public class ItemPaperOfAwakening extends ItemGolemWorldBase {
+public class ItemPaperOfAwakening extends Item {
 	
 	public static final String itemName="paperOfAwakening";
 	
@@ -35,10 +36,8 @@ public class ItemPaperOfAwakening extends ItemGolemWorldBase {
             }
             if (entityPlayer != null){
                 g.setCreator(entityPlayer.getDisplayName());
+                g.setPlayerCreated(true);
             }
-        }
-        if (g != null && entityPlayer != null) {
-            g.setPlayerCreated(true);
         }
         return g != null;
     }

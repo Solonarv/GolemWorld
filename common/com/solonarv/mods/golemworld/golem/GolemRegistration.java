@@ -3,7 +3,6 @@ package com.solonarv.mods.golemworld.golem;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 import com.solonarv.mods.golemworld.util.BlockRef;
 
@@ -180,7 +179,11 @@ public class GolemRegistration {
         }
         return theGolem;
     }
-
+    
+    public boolean isValidShape(BlockRef lshoulder, BlockRef rshoulder, BlockRef upperbody, BlockRef larm, BlockRef rarm, BlockRef lowerbody, BlockRef lleg, BlockRef rleg){
+        return this.shape.isMatched(lshoulder, rshoulder, upperbody, larm, rarm, lowerbody, lleg, rleg);
+    }
+    
     public String getGolemName() {
         if(this.golemName == null){
             try{
@@ -190,5 +193,9 @@ public class GolemRegistration {
             }
         }
         return this.golemName;
+    }
+
+    public Class<? extends EntityCustomGolem> getGolemClass() {
+        return golemClass;
     }
 }

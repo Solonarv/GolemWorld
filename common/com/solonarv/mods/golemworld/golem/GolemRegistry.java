@@ -217,4 +217,11 @@ public class GolemRegistry {
             return reg.spawn(world, x, y, z);
         } else return null;
     }
+    
+    public static GolemRegistration findGolemReg(BlockRef lshoulder, BlockRef rshoulder, BlockRef upperbody, BlockRef larm, BlockRef rarm, BlockRef lowerbody, BlockRef lleg, BlockRef rleg){
+        for(GolemRegistration reg : entries){
+            if(reg.isValidShape(lshoulder, rshoulder, upperbody, larm, rarm, lowerbody, lleg, rleg)) return reg;
+        }
+        return null;
+    }
 }

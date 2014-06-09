@@ -35,8 +35,6 @@ public class EntityCraftingGolem extends EntityCustomGolem {
     // The center of the 3x3 from which to pull the recipe. Only above, in front, behind, or besides the golem.
     public int gridCenterX, gridCenterY, gridCenterZ;
     public ForgeDirection towardsGrid;
-    // The coords of the inventory to insert the crafting result into, can only be directly below the golem
-    public int targetX, targetY, targetZ;
     private DummyContainer dummyContainer = new DummyContainer();
     public static int maxCraftCooldown=20;
     
@@ -57,7 +55,6 @@ public class EntityCraftingGolem extends EntityCustomGolem {
         IInventory[][] inventories=getCraftingInventories();
         ItemStack[][] items=new ItemStack[3][3];
         int[][] slots=new int[3][3];
-        IInventory targetInv=(IInventory)worldObj.getTileEntity(targetX, targetY, targetZ);
         for (int y = 0; y < inventories.length; y++) {
             IInventory[] row = inventories[y];
             for (int x = 0; x < row.length; x++) {
@@ -76,15 +73,15 @@ public class EntityCraftingGolem extends EntityCustomGolem {
         }
         ItemStack result=CraftingManager.getInstance().findMatchingRecipe(craftMatrix, worldObj);
         if(result!=null){
-            WorldHelper.shoveStackOrDrop(targetInv, result, -1, this);
+            this.entityDropItem(result, 0);
             for(int y=0; y<3; y++) for(int x=0; x<3; x++){
                 ItemStack stack=items[y][x];
                 IInventory inventory=inventories[y][x];
-                if(inventory==null) continue;
+                if(inventory==null || stack==null) continue;
                 if(stack.getItem().hasContainerItem(stack)){
                     ItemStack containerItem=stack.getItem().getContainerItem(stack);
                     inventory.decrStackSize(slots[y][x], 1);
-                    WorldHelper.shoveStackOrDrop(inventory, containerItem, -1, this);
+                    this.entityDropItem(containerItem, 0);
                 } else {
                     inventory.decrStackSize(slots[y][x], 1);
                 }
@@ -97,25 +94,19 @@ public class EntityCraftingGolem extends EntityCustomGolem {
         int mx=MathHelper.floor_double(this.posX);
         int y=MathHelper.floor_double(this.posY);
         int mz=MathHelper.floor_double(this.posZ);
+        TileEntity maybeInventory;
         for(int x=mx; x<mx+2; x++) for(int z=mz; z<mz+2; z++){
-            TileEntity maybeInventory=worldObj.getTileEntity(x, y-1, z);
-            if(maybeInventory!=null && !maybeInventory.isInvalid() && maybeInventory instanceof IInventory){
-                this.targetX=x;
-                this.targetY=y;
-                this.targetZ=z;
-            }
-            System.out.println(String.format("Looking for grid centers around %d, %d, %d", x, y, z));
             // Check up
-            maybeInventory=worldObj.getTileEntity(x, y+3, z);
+            maybeInventory = worldObj.getTileEntity(x, y+3, z);
             if(maybeInventory!=null && !maybeInventory.isInvalid() && maybeInventory instanceof IInventory){
                 this.gridCenterX=x;
                 this.gridCenterY=y+3;
                 this.gridCenterZ=z;
                 this.towardsGrid=ForgeDirection.UP;
-                System.out.println(String.format("Found grid center at %d, %d, %d: %s", gridCenterX, gridCenterY, gridCenterZ, towardsGrid.toString()));
                 return;
             }
             
+            /* Disabled for now
             // Check north (-z)
             maybeInventory=worldObj.getTileEntity(x, y+1, z-1);
             if(maybeInventory!=null && !maybeInventory.isInvalid() && maybeInventory instanceof IInventory){
@@ -123,7 +114,6 @@ public class EntityCraftingGolem extends EntityCustomGolem {
                 this.gridCenterY=y;
                 this.gridCenterZ=z-1;
                 this.towardsGrid=ForgeDirection.NORTH;
-                System.out.println(String.format("Found grid center at %d, %d, %d: %s", gridCenterX, gridCenterY, gridCenterZ, towardsGrid.toString()));
                 return;
             }
             
@@ -134,7 +124,6 @@ public class EntityCraftingGolem extends EntityCustomGolem {
                 this.gridCenterY=y;
                 this.gridCenterZ=z;
                 this.towardsGrid=ForgeDirection.EAST;
-                System.out.println(String.format("Found grid center at %d, %d, %d: %s", gridCenterX, gridCenterY, gridCenterZ, towardsGrid.toString()));
                 return;
             }
             
@@ -145,7 +134,6 @@ public class EntityCraftingGolem extends EntityCustomGolem {
                 this.gridCenterY=y;
                 this.gridCenterZ=z+1;
                 this.towardsGrid=ForgeDirection.SOUTH;
-                System.out.println(String.format("Found grid center at %d, %d, %d: %s", gridCenterX, gridCenterY, gridCenterZ, towardsGrid.toString()));
                 return;
             }
             // Check west (-x)
@@ -155,9 +143,9 @@ public class EntityCraftingGolem extends EntityCustomGolem {
                 this.gridCenterY=y;
                 this.gridCenterZ=z;
                 this.towardsGrid=ForgeDirection.WEST;
-                System.out.println(String.format("Found grid center at %d, %d, %d: %s", gridCenterX, gridCenterY, gridCenterZ, towardsGrid.toString()));
                 return;
-            }   
+            }
+            /**/
         }
     }
     
