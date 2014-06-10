@@ -24,4 +24,8 @@ public class StringHelper {
         }
         return "ItemStack[]{" + r + "}";
     }
+    
+    public static String toString(Object o, String deflt){
+        return o==null?deflt:o.toString();
+    }
 }

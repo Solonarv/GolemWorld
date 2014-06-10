@@ -1,6 +1,8 @@
 package com.solonarv.mods.golemworld.util;
 
-import net.minecraft.block.Block;
+import java.io.PrintStream;
+
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -47,5 +49,19 @@ public class ItemHelper {
     
     public static ItemStack stackFromName(String itemName, int qty){
     	return stackFromName(itemName, qty, 0);
+    }
+
+    public static void printCraftingMatrix(PrintStream out, InventoryCrafting craftMatrix) {
+        StringBuilder output = new StringBuilder("Crafting Griddu\n================");
+        for(int row = 0; row<3; row++){
+            output.append("\n |");
+            for(int col = 0; col<3; col++){
+                ItemStack item = craftMatrix.getStackInRowAndColumn(row, col);
+                output.append(item == null ? " {none} |"
+                        : String.format(" {%s/%d} |", item.getItem().getUnlocalizedName(), item.getItemDamage()));
+            }
+        }
+        output.append("\n================");
+        out.println(output.toString());
     }
 }

@@ -1,7 +1,6 @@
 package com.solonarv.mods.golemworld.util;
 
 import net.minecraft.block.Block;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 import com.solonarv.mods.golemworld.golem.GolemRegistry;
@@ -28,11 +27,15 @@ public class BlockRef {
 	}
 
 	public boolean matches(BlockRef other) {
-		return (this.block==null || this.block==other.block) &&
+		return other!=null && (this.block==null || this.block==other.block) &&
 				(this.meta==-1 || this.meta==other.meta);
 	}
 
 	public static BlockRef fromWorld(World world, int x, int y, int z) {
 		return new BlockRef(world.getBlock(x, y, z), world.getBlockMetadata(x, y, z));
+	}
+	
+	public String toString() {
+	    return block.getUnlocalizedName() + "/" + (meta==-1? "*" : meta); 
 	}
 }
