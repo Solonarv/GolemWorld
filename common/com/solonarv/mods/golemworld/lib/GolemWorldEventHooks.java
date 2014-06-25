@@ -1,21 +1,33 @@
 package com.solonarv.mods.golemworld.lib;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityIronGolem;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 
 import com.solonarv.mods.golemworld.golem.GolemRegistry;
-import com.solonarv.mods.golemworld.potion.DamageSourceShatter;
-import com.solonarv.mods.golemworld.potion.PotionFreeze;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class GolemWorldEventHooks {
+    
+    @SubscribeEvent
+    public void onItemUseStart(PlayerUseItemEvent.Start event){
+        System.out.println("PlayerUseItem.Start detected");
+        Item theItem = event.item.getItem();
+        if(theItem instanceof ItemBlock && (((ItemBlock) theItem).field_150939_a == Blocks.pumpkin)
+                || ((ItemBlock) theItem).field_150939_a == Blocks.lit_pumpkin){
+            System.out.println("PlayerUseItem.Start detected with a pumpkin or jack o'lantern");
+        }
+    }
+    
     @SubscribeEvent
     public void onLivingUpdate(LivingUpdateEvent event){
     	/*
