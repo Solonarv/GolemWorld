@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
+import com.solonarv.mods.golemworld.GolemWorld;
 import com.solonarv.mods.golemworld.util.BlockRef;
 
 /**
@@ -144,6 +145,7 @@ public class GolemRegistration {
      * Spawn a golem after passing a check for valid construction.
      */
     public EntityCustomGolem checkAndSpawn(World world, int x, int y, int z){
+        if(GolemWorld.config.getInt("spawn"+ getGolemID()) == 1) return null;
         int golemFacing=this.checkAt(world, x, y, z, true);
         if(golemFacing!=-1){
             EntityCustomGolem theGolem=this.spawn(world, x, y-2, z);
@@ -197,5 +199,9 @@ public class GolemRegistration {
 
     public Class<? extends EntityCustomGolem> getGolemClass() {
         return golemClass;
+    }
+    
+    public String getGolemID(){
+        return golemClass.getSimpleName().replace("Entity", "");
     }
 }

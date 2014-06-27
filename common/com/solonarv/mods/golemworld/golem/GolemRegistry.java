@@ -57,7 +57,7 @@ public class GolemRegistry {
     public static void registerGolem(Class<? extends EntityCustomGolem> golemClass, IShapeMatcher shapeMatcher){
         GolemRegistration reg = new GolemRegistration(golemClass, shapeMatcher); 
         entries.add(reg);
-        if(reg.villageSpawnable)
+        if(GolemWorld.config.getInt("village" + reg.getGolemID())==1)
             villageSpawnableGolems.add(reg);
         EntityRegistry.registerModEntity(golemClass, golemClass.getName(),
                 nextID++, GolemWorld.instance, 40, 1, true);
@@ -195,6 +195,7 @@ public class GolemRegistry {
         registerGolem(EntityQuartzGolem.class, Blocks.quartz_block, GolemShapes.DEFAULT);
         registerGolem(EntityHardenedClayGolem.class, Blocks.hardened_clay, GolemShapes.DEFAULT);
         registerGolem(EntityCraftingGolem.class, Blocks.crafting_table, GolemShapes.DEFAULT);
+        System.out.println("Registered " + entries.size() + " golems, of which " + villageSpawnableGolems.size() + " are village-spawnable.");
     }
     
     public static List<Class<? extends EntityCustomGolem>> getGolemClasses() {
